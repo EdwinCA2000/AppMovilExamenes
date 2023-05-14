@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navegacion"
+    app:startDestination="@id/bienvenida">
+
+    <fragment
+        android:id="@+id/bienvenida"
+        android:name="com.example.examenesseq.bienvenida"
+        android:label="Bienvenida"
+        tools:layout="@layout/fragment_bienvenida" >
+        <action
+            android:id="@+id/action_bienvenida_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_bienvenida_to_registro"
+            app:destination="@id/registro" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.examenesseq.login"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_bienvenida"
+            app:destination="@id/bienvenida" />
+        <action
+            android:id="@+id/action_login_to_registro"
+            app:destination="@id/registro" />
+        <action
+            android:id="@+id/action_login_to_inicio"
+            app:destination="@id/inicio" />
+    </fragment>
+    <fragment
+        android:id="@+id/registro"
+        android:name="com.example.examenesseq.registro"
+        android:label="Registro"
+        tools:layout="@layout/fragment_registro" >
+        <action
+            android:id="@+id/action_registro_to_bienvenida"
+            app:destination="@id/bienvenida" />
+        <action
+            android:id="@+id/action_registro_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/inicio"
+        android:name="com.example.examenesseq.inicio"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_inicio_to_login"
+            app:destination="@id/login" />
+    </fragment>
+</navigation>
