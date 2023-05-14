@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_registro_to_login"
             app:destination="@id/login" />
+        <action
+            android:id="@+id/action_registro_to_inicio"
+            app:destination="@id/inicio" />
     </fragment>
     <fragment
         android:id="@+id/inicio"
