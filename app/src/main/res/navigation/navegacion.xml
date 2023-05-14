@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bienvenida"
-        android:name="com.example.examenesseq.bienvenida"
+        android:name="com.example.examenesseq.fragments.bienvenida"
         android:label="Bienvenida"
         tools:layout="@layout/fragment_bienvenida" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.example.examenesseq.login"
+        android:name="com.example.examenesseq.fragments.login"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/registro"
-        android:name="com.example.examenesseq.registro"
+        android:name="com.example.examenesseq.fragments.registro"
         android:label="Registro"
         tools:layout="@layout/fragment_registro" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/inicio"
-        android:name="com.example.examenesseq.inicio"
+        android:name="com.example.examenesseq.fragments.inicio"
         android:label="Inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
