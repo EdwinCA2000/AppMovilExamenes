@@ -2,4 +2,5 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTema" parent="Theme.AppCompat.Light.NoActionBar"/>
+
 </resources>
