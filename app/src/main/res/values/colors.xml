@@ -10,4 +10,10 @@
     <color name="red">#FF4646</color>
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
+    <color name="bgBienvenida">#F7F7F7</color>
+    <color name="colorSEQ">#ab0a3c</color>
+    <color name="hintTransparent">#90FFFFFF</color>
+
+
+
 </resources>

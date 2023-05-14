@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorSEQ"
+        tools:context=".fragments.login"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/ic_user"
+            android:layout_width="157dp"
+            android:layout_height="185dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/ic_usuario"
+            app:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_correoElectronico"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/white"
+            android:textColorHint="@color/hintTransparent"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="@string/correo_electr_nico"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ic_user" />
+
+        <EditText
+            android:id="@+id/et_contraseña"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="48dp"
+            android:ems="10"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/hintTransparent"
+            android:textColor="@color/white"
+            android:inputType="text"
+            android:hint="@string/contrase_a"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ic_user"
+            app:layout_constraintVertical_bias="0.246" />
+
+        <Button
+            android:id="@+id/btn_IniciarSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/iniciar_sesi_n"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_contraseña" />
+
+        <TextView
+            android:id="@+id/enlace_registro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/no_tienes_una_cuenta_registrate_aqui"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_IniciarSesion" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
