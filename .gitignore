@@ -1,1 +1,5 @@
-/.idea
+/.idea/
+app/build/
+/captures/
+/gradle/
+/.gradle/
