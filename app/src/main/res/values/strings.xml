@@ -2,4 +2,10 @@
     <string name="app_name">ExamenesSEQ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bienvenido_a_la_app_de_ex_menes_de_la_seq">Bienvenido a la App de exámenes de la SEQ</string>
+    <string name="iniciar_sesi_n">INICIAR SESIÓN</string>
+    <string name="registrarse">REGISTRARSE</string>
+    <string name="correo_electr_nico">Correo Electrónico</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="no_tienes_una_cuenta_registrate_aqui">¿No tienes una cuenta? Registrate aqui.</string>
 </resources>
