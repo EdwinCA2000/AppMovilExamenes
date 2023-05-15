@@ -1,5 +1,4 @@
 /.idea/
-app/build/
 /captures/
 /gradle/
-/.gradle/
+.gradle/
