@@ -1,1 +1,4 @@
-/.idea
+/.idea/
+/captures/
+/gradle/
+.gradle/

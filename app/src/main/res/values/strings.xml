@@ -8,4 +8,10 @@
     <string name="correo_electr_nico">Correo Electrónico</string>
     <string name="contrase_a">Contraseña</string>
     <string name="no_tienes_una_cuenta_registrate_aqui">¿No tienes una cuenta? Registrate aqui.</string>
+    <string name="registro">Registro</string>
+    <string name="nombre_s">Nombre(s)</string>
+    <string name="apellido_paterno">Apellido Paterno</string>
+    <string name="apellido_materno">Apellido Materno</string>
+    <string name="curp">CURP</string>
+    <string name="confirmar_contrase_a">Confirmar contraseña</string>
 </resources>
