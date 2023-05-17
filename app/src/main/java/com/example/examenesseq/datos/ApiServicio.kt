@@ -8,10 +8,23 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiServicio {
+
+
     @POST(value="tecnologiaeducativa.Sesion/actionLogin")
     fun postLogin(@Query(value="Usuario")usuario: String, @Query(value="Password") password: String):
             Call<LoginRespuesta>
 
+    @POST(value="tecnologiaeducativa.Sesion/actionRegistroUsuario")
+
+    fun postRegistro(
+        @Query(value="IdUsuario")IdUsuario:Int=1,
+        @Query(value="CURP")CURP:String,
+        @Query(value="Contrasena")Contrasena:String,
+        @Query(value="CorreoElectronico")CorreoElectronico: String,
+        @Query(value="Nombres")Nombres: String,
+        @Query(value="Apellido1")Apellido1:String,
+        @Query(value="Apellido2")Apellido2: String,
+    ):Call<LoginRespuesta>
     companion object Factory{
         private const val BASE_URL="http://192.168.0.3:8080/Ceneval/"
         fun create(): ApiServicio{

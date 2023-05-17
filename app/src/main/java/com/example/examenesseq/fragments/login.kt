@@ -1,5 +1,6 @@
 package com.example.examenesseq.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,6 +40,12 @@ class login : Fragment() {
         if(sharedPreferences["Mensaje",""].contains(".")){
             irAInicio()
         }
+
+        // Supongamos que "nombreUsuario" es una variable que contiene el nombre del usuario.
+        val sharedPreferences = requireActivity().getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("nombre_usuario", binding.etCorreoElectronico.text.toString())
+        editor.apply()
 
         binding.btnIniciarSesion.setOnClickListener(){
             performLogin()

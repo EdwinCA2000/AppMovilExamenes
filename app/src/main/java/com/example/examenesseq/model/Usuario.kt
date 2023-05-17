@@ -1,5 +1,6 @@
 package com.example.examenesseq.model
 
+
 data class Usuario(
     val IdUsuario: Int,
     val CURP: String,
