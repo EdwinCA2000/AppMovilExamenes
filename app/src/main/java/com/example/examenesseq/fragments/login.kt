@@ -36,8 +36,8 @@ class login : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        if(sharedPreferences["Mensaje",""].contains(".")){
+        //Código para conectar los datos de la BD
+        /*if(sharedPreferences["Mensaje",""].contains(".")){
             irAInicio()
         }
 
@@ -45,10 +45,11 @@ class login : Fragment() {
         val sharedPreferences = requireActivity().getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("nombre_usuario", binding.etCorreoElectronico.text.toString())
-        editor.apply()
+        editor.apply()*/
 
         binding.btnIniciarSesion.setOnClickListener(){
-            performLogin()
+            //performLogin()
+            irAInicio()
         }
 
         return binding.root
