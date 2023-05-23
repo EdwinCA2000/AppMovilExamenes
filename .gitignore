@@ -1,4 +1,8 @@
 /.idea/
 /captures/
 /gradle/
-.gradle/
+.gradle/8.0/
+.gradle/buildOutputCleanup/
+.gradle/kotlin/
+.gradle/vcs-1/
+.gradle/file-system.probe/
