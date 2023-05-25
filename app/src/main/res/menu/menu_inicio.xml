@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Perfil" />
-    <item android:title="Historial Exámenes" />
-    <item android:title="Cambiar Contraseña" />
-    <item android:title="Cerrar sesión" />
+    <item android:id="@+id/ver_perfil" android:title="Perfil" />
+    <item android:id="@+id/historial_examenes" android:title="Historial Exámenes" />
+    <item android:id="@+id/cerrar_sesion" android:title="Cerrar sesión" />
 </menu>
