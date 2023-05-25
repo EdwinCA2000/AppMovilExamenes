@@ -13,7 +13,6 @@ import com.example.examenesseq.databinding.FragmentRegistroBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.util.PreferenceHelper
-import com.example.examenesseq.util.PreferenceHelper.get
 import com.example.examenesseq.util.PreferenceHelper.set
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +24,7 @@ class registro : Fragment() {
     private val sharedPreferences by lazy { PreferenceHelper.defaultPrefs(requireContext()) }
 
     private val apiServicio: ApiServicio by lazy {
-        ApiServicio.create()
+        ApiServicio.create(requireContext())
     }
 
     private var _binding: FragmentRegistroBinding? = null
@@ -37,10 +36,6 @@ class registro : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRegistroBinding.inflate(inflater, container, false)
-
-        if(sharedPreferences["Mensaje",""].contains(".")){
-            irAInicio()
-        }
 
         binding.btnRegistrarse.setOnClickListener {
             performRegistro()
