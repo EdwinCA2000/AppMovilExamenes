@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_login_to_inicio"
             app:destination="@id/inicio" />
+        <action
+            android:id="@+id/action_login_to_dashboard"
+            app:destination="@id/dashboard" />
     </fragment>
     <fragment
         android:id="@+id/registro"
@@ -55,5 +58,22 @@
         <action
             android:id="@+id/action_inicio_to_login"
             app:destination="@id/login" />
+        <action
+            android:id="@+id/action_inicio_to_perfil_usuario"
+            app:destination="@id/perfil_usuario" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.example.examenesseq.dashboard"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/perfil_usuario"
+        android:name="com.example.examenesseq.perfil_usuario"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil_usuario" >
+        <action
+            android:id="@+id/action_perfil_usuario_to_inicio"
+            app:destination="@id/inicio" />
     </fragment>
 </navigation>
