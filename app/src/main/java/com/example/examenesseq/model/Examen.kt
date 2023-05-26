@@ -1,4 +1,5 @@
-import java.sql.Date
+package com.example.examenesseq.model
+import java.util.Date
 
 data class Examen(
     val IdExamen: Int=-1,

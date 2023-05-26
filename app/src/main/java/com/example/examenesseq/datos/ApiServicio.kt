@@ -1,12 +1,14 @@
 package com.example.examenesseq.datos
 
-import Examen
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
+import com.example.examenesseq.model.Examen
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.gson
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -40,7 +42,7 @@ interface ApiServicio {
 
 
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.11:8080/Ceneval/"
+        private const val BASE_URL = "http://10.8.16.216:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->
@@ -58,7 +60,7 @@ interface ApiServicio {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(httpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
             return retrofit.create(ApiServicio::class.java)

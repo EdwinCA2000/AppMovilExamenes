@@ -14,4 +14,6 @@
     <string name="apellido_materno">Apellido Materno</string>
     <string name="curp">CURP</string>
     <string name="confirmar_contrase_a">Confirmar contraseña</string>
+    <string name="no_hay_ex_menes_disponibles">No hay exámenes disponibles</string>
+    <string name="ex_menes">Exámenes</string>
 </resources>

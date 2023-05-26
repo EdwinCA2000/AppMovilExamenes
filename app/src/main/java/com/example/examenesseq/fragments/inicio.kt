@@ -1,6 +1,5 @@
 package com.example.examenesseq.fragments
 
-import Examen
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,11 +14,15 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
+import com.example.examenesseq.examenAdapter
+import com.example.examenesseq.model.Examen
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.getExamen
 import com.example.examenesseq.util.PreferenceHelper.saveExamen
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
@@ -36,12 +39,17 @@ class inicio : Fragment() {
         ApiServicio.create(requireContext())
     }
 
+    private lateinit var examenAdapter: examenAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentInicioBinding.inflate(inflater, container, false)
+        binding.listaExamenes.layoutManager = LinearLayoutManager(requireContext())
+
 
         return binding.root
     }
@@ -66,6 +74,8 @@ class inicio : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         obtenerDatosSesion()
         obtenerExamenesDisponibles()
+
+
     }
     private fun obtenerExamenesDisponibles() {
         apiServicio.getExamenesDisponibles().enqueue(object : Callback<List<Examen>> {
@@ -77,17 +87,13 @@ class inicio : Fragment() {
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
                     // Hacer lo que necesites con la lista de exámenes
-                    if (examenes != null) {
-                        for (examen in examenes) {
-                            val idExamen = examen.IdExamen
-                            val titulo = examen.TituloExamen
-                            val descripcion = examen.DescripcionExamen
-                            val fechaInicio = examen.FechaInicio
-                            val fechaFinal = examen.FechaFinal
-                            val tiempoExamen = examen.TiempoExamen
-                            val estadoExamen = examen.EstadoExamen
-                            preferences.saveExamen(examen)
-                        }
+                    if (!examenes.isNullOrEmpty()) {
+                        examenAdapter = examenAdapter(requireContext(), examenes)
+                        binding.listaExamenes.adapter = examenAdapter
+
+                    }else{
+                        binding.txtnoExamenesDisponibles.visibility=View.VISIBLE
+                        binding.imgNoExamenesDisponibles.visibility=View.VISIBLE
                     }
                 } else {
                     // Manejar error de respuesta
@@ -102,7 +108,6 @@ class inicio : Fragment() {
         })
     }
 
-
     private fun obtenerDatosSesion() {
 
         apiServicio.getDatosSesion().enqueue(object : Callback<Identidad> {
@@ -114,7 +119,6 @@ class inicio : Fragment() {
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
                     val prueba = identidad?.IdUsuario
-                    binding.textView.text=prueba.toString()
                 } else {
                     // Manejar error de respuesta
                 }
