@@ -1,6 +1,7 @@
 package com.example.examenesseq
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -20,6 +21,20 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController)
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val currentFragment = navController.currentDestination?.id
+                    val welcomeFragmentId = R.id.bienvenida
+
+                    if (currentFragment == welcomeFragmentId) {
+                        return finish()
+                    }
+                    navController.navigateUp()
+                }
+            }
+
+        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onSupportNavigateUp(): Boolean {

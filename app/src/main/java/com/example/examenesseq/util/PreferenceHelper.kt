@@ -1,9 +1,10 @@
 package com.example.examenesseq.util
 
-import Examen
+
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.usuario.Identidad
 import com.google.gson.Gson
 import java.sql.Date
