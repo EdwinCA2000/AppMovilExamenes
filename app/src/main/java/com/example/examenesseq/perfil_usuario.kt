@@ -5,55 +5,74 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.examenesseq.databinding.FragmentPerfilUsuarioBinding
+import com.example.examenesseq.datos.ApiServicio
+import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.getIdentidad
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [perfil_usuario.newInstance] factory method to
- * create an instance of this fragment.
- */
 class perfil_usuario : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentPerfilUsuarioBinding? = null
+    private val binding get() = _binding!!
+
+    private val apiServicio: ApiServicio by lazy {
+        ApiServicio.create(requireContext())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_perfil_usuario, container, false)
+        _binding = FragmentPerfilUsuarioBinding.inflate(inflater, container, false)
+
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        //correo
+        val correoElectronico=preferences.getIdentidad()?.CorreoElectronico
+        //CURP
+        val curp=preferences.getIdentidad()?.CURP
+        //nombre
+        val nombreUser= preferences.getIdentidad()?.Nombres
+        val apellido1User= preferences.getIdentidad()?.Apellido1
+        val apellido2User= preferences.getIdentidad()?.Apellido2
+        val nombreCompleto= nombreUser + " " + apellido1User + " " + apellido2User
+
+        binding.txtnombreAlumno.text=nombreCompleto
+        binding.txtCorreoElectronico.text=correoElectronico
+        binding.txtCurp.text=curp
+
+        binding.perfilCerrarSesion.setOnClickListener {
+            cerrarSesionUser()
+        }
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment perfil_usuario.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            perfil_usuario().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun cerrarSesionUser(){
+        apiServicio.cerrarSesion().enqueue(object : Callback<Unit> {
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                if (response.isSuccessful) {
+                    irAinicio()
+                } else {
+                    // Ocurrió un error al cerrar la sesión
                 }
             }
+
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                // Error de red u otro tipo de error
+            }
+        })
     }
+
+    fun irAinicio() {
+        val navController = findNavController()
+        // Navega al fragmento de bienvenida
+        navController.navigate(R.id.action_perfil_usuario_to_bienvenida)
+    }
+
+
 }

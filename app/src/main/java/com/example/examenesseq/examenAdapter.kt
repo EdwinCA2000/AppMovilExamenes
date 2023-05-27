@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.examenesseq.model.Examen
+import com.example.examenesseq.model.examen.Examen
 
 class examenAdapter(var con: Context, var list: List<Examen>): RecyclerView.Adapter<examenAdapter.ViewHolder>(){
     inner class ViewHolder(v:View): RecyclerView.ViewHolder(v){

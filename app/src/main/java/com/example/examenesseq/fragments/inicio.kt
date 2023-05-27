@@ -19,11 +19,9 @@ import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.examenAdapter
-import com.example.examenesseq.model.Examen
+import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
-import com.example.examenesseq.util.PreferenceHelper.getExamen
-import com.example.examenesseq.util.PreferenceHelper.saveExamen
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
 import retrofit2.Callback
@@ -118,7 +116,6 @@ class inicio : Fragment() {
                     val jsessionid = response.headers()["Set-Cookie"] ?: ""
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
-                    val prueba = identidad?.IdUsuario
                 } else {
                     // Manejar error de respuesta
                 }

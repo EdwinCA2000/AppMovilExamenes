@@ -75,5 +75,8 @@
         <action
             android:id="@+id/action_perfil_usuario_to_inicio"
             app:destination="@id/inicio" />
+        <action
+            android:id="@+id/action_perfil_usuario_to_bienvenida"
+            app:destination="@id/bienvenida" />
     </fragment>
 </navigation>

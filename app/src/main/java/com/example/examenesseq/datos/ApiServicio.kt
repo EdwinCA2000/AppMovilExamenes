@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
-import com.example.examenesseq.model.Examen
+import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
@@ -40,9 +40,13 @@ interface ApiServicio {
         @Query(value="Apellido2")Apellido2: String,
     ):Call<LoginRespuesta>
 
+    @GET("tecnologiaeducativa.Sesion/actionCerrarSesion")
+    fun cerrarSesion(): Call<Unit>
+
+
 
     companion object Factory {
-        private const val BASE_URL = "http://10.8.16.216:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.7:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

@@ -1,4 +1,4 @@
-package com.example.examenesseq.model
+package com.example.examenesseq.model.examen
 import java.util.Date
 
 data class Examen(
