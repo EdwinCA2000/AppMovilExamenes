@@ -1,4 +1,4 @@
-package com.example.examenesseq.fragments
+package com.example.examenesseq.fragments.registro
 
 import android.os.Bundle
 import android.util.Patterns

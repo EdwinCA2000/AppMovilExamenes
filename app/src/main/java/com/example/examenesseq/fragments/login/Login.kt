@@ -1,4 +1,4 @@
-package com.example.examenesseq.fragments
+package com.example.examenesseq.fragments.login
 
 import android.os.Bundle
 import android.util.Log

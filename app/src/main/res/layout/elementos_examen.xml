@@ -38,7 +38,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_toEndOf="@+id/ic_examen"
                 android:orientation="vertical">
-                
+
                 <TextView
                     android:id="@+id/tituloExamenTxt"
                     android:layout_width="match_parent"
@@ -48,33 +48,34 @@
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"/>
-                
+
                 <TextView
                     android:id="@+id/descripcionExamentxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="lorem impsum"
                     android:textSize="18sp"
-                    android:maxLines="2"/>
+                    android:maxLines="1"/>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/estadoTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp"
-                android:text="Finalizado"
-                android:textSize="20sp"
-                android:textStyle="bold"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/estadoExamen"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/red"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_alignParentEnd="true"/>
 
 
 
 
         </RelativeLayout>
-        
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

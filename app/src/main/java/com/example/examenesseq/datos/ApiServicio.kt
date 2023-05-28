@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.model.examen.Examen
+import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
@@ -19,6 +20,9 @@ import retrofit2.http.Query
 
 interface ApiServicio {
 
+    @GET(value= "tecnologiaeducativa.PerfilExamen/jsonExamenesPerfil")
+    fun obtenerExamenUsuario(@Query(value="IdUsuario")idUsuario: Int):
+            Call <List<ExamenUsuario>>
 
     @POST(value="tecnologiaeducativa.Sesion/actionLogin")
     fun postLogin(@Query(value="Usuario")usuario: String, @Query(value="Password") password: String):
@@ -46,7 +50,7 @@ interface ApiServicio {
 
 
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.7:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.5:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

@@ -1,4 +1,4 @@
-package com.example.examenesseq
+package com.example.examenesseq.fragments.inicio.perfil
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentPerfilUsuarioBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.util.PreferenceHelper
@@ -67,7 +68,6 @@ class perfil_usuario : Fragment() {
             }
         })
     }
-
     fun irAinicio() {
         val navController = findNavController()
         // Navega al fragmento de bienvenida

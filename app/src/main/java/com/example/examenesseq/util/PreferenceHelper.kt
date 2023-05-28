@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.example.examenesseq.model.examen.Examen
+import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.usuario.Identidad
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.sql.Date
+import java.sql.Timestamp
 
 
 object PreferenceHelper {
@@ -83,43 +86,36 @@ object PreferenceHelper {
         }
     }
 
-    fun SharedPreferences.saveExamen(examen: Examen) {
-        edit {
-            it.putInt("IdExamen", examen.IdExamen)
-            it.putString("TituloExamen", examen.TituloExamen)
-            it.putString("DescripcionExamen", examen.DescripcionExamen)
-            it.putLong("FechaInicio", examen.FechaInicio.time)
-            it.putLong("FechaFinal", examen.FechaFinal.time)
-            it.putInt("TiempoExamen", examen.TiempoExamen)
-            it.putInt("EstadoExamen", examen.EstadoExamen)
-        }
+    fun SharedPreferences.saveExamenes(examenes: List<Examen>) {
+        val jsonString = Gson().toJson(examenes)
+        edit { it.putString("Examenes", jsonString) }
     }
 
-    fun SharedPreferences.getExamen(): Examen? {
-        val idExamen = getInt("IdExamen", -1)
-        val tituloExamen = getString("TituloExamen", null)
-        val descripcionExamen = getString("DescripcionExamen", null)
-        val fechaInicio = getLong("FechaInicio", -1L)
-        val fechaFinal = getLong("FechaFinal", -1L)
-        val tiempoExamen = getInt("TiempoExamen", -1)
-        val estadoExamen = getInt("EstadoExamen", -1)
-
-        return if (idExamen != -1 && tituloExamen != null && descripcionExamen != null &&
-            fechaInicio != -1L && fechaFinal != -1L && tiempoExamen != -1 && estadoExamen != -1
-        ) {
-            Examen(
-                idExamen,
-                tituloExamen,
-                descripcionExamen,
-                Date(fechaInicio),
-                Date(fechaFinal),
-                tiempoExamen,
-                estadoExamen
-            )
+    fun SharedPreferences.getExamenes(): List<Examen>? {
+        val jsonString = getString("Examenes", null)
+        return if (jsonString != null) {
+            val type = object : TypeToken<List<Examen>>() {}.type
+            Gson().fromJson(jsonString, type)
         } else {
             null
         }
     }
+
+    fun SharedPreferences.saveExamenesUsuario(examenes: List<ExamenUsuario>) {
+        val jsonString = Gson().toJson(examenes)
+        edit { it.putString("ExamenesUsuario", jsonString) }
+    }
+
+    fun SharedPreferences.getExamenesUsuario(): List<ExamenUsuario>? {
+        val jsonString = getString("ExamenesUsuario", null)
+        return if (jsonString != null) {
+            val type = object : TypeToken<List<Examen>>() {}.type
+            Gson().fromJson(jsonString, type)
+        } else {
+            null
+        }
+    }
+
 
 
 

@@ -1,4 +1,4 @@
-package com.example.examenesseq.fragments
+package com.example.examenesseq.fragments.principal
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.example.examenesseq.fragments
+package com.example.examenesseq.fragments.inicio
 
 import android.os.Bundle
 import android.util.Log
@@ -18,10 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.examenAdapter
+import com.example.examenesseq.fragments.inicio.examenadapter.ExamenUsuarioAdapter
+import com.example.examenesseq.fragments.inicio.examenadapter.examenAdapter
 import com.example.examenesseq.model.examen.Examen
+import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.getIdentidad
+import com.example.examenesseq.util.PreferenceHelper.saveExamenes
+import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,7 +53,6 @@ class inicio : Fragment() {
         _binding = FragmentInicioBinding.inflate(inflater, container, false)
         binding.listaExamenes.layoutManager = LinearLayoutManager(requireContext())
 
-
         return binding.root
     }
 
@@ -72,8 +76,6 @@ class inicio : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         obtenerDatosSesion()
         obtenerExamenesDisponibles()
-
-
     }
     private fun obtenerExamenesDisponibles() {
         apiServicio.getExamenesDisponibles().enqueue(object : Callback<List<Examen>> {
@@ -84,11 +86,9 @@ class inicio : Fragment() {
                     val jsessionid = response.headers()["Set-Cookie"] ?: ""
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
-                    // Hacer lo que necesites con la lista de exámenes
                     if (!examenes.isNullOrEmpty()) {
-                        examenAdapter = examenAdapter(requireContext(), examenes)
-                        binding.listaExamenes.adapter = examenAdapter
-
+                        preferences.saveExamenes(examenes)
+                        obtenerDatosDeExamenUsuario(examenes)
                     }else{
                         binding.txtnoExamenesDisponibles.visibility=View.VISIBLE
                         binding.imgNoExamenesDisponibles.visibility=View.VISIBLE
@@ -104,6 +104,38 @@ class inicio : Fragment() {
             }
 
         })
+    }
+
+    private fun obtenerDatosDeExamenUsuario(examenes: List<Examen>) {
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        val idUsuario= preferences.getIdentidad()?.IdUsuario
+        if (idUsuario != null) {
+            apiServicio.obtenerExamenUsuario(idUsuario).enqueue(object : Callback<List<ExamenUsuario>> {
+                override fun onResponse(call: Call<List<ExamenUsuario>>, response: Response<List<ExamenUsuario>>) {
+                    if (response.isSuccessful) {
+                        val exameneusuario = response.body()
+                        val jsessionid = response.headers()["Set-Cookie"] ?: ""
+                        Log.d("JSESSIONID", jsessionid)
+                        preferences.setJSessionId(jsessionid)
+                        if (!exameneusuario.isNullOrEmpty()) {
+                            examenAdapter = examenAdapter(requireContext(), examenes, exameneusuario)
+                            binding.listaExamenes.adapter = examenAdapter
+                            preferences.saveExamenesUsuario(exameneusuario)
+                        }else{
+
+                        }
+                    } else {
+                        // Manejar error de respuesta
+                    }
+                }
+
+                override fun onFailure(call: Call <List<ExamenUsuario>>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("API Failure", "Error: ${t.message}", t)
+                }
+
+            })
+        }
     }
 
     private fun obtenerDatosSesion() {
@@ -131,6 +163,8 @@ class inicio : Fragment() {
     fun irAPerfil(){
         findNavController().navigate(R.id.action_inicio_to_perfil_usuario)
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
