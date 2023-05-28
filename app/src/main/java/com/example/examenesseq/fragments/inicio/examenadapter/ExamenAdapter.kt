@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.R
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
-import org.w3c.dom.Text
 
 class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<ExamenUsuario>): RecyclerView.Adapter<ExamenAdapter.ViewHolder>(){
     inner class ViewHolder(v:View): RecyclerView.ViewHolder(v){

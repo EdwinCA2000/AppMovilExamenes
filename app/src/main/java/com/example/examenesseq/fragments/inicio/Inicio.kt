@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.fragments.inicio.examenadapter.examenAdapter
+import com.example.examenesseq.fragments.inicio.examenadapter.ExamenAdapter
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.usuario.Identidad
@@ -44,7 +44,7 @@ class Inicio : Fragment() {
         ApiServicio.create(requireContext())
     }
 
-    private lateinit var examenAdapter: examenAdapter
+    private lateinit var examenAdapter: ExamenAdapter
 
 
     override fun onCreateView(
@@ -129,7 +129,7 @@ class Inicio : Fragment() {
                         Log.d("JSESSIONID", jsessionid)
                         preferences.setJSessionId(jsessionid)
                         if (!exameneusuario.isNullOrEmpty()) {
-                            examenAdapter = examenAdapter(requireContext(), examenes, exameneusuario)
+                            examenAdapter = ExamenAdapter(requireContext(), examenes, exameneusuario)
                             binding.listaExamenes.adapter = examenAdapter
                             preferences.saveExamenesUsuario(exameneusuario)
                         }else{
