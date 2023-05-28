@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.R
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
+import org.w3c.dom.Text
 
-class examenAdapter(var con: Context, var list: List<Examen>, var list2: List<ExamenUsuario>): RecyclerView.Adapter<examenAdapter.ViewHolder>(){
+class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<ExamenUsuario>): RecyclerView.Adapter<ExamenAdapter.ViewHolder>(){
     inner class ViewHolder(v:View): RecyclerView.ViewHolder(v){
         var txtTitulo=v.findViewById<TextView>(R.id.tituloExamenTxt)
-        var txtDescription=v.findViewById<TextView>(R.id.descripcionExamentxt)
+        var txtCalificacion=v.findViewById<TextView>(R.id.txtCalificacion)
+        var txtCalifNumero=v.findViewById<TextView>(R.id.txtCalifNum)
         var Estado=v.findViewById<CardView>(R.id.estadoExamen)
         var imgExamen=v.findViewById<ImageView>(R.id.ic_examen)
     }
@@ -35,10 +37,23 @@ class examenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtTitulo.text = list[position].TituloExamen
-        holder.txtDescription.text = list[position].DescripcionExamen
 
         val examen = list[position]
+        val examenUsuarioDetails= list2.find { it.IdExamen == examen.IdExamen }
 
+        if (examenUsuarioDetails != null) {
+            if(examenUsuarioDetails.Estado==2 || examenUsuarioDetails.Estado==3){
+                holder.txtCalifNumero.text=examenUsuarioDetails.TotalCalificacion.toString()
+            }else{
+                val avisoEstadoExamen="En proceso"
+                holder.txtCalificacion.text=avisoEstadoExamen
+                holder.txtCalifNumero.visibility=View.INVISIBLE
+            }
+        }else{
+            val avisoEstadoExamen="No iniciado"
+            holder.txtCalificacion.text=avisoEstadoExamen
+            holder.txtCalifNumero.visibility=View.INVISIBLE
+        }
         val estadoExamen=examen.Activo
 
         if (estadoExamen == 1) {
@@ -48,7 +63,7 @@ class examenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
         }
 
 
-        val examenUsuarioDetails= list2.find { it.IdExamen == examen.IdExamen }
+
         holder.itemView.setOnClickListener {
             val detalleExamenModalCompletado = examenUsuarioDetails?.let { it1 -> ExamenModalCompletado(examen, it1) }
             if (detalleExamenModalCompletado != null) {
@@ -58,13 +73,11 @@ class examenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
                 detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
             }
             Toast.makeText(con, "Información del examen: ${examen.TituloExamen}", Toast.LENGTH_SHORT).show()
-            // Puedes abrir una actividad o fragmento con más detalles del examen si lo deseas
         }
 
-        val examenUsuario = list2.find { it.IdExamen == examen.IdExamen }
 
         // Obtener el estado del ExamenUsuario
-        val estado = examenUsuario?.Estado
+        val estado = examenUsuarioDetails?.Estado
 
         when(estado){
             1 -> holder.imgExamen.setImageResource(R.drawable.book_alert_outline)
