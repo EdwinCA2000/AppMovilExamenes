@@ -16,7 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class perfil_usuario : Fragment() {
+class PerfilUsuario : Fragment() {
 
     private var _binding: FragmentPerfilUsuarioBinding? = null
     private val binding get() = _binding!!

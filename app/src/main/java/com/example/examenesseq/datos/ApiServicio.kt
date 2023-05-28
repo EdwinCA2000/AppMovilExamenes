@@ -50,7 +50,7 @@ interface ApiServicio {
 
 
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.5:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.2:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

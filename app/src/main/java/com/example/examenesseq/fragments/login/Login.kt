@@ -20,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class login : Fragment() {
+class Login : Fragment() {
 
     private val apiServicio: ApiServicio by lazy {
         ApiServicio.create(requireContext())

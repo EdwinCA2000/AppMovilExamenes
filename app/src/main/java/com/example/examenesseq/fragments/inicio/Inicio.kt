@@ -18,13 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.fragments.inicio.examenadapter.ExamenUsuarioAdapter
 import com.example.examenesseq.fragments.inicio.examenadapter.examenAdapter
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.TieneExamenes
+import com.example.examenesseq.util.PreferenceHelper.getExamenes
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
+import com.example.examenesseq.util.PreferenceHelper.getJSessionId
 import com.example.examenesseq.util.PreferenceHelper.saveExamenes
 import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
@@ -33,7 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class inicio : Fragment() {
+class Inicio : Fragment() {
 
     private var _binding: FragmentInicioBinding? = null
     private val binding get() = _binding!!
@@ -89,10 +91,19 @@ class inicio : Fragment() {
                     if (!examenes.isNullOrEmpty()) {
                         preferences.saveExamenes(examenes)
                         obtenerDatosDeExamenUsuario(examenes)
-                    }else{
-                        binding.txtnoExamenesDisponibles.visibility=View.VISIBLE
-                        binding.imgNoExamenesDisponibles.visibility=View.VISIBLE
+                    }else if (preferences.TieneExamenes()) {
+                        val examenes = preferences.getExamenes()
+                        preferences.getJSessionId()
+                        if (examenes != null) {
+                            obtenerDatosDeExamenUsuario(examenes)
+                        }
+                    } else {
+                        // No existen examenes disponibles
+                        binding.txtnoExamenesDisponibles.visibility = View.VISIBLE
+                        binding.imgNoExamenesDisponibles.visibility = View.VISIBLE
                     }
+
+
                 } else {
                     // Manejar error de respuesta
                 }
@@ -122,10 +133,10 @@ class inicio : Fragment() {
                             binding.listaExamenes.adapter = examenAdapter
                             preferences.saveExamenesUsuario(exameneusuario)
                         }else{
-
+                            preferences.getJSessionId()
                         }
                     } else {
-                        // Manejar error de respuesta
+                        Toast.makeText(requireContext(), "Hubo error en la respuesta del servidor", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -149,12 +160,12 @@ class inicio : Fragment() {
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
                 } else {
-                    // Manejar error de respuesta
+                    Toast.makeText(requireContext(), "No se pudo concretar la respuesta al servidor para obtener los datos de sesión", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<Identidad>, t: Throwable) {
-                // Manejar error de solicitud
+                Toast.makeText(requireContext(), "Hubo una falla en el servidor", Toast.LENGTH_SHORT).show()
             }
         })
     }

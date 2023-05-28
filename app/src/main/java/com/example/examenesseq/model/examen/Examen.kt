@@ -6,8 +6,11 @@ data class Examen(
     val IdExamen: Int=-1,
     val TituloExamen: String,
     val DescripcionExamen: String,
+    val Activo: Int,
+    val FechaCreacion: Timestamp,
     val FechaInicio: Timestamp,
     val FechaFinal: Timestamp,
     val TiempoExamen: Int,
-    val EstadoExamen: Int
+    val TextoBienvenida: String
+
 )

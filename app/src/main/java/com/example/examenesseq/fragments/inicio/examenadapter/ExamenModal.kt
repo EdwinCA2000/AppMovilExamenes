@@ -1,4 +1,4 @@
-package com.example.examenesseq.fragments.inicio.perfil
+package com.example.examenesseq.fragments.inicio.examenadapter
 
 import android.app.Dialog
 import android.os.Bundle
@@ -15,8 +15,7 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.modal_examen, null)
 
-        // Configurar los elementos del modal con los datos del examen
-        // Ejemplo:
+
         view.findViewById<TextView>(R.id.tituloModal).text = examen.TituloExamen
         view.findViewById<TextView>(R.id.descripcionModal).text = examen.DescripcionExamen
 

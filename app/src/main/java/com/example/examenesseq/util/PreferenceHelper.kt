@@ -101,6 +101,10 @@ object PreferenceHelper {
         }
     }
 
+    fun SharedPreferences.TieneExamenes(): Boolean {
+        return contains("Examenes")
+    }
+
     fun SharedPreferences.saveExamenesUsuario(examenes: List<ExamenUsuario>) {
         val jsonString = Gson().toJson(examenes)
         edit { it.putString("ExamenesUsuario", jsonString) }

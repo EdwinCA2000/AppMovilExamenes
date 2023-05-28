@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.example.examenesseq.fragments.login.login"
+        android:name="com.example.examenesseq.fragments.login.Login"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/inicio"
-        android:name="com.example.examenesseq.fragments.inicio.inicio"
+        android:name="com.example.examenesseq.fragments.inicio.Inicio"
         android:label="Inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
@@ -69,7 +69,7 @@
         tools:layout="@layout/fragment_dashboard" />
     <fragment
         android:id="@+id/perfil_usuario"
-        android:name="com.example.examenesseq.fragments.inicio.perfil.perfil_usuario"
+        android:name="com.example.examenesseq.fragments.inicio.perfil.PerfilUsuario"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil_usuario" >
         <action

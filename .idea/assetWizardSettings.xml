@@ -332,8 +332,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_agregar_usuario" />
-                            <entry key="sourceFile" value="C:\Users\edwin\Documents\AndroidStudioProjects\AppMovilExamenes" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="examen" />
+                            <entry key="sourceFile" value="C:\Users\edwin\Downloads\book_FILL0_wght400_GRAD0_opsz48.svg" />
                           </map>
                         </option>
                       </PersistentState>

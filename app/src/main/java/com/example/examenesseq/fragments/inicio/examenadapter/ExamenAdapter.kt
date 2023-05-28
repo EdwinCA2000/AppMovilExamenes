@@ -12,7 +12,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.R
-import com.example.examenesseq.fragments.inicio.perfil.ExamenModal
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 
@@ -38,7 +37,9 @@ class examenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
         holder.txtTitulo.text = list[position].TituloExamen
         holder.txtDescription.text = list[position].DescripcionExamen
 
-        val estadoExamen = list[position].EstadoExamen
+        val examen = list[position]
+
+        val estadoExamen=examen.Activo
 
         if (estadoExamen == 1) {
             holder.Estado.setCardBackgroundColor(ContextCompat.getColor(con, R.color.green))
@@ -46,10 +47,16 @@ class examenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
             holder.Estado.setCardBackgroundColor(ContextCompat.getColor(con, R.color.red))
         }
 
-        val examen = list[position]
+
+        val examenUsuarioDetails= list2.find { it.IdExamen == examen.IdExamen }
         holder.itemView.setOnClickListener {
-            val detalleExamenModal = ExamenModal(examen)
-            detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
+            val detalleExamenModalCompletado = examenUsuarioDetails?.let { it1 -> ExamenModalCompletado(examen, it1) }
+            if (detalleExamenModalCompletado != null) {
+                detalleExamenModalCompletado.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModalCompletado")
+            }else{
+                val detalleExamenModal = ExamenModal(examen)
+                detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
+            }
             Toast.makeText(con, "Información del examen: ${examen.TituloExamen}", Toast.LENGTH_SHORT).show()
             // Puedes abrir una actividad o fragmento con más detalles del examen si lo deseas
         }
