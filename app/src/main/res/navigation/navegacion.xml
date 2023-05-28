@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bienvenida"
-        android:name="com.example.examenesseq.fragments.principal.bienvenida"
+        android:name="com.example.examenesseq.fragments.principal.Bienvenida"
         android:label="Bienvenida"
         tools:layout="@layout/fragment_bienvenida" >
         <action

@@ -18,7 +18,15 @@ class ExamenModalCompletado(private val examen: Examen, private val examenUsuari
 
 
         view.findViewById<TextView>(R.id.tituloModal).text = examen.TituloExamen
-        view.findViewById<TextView>(R.id.descripcionModal).text = examen.DescripcionExamen
+
+        val descripcionSinEtiquetas=examen.DescripcionExamen.replace("<p>".toRegex(), "")?.replace("</p>".toRegex(), "")
+
+        if (examen.DescripcionExamen.contains("<p>") && examen.DescripcionExamen.contains("</p>")){
+            view.findViewById<TextView>(R.id.descripcionModal).text = descripcionSinEtiquetas
+        }else{
+            view.findViewById<TextView>(R.id.descripcionModal).text = examen.DescripcionExamen
+        }
+
 
         builder.setView(view)
             .setTitle("Detalles del examen")

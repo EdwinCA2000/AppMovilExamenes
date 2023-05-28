@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentBienvenidaBinding
 
-class bienvenida : Fragment() {
+class Bienvenida : Fragment() {
 
     private var _binding: FragmentBienvenidaBinding? = null
     private val binding get() = _binding!!

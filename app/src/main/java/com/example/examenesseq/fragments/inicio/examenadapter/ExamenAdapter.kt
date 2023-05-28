@@ -42,7 +42,13 @@ class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
 
         if (examenUsuarioDetails != null) {
             if(examenUsuarioDetails.Estado==2 || examenUsuarioDetails.Estado==3){
-                holder.txtCalifNumero.text=examenUsuarioDetails.TotalCalificacion.toString()
+                if (examenUsuarioDetails.TotalCalificacion>60){
+                    holder.txtCalifNumero.setTextColor(ContextCompat.getColor(con, R.color.green))
+                    holder.txtCalifNumero.text=examenUsuarioDetails.TotalCalificacion.toString()
+                }else{
+                    holder.txtCalifNumero.text=examenUsuarioDetails.TotalCalificacion.toString()
+                    holder.txtCalifNumero.setTextColor(ContextCompat.getColor(con, R.color.red))
+                }
             }else{
                 val avisoEstadoExamen="En proceso"
                 holder.txtCalificacion.text=avisoEstadoExamen

@@ -14,7 +14,6 @@
         android:src="@drawable/book_check_outline"
         app:tint="@color/colorSEQ"/>
 
-    <!-- Agrega aquí los elementos de diseño para mostrar los detalles del examen -->
     <TextView
         android:id="@+id/tituloModal"
         android:layout_width="wrap_content"
