@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
+import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -99,6 +100,25 @@ object PreferenceHelper {
         } else {
             null
         }
+    }
+
+    fun SharedPreferences.saveSecciones(secciones: List<Secciones>) {
+        val jsonString = Gson().toJson(secciones)
+        edit { it.putString("Secciones", jsonString) }
+    }
+
+    fun SharedPreferences.getSecciones(): List<Secciones>? {
+        val jsonString = getString("Secciones", null)
+        return if (jsonString != null) {
+            val type = object : TypeToken<List<Secciones>>() {}.type
+            Gson().fromJson(jsonString, type)
+        } else {
+            null
+        }
+    }
+
+    fun SharedPreferences.TieneSecciones(): Boolean {
+        return contains("Secciones")
     }
 
     fun SharedPreferences.TieneExamenes(): Boolean {

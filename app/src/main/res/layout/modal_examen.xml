@@ -116,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Cantidad de preguntas:" />
+                android:text="Cantidad de secciones:" />
 
             <TextView
                 android:id="@+id/cantidadPreguntas"
@@ -125,8 +125,13 @@
                 android:layout_marginStart="4dp"
                 android:text="30 preguntas"/>
         </LinearLayout>
-
-
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contenedorTitulos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"/>
 
 </LinearLayout>

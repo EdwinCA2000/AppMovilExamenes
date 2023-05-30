@@ -1,6 +1,7 @@
 package com.example.examenesseq.fragments.registro
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,15 +14,16 @@ import com.example.examenesseq.databinding.FragmentRegistroBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.saveIdentidad
 import com.example.examenesseq.util.PreferenceHelper.set
+import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.regex.Pattern
 
-class registro : Fragment() {
+class Registro : Fragment() {
 
-    private val sharedPreferences by lazy { PreferenceHelper.defaultPrefs(requireContext()) }
 
     private val apiServicio: ApiServicio by lazy {
         ApiServicio.create(requireContext())
@@ -47,9 +49,6 @@ class registro : Fragment() {
         findNavController().navigate(R.id.action_registro_to_inicio)
     }
 
-    private fun createSessionPreference(Mensaje: String){
-        sharedPreferences["Mensaje"]=Mensaje
-    }
     private fun validarRegistro(): Boolean {
         val etNombres = binding.etNombresRegistro.text.toString()
         val etApellido1 = binding.etApellidoPaterno.text.toString()
@@ -112,7 +111,12 @@ class registro : Fragment() {
                             Toast.makeText(requireContext(), "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
                             return
                         }else{
-                            createSessionPreference(loginRespuesta.Mensaje)
+                            val preferences = PreferenceHelper.defaultPrefs(requireContext())
+                            val identidad = loginRespuesta.Objeto
+                            val jsessionid = response.headers()["Set-Cookie"] ?: ""
+                            Log.d("JSESSIONID", jsessionid)
+                            preferences.setJSessionId(jsessionid)
+                            preferences.saveIdentidad(identidad)
                             irAInicio()
                         }
                     }else{

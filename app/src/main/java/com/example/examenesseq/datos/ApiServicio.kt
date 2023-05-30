@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
+import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
@@ -33,6 +34,9 @@ interface ApiServicio {
     @GET("tecnologiaeducativa.ceneval/jsonExamenes")
     fun getExamenesDisponibles(): Call<List<Examen>>
 
+    @GET("tecnologiaeducativa.ceneval/jsonSecciones")
+    fun getSeccionesExamen(): Call<List<Secciones>>
+
     @POST(value="tecnologiaeducativa.Sesion/actionRegistroUsuario")
     fun postRegistro(
         @Query(value="IdUsuario")IdUsuario:Int=1,
@@ -50,7 +54,7 @@ interface ApiServicio {
 
 
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.2:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.14:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/registro"
-        android:name="com.example.examenesseq.fragments.registro.registro"
+        android:name="com.example.examenesseq.fragments.registro.Registro"
         android:label="Registro"
         tools:layout="@layout/fragment_registro" >
         <action
@@ -57,7 +57,9 @@
         tools:layout="@layout/fragment_inicio" >
         <action
             android:id="@+id/action_inicio_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_inicio_to_perfil_usuario"
             app:destination="@id/perfil_usuario" />
@@ -76,7 +78,10 @@
             android:id="@+id/action_perfil_usuario_to_inicio"
             app:destination="@id/inicio" />
         <action
-            android:id="@+id/action_perfil_usuario_to_bienvenida"
-            app:destination="@id/bienvenida" />
+            android:id="@+id/action_perfil_usuario_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 </navigation>

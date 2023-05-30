@@ -1,5 +1,6 @@
 package com.example.examenesseq.fragments.inicio
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -21,14 +23,18 @@ import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.fragments.inicio.examenadapter.ExamenAdapter
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
+import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneExamenes
+import com.example.examenesseq.util.PreferenceHelper.TieneSecciones
 import com.example.examenesseq.util.PreferenceHelper.getExamenes
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
 import com.example.examenesseq.util.PreferenceHelper.getJSessionId
+import com.example.examenesseq.util.PreferenceHelper.getSecciones
 import com.example.examenesseq.util.PreferenceHelper.saveExamenes
 import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
+import com.example.examenesseq.util.PreferenceHelper.saveSecciones
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,6 +65,10 @@ class Inicio : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            mostrarDialogoCerrarSesion()
+        }
         super.onViewCreated(view, savedInstanceState)
         val menuHost: MenuHost = requireActivity()
 
@@ -78,6 +88,7 @@ class Inicio : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         obtenerDatosSesion()
         obtenerExamenesDisponibles()
+        obtenerSeccionesExamen()
     }
     private fun obtenerExamenesDisponibles() {
         apiServicio.getExamenesDisponibles().enqueue(object : Callback<List<Examen>> {
@@ -102,10 +113,8 @@ class Inicio : Fragment() {
                         binding.txtnoExamenesDisponibles.visibility = View.VISIBLE
                         binding.imgNoExamenesDisponibles.visibility = View.VISIBLE
                     }
-
-
                 } else {
-                    // Manejar error de respuesta
+                    Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener los examenes", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -116,6 +125,7 @@ class Inicio : Fragment() {
 
         })
     }
+
 
     private fun obtenerDatosDeExamenUsuario(examenes: List<Examen>) {
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
@@ -133,7 +143,8 @@ class Inicio : Fragment() {
                             binding.listaExamenes.adapter = examenAdapter
                             preferences.saveExamenesUsuario(exameneusuario)
                         }else{
-                            preferences.getJSessionId()
+                            examenAdapter = ExamenAdapter(requireContext(), examenes, emptyList())
+                            binding.listaExamenes.adapter = examenAdapter
                         }
                     } else {
                         Toast.makeText(requireContext(), "Hubo error en la respuesta del servidor", Toast.LENGTH_SHORT).show()
@@ -147,6 +158,35 @@ class Inicio : Fragment() {
 
             })
         }
+    }
+
+    private fun obtenerSeccionesExamen(){
+        apiServicio.getSeccionesExamen().enqueue(object : Callback<List<Secciones>> {
+            override fun onResponse(call: Call<List<Secciones>>, response: Response<List<Secciones>>) {
+                if (response.isSuccessful) {
+                    val secciones = response.body()
+                    val preferences = PreferenceHelper.defaultPrefs(requireContext())
+                    val jsessionid = response.headers()["Set-Cookie"] ?: ""
+                    Log.d("JSESSIONID", jsessionid)
+                    preferences.setJSessionId(jsessionid)
+                    if (!secciones.isNullOrEmpty()) {
+                        preferences.saveSecciones(secciones)
+                    } else {
+                        // No existen examenes disponibles
+                        binding.txtnoExamenesDisponibles.visibility = View.VISIBLE
+                        binding.imgNoExamenesDisponibles.visibility = View.VISIBLE
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener las secciones", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call <List<Secciones>>, t: Throwable) {
+                Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("API Failure", "Error: ${t.message}", t)
+            }
+
+        })
     }
 
     private fun obtenerDatosSesion() {
@@ -170,12 +210,42 @@ class Inicio : Fragment() {
         })
     }
 
+    private fun mostrarDialogoCerrarSesion() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirmar Cerrar sesión")
+            .setMessage("¿Desea cerrar sesión?")
+            .setPositiveButton("Si") { dialog, _ ->
+                cerrarSesionUser()
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 
+    fun cerrarSesionUser(){
+        apiServicio.cerrarSesion().enqueue(object : Callback<Unit> {
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                if (response.isSuccessful) {
+                    irALogin()
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                // Error de red u otro tipo de error
+            }
+        })
+    }
+
+    fun irALogin(){
+        findNavController().navigate(R.id.action_inicio_to_login)
+    }
     fun irAPerfil(){
         findNavController().navigate(R.id.action_inicio_to_perfil_usuario)
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

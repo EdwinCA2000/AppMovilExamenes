@@ -2,15 +2,20 @@ package com.example.examenesseq.fragments.inicio.examenadapter
 
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.examenesseq.R
+import com.example.examenesseq.datos.examen.DaoExamen
 import com.example.examenesseq.model.examen.Examen
+import com.example.examenesseq.util.PreferenceHelper
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class ExamenModal(private val examen: Examen) : DialogFragment() {
+
+    val daoExamen = DaoExamen()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
@@ -38,11 +43,24 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
         val duracionExamen= examen.TiempoExamen
         conversorHoras(duracionExamen)
 
+        val idExamen= examen.IdExamen
+        val cantidadSecciones= daoExamen.obtenerCantidadSecciones(requireContext(),idExamen)
 
+        if(cantidadSecciones==1){
+            view.findViewById<TextView>(R.id.cantidadPreguntas).text="$cantidadSecciones sección"
+        }else{
+            view.findViewById<TextView>(R.id.cantidadPreguntas).text="$cantidadSecciones secciones"
+        }
 
+        val contenedorSecciones = view.findViewById<LinearLayout>(R.id.contenedorTitulos)
 
+        val titulosSecciones = daoExamen.obtenerTitulosSecciones(requireContext(), idExamen)
 
-
+        for (titulo in titulosSecciones) {
+            val textView = TextView(requireContext())
+            textView.text = titulo
+            contenedorSecciones.addView(textView)
+        }
         builder.setView(view)
             .setTitle("Detalles del examen")
             .setPositiveButton("Cerrar") { dialog, _ ->
