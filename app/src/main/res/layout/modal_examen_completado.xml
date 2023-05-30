@@ -35,7 +35,4 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:justificationMode="inter_word"/>
-
-    <!-- Agrega más elementos según los detalles que desees mostrar -->
-
 </LinearLayout>

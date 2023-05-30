@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
+import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.fragments.inicio.examenadapter.ExamenAdapter
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
@@ -27,11 +28,9 @@ import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneExamenes
-import com.example.examenesseq.util.PreferenceHelper.TieneSecciones
 import com.example.examenesseq.util.PreferenceHelper.getExamenes
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
 import com.example.examenesseq.util.PreferenceHelper.getJSessionId
-import com.example.examenesseq.util.PreferenceHelper.getSecciones
 import com.example.examenesseq.util.PreferenceHelper.saveExamenes
 import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.saveSecciones
@@ -51,6 +50,7 @@ class Inicio : Fragment() {
     }
 
     private lateinit var examenAdapter: ExamenAdapter
+    private val seccionesIds: ArrayList<Int> = ArrayList()
 
 
     override fun onCreateView(
@@ -171,6 +171,7 @@ class Inicio : Fragment() {
                     preferences.setJSessionId(jsessionid)
                     if (!secciones.isNullOrEmpty()) {
                         preferences.saveSecciones(secciones)
+
                     } else {
                         // No existen examenes disponibles
                         binding.txtnoExamenesDisponibles.visibility = View.VISIBLE
@@ -189,6 +190,8 @@ class Inicio : Fragment() {
         })
     }
 
+
+
     private fun obtenerDatosSesion() {
 
         apiServicio.getDatosSesion().enqueue(object : Callback<Identidad> {
@@ -200,7 +203,10 @@ class Inicio : Fragment() {
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
                 } else {
-                    Toast.makeText(requireContext(), "No se pudo concretar la respuesta al servidor para obtener los datos de sesión", Toast.LENGTH_SHORT).show()
+                    Log.e("API Error", "Error code: ${response.code()}")
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("API Error", "Error body: $errorBody")
+                    Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener la cantidad de preguntas", Toast.LENGTH_SHORT).show()
                 }
             }
 

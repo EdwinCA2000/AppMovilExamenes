@@ -1,8 +1,6 @@
 package com.example.examenesseq.datos.examen
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.util.PreferenceHelper
@@ -21,6 +19,11 @@ class DaoExamen {
         }
 
         return 0
+    }
+
+    fun obtenerIdsSecciones(context: Context, idExamen: Int): List<Int> {
+        val secciones = getSecciones(context)
+        return secciones?.filter { it.IdExamen == idExamen }?.map { it.IdSeccion } ?: emptyList()
     }
 
     fun obtenerTitulosSecciones(context: Context, idExamen: Int): List<String> {

@@ -29,6 +29,10 @@ interface ApiServicio {
     fun postLogin(@Query(value="Usuario")usuario: String, @Query(value="Password") password: String):
             Call <LoginRespuesta>
 
+    @GET(value="tecnologiaeducativa.ceneval/jsonTotalPreguntas")
+    fun obtenerTotalPreguntas(@Query(value="IdSeccion")idSeccion: Int):
+            Call <LoginRespuesta>
+
     @GET("jsonDatosSesion")
     fun getDatosSesion(): Call<Identidad>
     @GET("tecnologiaeducativa.ceneval/jsonExamenes")
@@ -54,7 +58,7 @@ interface ApiServicio {
 
 
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.14:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.4:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

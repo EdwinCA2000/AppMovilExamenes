@@ -10,8 +10,6 @@ import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.sql.Date
-import java.sql.Timestamp
 
 
 object PreferenceHelper {
@@ -116,6 +114,15 @@ object PreferenceHelper {
             null
         }
     }
+
+    fun SharedPreferences.saveCantidadPreguntas(cantidad: String?) {
+        edit { it.putString("CantidadPreguntas", cantidad) }
+    }
+
+    fun SharedPreferences.getCantidadPreguntas(): String? {
+        return getString("CantidadPreguntas", "")
+    }
+
 
     fun SharedPreferences.TieneSecciones(): Boolean {
         return contains("Secciones")
