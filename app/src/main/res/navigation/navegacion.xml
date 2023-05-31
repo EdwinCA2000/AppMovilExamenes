@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bienvenida"
-        android:name="com.example.examenesseq.fragments.bienvenida"
+        android:name="com.example.examenesseq.fragments.principal.Bienvenida"
         android:label="Bienvenida"
         tools:layout="@layout/fragment_bienvenida" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.example.examenesseq.fragments.login"
+        android:name="com.example.examenesseq.fragments.login.Login"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/registro"
-        android:name="com.example.examenesseq.fragments.registro"
+        android:name="com.example.examenesseq.fragments.registro.Registro"
         android:label="Registro"
         tools:layout="@layout/fragment_registro" >
         <action
@@ -52,31 +52,48 @@
     </fragment>
     <fragment
         android:id="@+id/inicio"
-        android:name="com.example.examenesseq.fragments.inicio"
+        android:name="com.example.examenesseq.fragments.inicio.Inicio"
         android:label="Inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
             android:id="@+id/action_inicio_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_inicio_to_perfil_usuario"
             app:destination="@id/perfil_usuario" />
+        <action
+            android:id="@+id/action_inicio_to_historial_examenes2"
+            app:destination="@id/historial_examenes2" />
     </fragment>
     <fragment
         android:id="@+id/dashboard"
-        android:name="com.example.examenesseq.dashboard"
+        android:name="com.example.examenesseq.fragments.dashboard.dashboard"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard" />
     <fragment
         android:id="@+id/perfil_usuario"
-        android:name="com.example.examenesseq.perfil_usuario"
+        android:name="com.example.examenesseq.fragments.inicio.perfil.PerfilUsuario"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil_usuario" >
         <action
             android:id="@+id/action_perfil_usuario_to_inicio"
             app:destination="@id/inicio" />
         <action
-            android:id="@+id/action_perfil_usuario_to_bienvenida"
-            app:destination="@id/bienvenida" />
+            android:id="@+id/action_perfil_usuario_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/historial_examenes2"
+        android:name="com.example.examenesseq.HistorialExamenes"
+        android:label="Historial de examenes"
+        tools:layout="@layout/fragment_historial_examenes" >
+        <action
+            android:id="@+id/action_historial_examenes2_to_inicio"
+            app:destination="@id/inicio" />
     </fragment>
 </navigation>

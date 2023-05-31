@@ -1,4 +1,4 @@
-package com.example.examenesseq.fragments
+package com.example.examenesseq.fragments.login
 
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class login : Fragment() {
+class Login : Fragment() {
 
     private val apiServicio: ApiServicio by lazy {
         ApiServicio.create(requireContext())
@@ -39,11 +39,19 @@ class login : Fragment() {
             performLogin()
         }
 
+        binding.enlaceRegistro.setOnClickListener{
+            irARegistro()
+        }
+
         return binding.root
     }
 
     private fun irAInicio() {
         findNavController().navigate(R.id.action_login_to_inicio)
+    }
+
+    private fun irARegistro(){
+        findNavController().navigate(R.id.action_login_to_registro)
     }
 
     private fun irADashboard() {
@@ -70,22 +78,9 @@ class login : Fragment() {
                         Log.d("JSESSIONID", jsessionid)
                         preferences.setJSessionId(jsessionid)
                         if (etEmail.contains("@")) {
-                            val identidad = Identidad(
-                                IdUsuario = identidad.IdUsuario,
-                                CURP = identidad.CURP,
-                                CorreoElectronico = identidad.CorreoElectronico,
-                                Nombres = identidad.Nombres,
-                                Apellido1 = identidad.Apellido1,
-                                Apellido2 = identidad.Apellido2,
-                                IdPerfil = identidad.IdPerfil,
-                                ActivoUsuario = identidad.ActivoUsuario
-                            )
                             preferences.saveIdentidad(identidad)
-
-
                             irAInicio()
                         } else {
-                            // Almacenar identidad en una variable local o en otra forma de almacenamiento si es necesario
                             irADashboard()
                         }
                     } else {

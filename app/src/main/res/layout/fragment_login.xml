@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorSEQ"
-        tools:context=".fragments.login"
+        tools:context=".fragments.login.login"
         android:padding="24dp">
 
         <ImageView

@@ -18,4 +18,5 @@
     <string name="ex_menes">Exámenes</string>
     <string name="perfil_del_alumno">Perfil del alumno</string>
     <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="no_has_completado_ning_n_examen">No has completado ningún examen</string>
 </resources>

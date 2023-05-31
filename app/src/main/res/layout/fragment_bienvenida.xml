@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.bienvenida">
+        tools:context=".fragments.principal.bienvenida">
 
         <ImageView
             android:id="@+id/logoSEQ"

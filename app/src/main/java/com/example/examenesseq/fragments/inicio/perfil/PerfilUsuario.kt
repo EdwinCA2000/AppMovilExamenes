@@ -1,11 +1,14 @@
-package com.example.examenesseq
+package com.example.examenesseq.fragments.inicio.perfil
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentPerfilUsuarioBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.util.PreferenceHelper
@@ -15,7 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class perfil_usuario : Fragment() {
+class PerfilUsuario : Fragment() {
 
     private var _binding: FragmentPerfilUsuarioBinding? = null
     private val binding get() = _binding!!
@@ -47,31 +50,44 @@ class perfil_usuario : Fragment() {
         binding.txtCurp.text=curp
 
         binding.perfilCerrarSesion.setOnClickListener {
-            cerrarSesionUser()
+            mostrarDialogoCerrarSesion()
         }
         return binding.root
+    }
+
+    private fun mostrarDialogoCerrarSesion() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirmar Cerrar sesión")
+            .setMessage("¿Desea cerrar sesión?")
+            .setPositiveButton("Si") { dialog, _ ->
+                cerrarSesionUser()
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     fun cerrarSesionUser(){
         apiServicio.cerrarSesion().enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
-                    irAinicio()
+                    irALogin()
                 } else {
-                    // Ocurrió un error al cerrar la sesión
+                    Toast.makeText(requireContext(), "No se pudo cerrar sesión", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<Unit>, t: Throwable) {
-                // Error de red u otro tipo de error
+                Toast.makeText(requireContext(), "Ocurrio un error al cerrar sesión en el servidor", Toast.LENGTH_SHORT).show()
             }
         })
     }
-
-    fun irAinicio() {
+    fun irALogin() {
         val navController = findNavController()
         // Navega al fragmento de bienvenida
-        navController.navigate(R.id.action_perfil_usuario_to_bienvenida)
+        navController.navigate(R.id.action_perfil_usuario_to_login)
     }
 
 

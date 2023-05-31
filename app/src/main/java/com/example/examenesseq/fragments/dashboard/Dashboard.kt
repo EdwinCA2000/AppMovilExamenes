@@ -1,4 +1,4 @@
-package com.example.examenesseq
+package com.example.examenesseq.fragments.dashboard
 
 
 import android.os.Bundle
