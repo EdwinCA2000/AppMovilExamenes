@@ -42,7 +42,8 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
 
 
         view.findViewById<TextView>(R.id.tituloModal).text = examen.TituloExamen
-        val descripcionSinEtiquetas=examen.DescripcionExamen.replace("<p>".toRegex(), "")?.replace("</p>".toRegex(), "")
+        val descripcionSinEtiquetas=
+            examen.DescripcionExamen.replace("<p>".toRegex(), "").replace("</p>".toRegex(), "")
 
         if (examen.DescripcionExamen.contains("<p>") && examen.DescripcionExamen.contains("</p>")){
             view.findViewById<TextView>(R.id.descripcionModal).text = descripcionSinEtiquetas
@@ -137,7 +138,11 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
     fun parsearFecha(fechas: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         val parsedDate = dateFormat.parse(fechas)
-        val formattedDate = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US).format(parsedDate)
+        val formattedDate = parsedDate?.let {
+            SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US).format(
+                it
+            )
+        }
 
         return formattedDate.toString()
     }

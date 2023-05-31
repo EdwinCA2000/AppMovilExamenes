@@ -1,6 +1,5 @@
 package com.example.examenesseq.model.examen
 import java.sql.Timestamp
-import java.util.Date
 
 data class Examen(
     val IdExamen: Int=-1,

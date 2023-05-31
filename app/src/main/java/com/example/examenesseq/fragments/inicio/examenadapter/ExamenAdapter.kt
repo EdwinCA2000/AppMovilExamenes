@@ -77,7 +77,6 @@ class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
                 val detalleExamenModal = ExamenModal(examen)
                 detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
             }
-            Toast.makeText(con, "Información del examen: ${examen.TituloExamen}", Toast.LENGTH_SHORT).show()
         }
 
 

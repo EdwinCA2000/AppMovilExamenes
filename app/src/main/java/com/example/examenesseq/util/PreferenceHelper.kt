@@ -136,11 +136,14 @@ object PreferenceHelper {
         val jsonString = Gson().toJson(examenes)
         edit { it.putString("ExamenesUsuario", jsonString) }
     }
+    fun SharedPreferences.TieneExamenesUsuario(): Boolean {
+        return contains("ExamenesUsuario")
+    }
 
     fun SharedPreferences.getExamenesUsuario(): List<ExamenUsuario>? {
         val jsonString = getString("ExamenesUsuario", null)
         return if (jsonString != null) {
-            val type = object : TypeToken<List<Examen>>() {}.type
+            val type = object : TypeToken<List<ExamenUsuario>>() {}.type
             Gson().fromJson(jsonString, type)
         } else {
             null

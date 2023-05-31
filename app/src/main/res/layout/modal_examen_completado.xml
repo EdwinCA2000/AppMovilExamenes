@@ -35,4 +35,69 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:justificationMode="inter_word"/>
+
+    <LinearLayout
+        android:id="@+id/llCalificacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tituloCalif"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Haz aprobado con"/>
+
+        <TextView
+            android:id="@+id/calificacion"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:text="60"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFechaFinalizado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tituloFechaFin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Fecha finalizado:"/>
+
+        <TextView
+            android:id="@+id/fechaFinalizacion"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:text="fecha"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTiempoTranscurrido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tituloTiempo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Completaste el examen en:"/>
+
+        <TextView
+            android:id="@+id/tiempoTranscurrido"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"/>
+
+    </LinearLayout>
+
 </LinearLayout>

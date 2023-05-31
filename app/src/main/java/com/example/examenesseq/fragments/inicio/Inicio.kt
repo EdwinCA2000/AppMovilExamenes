@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.fragments.inicio.examenadapter.ExamenAdapter
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
@@ -80,6 +79,8 @@ class Inicio : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.ver_perfil -> irAPerfil()
+                    R.id.historial_examenes -> irAHistorial()
+                    R.id.cerrar_sesion -> mostrarDialogoCerrarSesion()
                     android.R.id.home -> requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
 
@@ -90,6 +91,8 @@ class Inicio : Fragment() {
         obtenerExamenesDisponibles()
         obtenerSeccionesExamen()
     }
+
+
     private fun obtenerExamenesDisponibles() {
         apiServicio.getExamenesDisponibles().enqueue(object : Callback<List<Examen>> {
             override fun onResponse(call: Call<List<Examen>>, response: Response<List<Examen>>) {
@@ -160,6 +163,7 @@ class Inicio : Fragment() {
         }
     }
 
+
     private fun obtenerSeccionesExamen(){
         apiServicio.getSeccionesExamen().enqueue(object : Callback<List<Secciones>> {
             override fun onResponse(call: Call<List<Secciones>>, response: Response<List<Secciones>>) {
@@ -203,9 +207,6 @@ class Inicio : Fragment() {
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
                 } else {
-                    Log.e("API Error", "Error code: ${response.code()}")
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("API Error", "Error body: $errorBody")
                     Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener la cantidad de preguntas", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -245,7 +246,9 @@ class Inicio : Fragment() {
             }
         })
     }
-
+    fun irAHistorial(){
+        findNavController().navigate(R.id.action_inicio_to_historial_examenes2)
+    }
     fun irALogin(){
         findNavController().navigate(R.id.action_inicio_to_login)
     }
