@@ -49,7 +49,6 @@ class Inicio : Fragment() {
     }
 
     private lateinit var examenAdapter: ExamenAdapter
-    private val seccionesIds: ArrayList<Int> = ArrayList()
 
 
     override fun onCreateView(
@@ -237,12 +236,12 @@ class Inicio : Fragment() {
                 if (response.isSuccessful) {
                     irALogin()
                 } else {
-
+                    Toast.makeText(requireContext(), "No se logro cerrar sesión por el servidor", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<Unit>, t: Throwable) {
-                // Error de red u otro tipo de error
+                Toast.makeText(requireContext(), "Ocurrio un fallo en el servidor al cerrar sesión", Toast.LENGTH_SHORT).show()
             }
         })
     }

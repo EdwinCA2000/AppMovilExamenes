@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/historial_examenes2"
-        android:name="com.example.examenesseq.Historial_examenes"
+        android:name="com.example.examenesseq.HistorialExamenes"
         android:label="Historial de examenes"
         tools:layout="@layout/fragment_historial_examenes" >
         <action

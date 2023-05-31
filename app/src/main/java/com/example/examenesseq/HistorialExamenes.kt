@@ -8,19 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.databinding.FragmentHistorialExamenesBinding
-import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.fragments.inicio.examenadapter.ExamenAdapter
 import com.example.examenesseq.fragments.inicio.examenadapter.ExamenHistorialAdapter
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.util.PreferenceHelper
-import com.example.examenesseq.util.PreferenceHelper.TieneExamenesUsuario
-import com.example.examenesseq.util.PreferenceHelper.getExamenes
-import com.example.examenesseq.util.PreferenceHelper.getExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
-import com.example.examenesseq.util.PreferenceHelper.getJSessionId
 import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
@@ -28,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class Historial_examenes : Fragment() {
+class HistorialExamenes : Fragment() {
 
     private var _binding: FragmentHistorialExamenesBinding? = null
     private val binding get() = _binding!!
