@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentBienvenidaBinding
@@ -20,6 +21,7 @@ class Bienvenida : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBienvenidaBinding.inflate(inflater, container, false)
+        (activity as AppCompatActivity).supportActionBar?.hide()
         actions()
         return binding.root
     }

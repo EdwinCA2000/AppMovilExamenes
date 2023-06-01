@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -57,6 +58,7 @@ class Inicio : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentInicioBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         binding.listaExamenes.layoutManager = LinearLayoutManager(requireContext())
 
         return binding.root
@@ -235,6 +237,7 @@ class Inicio : Fragment() {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
                     irALogin()
+                    (activity as AppCompatActivity).supportActionBar?.hide()
                 } else {
                     Toast.makeText(requireContext(), "No se logro cerrar sesión por el servidor", Toast.LENGTH_SHORT).show()
                 }

@@ -19,4 +19,6 @@
     <string name="perfil_del_alumno">Perfil del alumno</string>
     <string name="cerrar_sesi_n">Cerrar Sesión</string>
     <string name="no_has_completado_ning_n_examen">No has completado ningún examen</string>
+    <string name="con_nuestra_aplicaci_n_podr_s_acceder_y_consultar_una_amplia_variedad_de_ex_menes">Con nuestra aplicación, podrás acceder y consultar una amplia variedad de exámenes</string>
+    <string name="eduqroo_ex_menes">EduQROO Exámenes</string>
 </resources>
