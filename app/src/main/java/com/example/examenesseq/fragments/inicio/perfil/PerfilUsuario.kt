@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentPerfilUsuarioBinding
@@ -73,6 +74,11 @@ class PerfilUsuario : Fragment() {
         apiServicio.cerrarSesion().enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
+                    val preferences = PreferenceHelper.defaultPrefs(requireContext())
+                    preferences.edit {
+                        remove("JSESSIONID")
+                        apply()
+                    }
                     irALogin()
                 } else {
                     Toast.makeText(requireContext(), "No se pudo cerrar sesión", Toast.LENGTH_SHORT).show()

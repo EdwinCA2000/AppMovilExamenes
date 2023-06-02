@@ -80,6 +80,7 @@ class Login : Fragment() {
                             preferences.saveIdentidad(identidad)
                             irAInicio()
                         } else {
+                            preferences.saveIdentidad(identidad)
                             irADashboard()
                         }
                     } else {

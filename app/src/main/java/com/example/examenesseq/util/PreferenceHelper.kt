@@ -32,6 +32,30 @@ object PreferenceHelper {
         return contains("JSESSIONID")
     }
 
+    fun SharedPreferences.setTotalUser(totalUser: String){
+        edit { it.putString("TotalUser", totalUser) }
+    }
+
+    fun SharedPreferences.TieneUsuarios(): Boolean {
+        return contains("TotalUser")
+    }
+
+    fun SharedPreferences.getTotalUser(): String? {
+        return getString("TotalUser", null)
+    }
+
+    fun SharedPreferences.setTotalExamenesComple(totalUser: String){
+        edit { it.putString("TotalExamenes", totalUser) }
+    }
+
+    fun SharedPreferences.TieneExamenCompletados(): Boolean {
+        return contains("TotalExamenes")
+    }
+
+    fun SharedPreferences.getTotalExamenComple(): String? {
+        return getString("TotalExamenes", null)
+    }
+
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.edit()
         operation(editor)
@@ -59,26 +83,39 @@ object PreferenceHelper {
 
     fun SharedPreferences.saveIdentidad(identidad: Identidad) {
         edit {
-            it.putInt("IdUsuario", identidad.IdUsuario)
-            it.putString("CURP", identidad.CURP)
-            it.putString("CorreoElectronico", identidad.CorreoElectronico)
-            it.putString("Nombres", identidad.Nombres)
-            it.putString("Apellido1", identidad.Apellido1)
-            it.putString("Apellido2", identidad.Apellido2)
-            it.putInt("IdPerfil", identidad.IdPerfil)
-            it.putInt("ActivoUsuario", identidad.ActivoUsuario)
+            if (identidad.IdPerfil==2){
+                it.putInt("IdUsuario", identidad.IdUsuario)
+                it.putString("CURP", identidad.CURP)
+                it.putString("CorreoElectronico", identidad.CorreoElectronico)
+                it.putString("Nombres", identidad.Nombres)
+                it.putString("Apellido1", identidad.Apellido1)
+                it.putString("Apellido2", identidad.Apellido2)
+                it.putInt("IdPerfil", identidad.IdPerfil)
+                it.putInt("ActivoUsuario", identidad.ActivoUsuario)
+            }else{
+                it.putInt("IdUsuario", identidad.IdUsuario)
+                it.putString("CorreoElectronico", identidad.CorreoElectronico)
+                it.putString("Nombres", identidad.Nombres)
+                it.putString("Apellido1", identidad.Apellido1)
+                it.putString("Apellido2", identidad.Apellido2)
+                it.putInt("IdPerfil", identidad.IdPerfil)
+                it.putInt("ActivoUsuario", identidad.ActivoUsuario)
+            }
+
         }
     }
 
+
+
     fun SharedPreferences.getIdentidad(): Identidad? {
         val idUsuario = getInt("IdUsuario", -1)
-        val curp = getString("CURP", null)
         val correoElectronico = getString("CorreoElectronico", null)
         val nombres = getString("Nombres", null)
         val apellido1 = getString("Apellido1", null)
         val apellido2 = getString("Apellido2", null)
         val idPerfil = getInt("IdPerfil", -1)
         val activoUsuario = getInt("ActivoUsuario", -1)
+        val curp = if (idPerfil == 2) getString("CURP", null) else ""
 
         return if (idUsuario != -1 && curp != null && correoElectronico != null && nombres != null &&
             apellido1 != null && apellido2 != null && idPerfil != -1

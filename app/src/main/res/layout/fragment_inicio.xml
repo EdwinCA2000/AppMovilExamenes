@@ -50,7 +50,7 @@
             android:id="@+id/labelExamenes"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="40dp"
             android:text="Exámenes disponibles"
             android:textColor="@color/black"
             android:textSize="28sp"
