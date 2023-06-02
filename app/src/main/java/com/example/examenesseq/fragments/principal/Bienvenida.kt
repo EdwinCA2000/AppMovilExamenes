@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentBienvenidaBinding
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.TieneIdentidad
 import com.example.examenesseq.util.PreferenceHelper.TieneSesion
+import com.example.examenesseq.util.PreferenceHelper.getIdentidad
 
 class Bienvenida : Fragment() {
 
@@ -26,7 +28,13 @@ class Bienvenida : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.hide()
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         if(preferences.TieneSesion()){
-            irAInicio()
+            val identidad=preferences.getIdentidad()
+            if (identidad?.IdPerfil==2){
+                irAInicio()
+            }else{
+                irADashboard()
+            }
+
         }
         actions()
         return binding.root
@@ -44,6 +52,10 @@ class Bienvenida : Fragment() {
 
     private fun irAInicio(){
         findNavController().navigate(R.id.inicio)
+    }
+
+    private fun irADashboard(){
+        findNavController().navigate(R.id.dashboard)
     }
 
 
