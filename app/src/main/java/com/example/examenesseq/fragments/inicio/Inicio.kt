@@ -207,6 +207,10 @@ class Inicio : Fragment() {
                     val jsessionid = response.headers()["Set-Cookie"] ?: ""
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
+
+                    val nombreCompleto= identidad?.Nombres + " " + identidad?.Apellido1 + " " + identidad?.Apellido2
+                    binding.textUser.text=nombreCompleto
+                    binding.textCorreo.text=identidad?.CorreoElectronico
                 } else {
                     Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener la cantidad de preguntas", Toast.LENGTH_SHORT).show()
                 }

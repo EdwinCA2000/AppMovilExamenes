@@ -10,14 +10,50 @@
         tools:context=".fragments.inicio.inicio"
         android:padding="12dp">
 
+        <LinearLayout
+            android:id="@+id/iconoUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/estilo_button_login2"
+                android:src="@drawable/ic_usuario"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="User"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/textCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="correo"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
         <TextView
             android:id="@+id/labelExamenes"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/ex_menes"
+            android:layout_marginTop="35dp"
+            android:text="Exámenes disponibles"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
