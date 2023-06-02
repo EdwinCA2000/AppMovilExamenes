@@ -28,6 +28,10 @@ object PreferenceHelper {
         edit { it.putString("JSESSIONID", jsessionid) }
     }
 
+    fun SharedPreferences.TieneSesion(): Boolean {
+        return contains("JSESSIONID")
+    }
+
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.edit()
         operation(editor)
@@ -131,6 +135,21 @@ object PreferenceHelper {
     fun SharedPreferences.TieneExamenes(): Boolean {
         return contains("Examenes")
     }
+
+    fun SharedPreferences.TieneIdentidad(): Boolean {
+        val idUsuario = getInt("IdUsuario", -1)
+        val curp = getString("CURP", null)
+        val correoElectronico = getString("CorreoElectronico", null)
+        val nombres = getString("Nombres", null)
+        val apellido1 = getString("Apellido1", null)
+        val apellido2 = getString("Apellido2", null)
+        val idPerfil = getInt("IdPerfil", -1)
+        val activoUsuario = getInt("ActivoUsuario", -1)
+
+        return idUsuario != -1 && curp != null && correoElectronico != null && nombres != null &&
+                apellido1 != null && apellido2 != null && idPerfil != -1 && activoUsuario != -1
+    }
+
 
     fun SharedPreferences.saveExamenesUsuario(examenes: List<ExamenUsuario>) {
         val jsonString = Gson().toJson(examenes)

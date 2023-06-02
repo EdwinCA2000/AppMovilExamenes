@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentBienvenidaBinding
+import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.TieneSesion
 
 class Bienvenida : Fragment() {
 
@@ -22,6 +24,10 @@ class Bienvenida : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentBienvenidaBinding.inflate(inflater, container, false)
         (activity as AppCompatActivity).supportActionBar?.hide()
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        if(preferences.TieneSesion()){
+            irAInicio()
+        }
         actions()
         return binding.root
     }
@@ -34,6 +40,10 @@ class Bienvenida : Fragment() {
         binding.btnRegistro.setOnClickListener {
             findNavController().navigate(R.id.action_bienvenida_to_registro)
         }
+    }
+
+    private fun irAInicio(){
+        findNavController().navigate(R.id.inicio)
     }
 
 
