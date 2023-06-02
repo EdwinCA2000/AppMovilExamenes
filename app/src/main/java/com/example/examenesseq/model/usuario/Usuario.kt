@@ -1,13 +1,13 @@
 package com.example.examenesseq.model.usuario
 
 data class Usuario(
-    var IdUsuario: Int,
-    var CURP: String,
-    var Contrasena: String,
-    var CorreoElectronico: String,
-    var Nombres: String,
-    var Apellido1: String,
-    var Apellido2: String,
-    var IdPerfil: String,
-    var ActivoUsuario: String
+    val IdUsuario: Int,
+    val CURP: String,
+    val Contrasena: String,
+    val CorreoElectronico: String,
+    val Nombres: String,
+    val Apellido1: String,
+    val Apellido2: String,
+    val IdPerfil: Int,
+    val ActivoUsuario: Int
 )

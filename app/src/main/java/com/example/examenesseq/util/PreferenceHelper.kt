@@ -8,6 +8,7 @@ import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
+import com.example.examenesseq.model.usuario.Usuario
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -56,13 +57,32 @@ object PreferenceHelper {
         return getString("TotalExamenes", null)
     }
 
+
+
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.edit()
         operation(editor)
         editor.apply()
     }
 
+    fun SharedPreferences.saveModuloUsuarios(usuario: List<Usuario>) {
+        val jsonString = Gson().toJson(usuario)
+        edit { it.putString("Usuarios", jsonString) }
+    }
 
+    fun SharedPreferences.getModuloUsuarios(): List<Usuario>? {
+        val jsonString = getString("Usuarios", null)
+        return if (jsonString != null) {
+            val type = object : TypeToken<List<Usuario>>() {}.type
+            Gson().fromJson(jsonString, type)
+        } else {
+            null
+        }
+    }
+
+    fun SharedPreferences.TieneModuloUsuarios(): Boolean {
+        return contains("Usuarios")
+    }
 
     /**
      * puts a value for the given [key].

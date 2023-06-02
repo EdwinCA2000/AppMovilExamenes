@@ -96,5 +96,8 @@ class PerfilUsuario : Fragment() {
         navController.navigate(R.id.action_perfil_usuario_to_login)
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

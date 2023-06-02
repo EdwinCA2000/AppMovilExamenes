@@ -9,6 +9,7 @@ import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
+import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
 import okhttp3.OkHttpClient
@@ -63,6 +64,9 @@ interface ApiServicio {
 
     @GET("tecnologiaeducativa.ceneval/jsonExamenesUsuario")
     fun obtenerExamenesUsuario(): Call <List<ExamenUsuario>>
+
+    @GET("tecnologiaeducativa.ceneval/jsonModuloUsuarios")
+    fun obtenerModuloUsuarios(): Call <List<Usuario>>
 
 
 
