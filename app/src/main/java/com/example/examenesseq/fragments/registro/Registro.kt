@@ -15,7 +15,6 @@ import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.saveIdentidad
-import com.example.examenesseq.util.PreferenceHelper.set
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
 import retrofit2.Callback

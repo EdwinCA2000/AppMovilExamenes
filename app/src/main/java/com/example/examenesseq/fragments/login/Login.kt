@@ -12,7 +12,6 @@ import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentLoginBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
-import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.saveIdentidad
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
@@ -81,6 +80,7 @@ class Login : Fragment() {
                             preferences.saveIdentidad(identidad)
                             irAInicio()
                         } else {
+                            preferences.saveIdentidad(identidad)
                             irADashboard()
                         }
                     } else {

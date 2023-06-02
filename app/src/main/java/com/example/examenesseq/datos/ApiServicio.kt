@@ -55,6 +55,16 @@ interface ApiServicio {
     @GET("tecnologiaeducativa.Sesion/actionCerrarSesion")
     fun cerrarSesion(): Call<Unit>
 
+    @GET("tecnologiaeducativa.ceneval/jsonTotalModuloUsuarios")
+    fun obtenerTotalUsuariosRegistrados(): Call <LoginRespuesta>
+
+    @GET("tecnologiaeducativa.ceneval/jsonTotalExamenesUsuarios")
+    fun obtenerTotalExamenCompletados(): Call <LoginRespuesta>
+
+    @GET("tecnologiaeducativa.ceneval/jsonExamenesUsuario")
+    fun obtenerExamenesUsuario(): Call <List<ExamenUsuario>>
+
+
 
 
     companion object Factory {

@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -27,6 +29,8 @@ import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneExamenes
+import com.example.examenesseq.util.PreferenceHelper.TieneIdentidad
+import com.example.examenesseq.util.PreferenceHelper.TieneSesion
 import com.example.examenesseq.util.PreferenceHelper.getExamenes
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
 import com.example.examenesseq.util.PreferenceHelper.getJSessionId
@@ -57,6 +61,7 @@ class Inicio : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentInicioBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         binding.listaExamenes.layoutManager = LinearLayoutManager(requireContext())
 
         return binding.root
@@ -205,6 +210,18 @@ class Inicio : Fragment() {
                     val jsessionid = response.headers()["Set-Cookie"] ?: ""
                     Log.d("JSESSIONID", jsessionid)
                     preferences.setJSessionId(jsessionid)
+
+                    if (preferences.TieneIdentidad()){
+                        val identidadUser=preferences.getIdentidad()
+                        val nombreCompleto=identidadUser?.Nombres + " " + identidadUser?.Apellido1 + " " + identidadUser?.Apellido2
+                        binding.textUser.text=nombreCompleto
+                        binding.textCorreo.text=identidadUser?.CorreoElectronico
+                    }else{
+                        val nombreCompleto= identidad?.Nombres + " " + identidad?.Apellido1 + " " + identidad?.Apellido2
+                        binding.textUser.text=nombreCompleto
+                        binding.textCorreo.text=identidad?.CorreoElectronico
+                    }
+
                 } else {
                     Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener la cantidad de preguntas", Toast.LENGTH_SHORT).show()
                 }
@@ -234,7 +251,13 @@ class Inicio : Fragment() {
         apiServicio.cerrarSesion().enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
+                    val preferences = PreferenceHelper.defaultPrefs(requireContext())
+                    preferences.edit {
+                        remove("JSESSIONID")
+                        apply()
+                    }
                     irALogin()
+                    (activity as AppCompatActivity).supportActionBar?.hide()
                 } else {
                     Toast.makeText(requireContext(), "No se logro cerrar sesión por el servidor", Toast.LENGTH_SHORT).show()
                 }
