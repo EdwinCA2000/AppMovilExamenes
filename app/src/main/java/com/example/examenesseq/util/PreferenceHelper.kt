@@ -8,6 +8,8 @@ import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
+import com.example.examenesseq.model.usuario.ModuloUsuario
+import com.example.examenesseq.model.usuario.Usuario
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -26,6 +28,68 @@ object PreferenceHelper {
 
     fun SharedPreferences.setJSessionId(jsessionid: String) {
         edit { it.putString("JSESSIONID", jsessionid) }
+    }
+
+    fun SharedPreferences.saveUsuario(moduloUsuario: ModuloUsuario) {
+        edit {
+            it.putInt("IdUsuario", moduloUsuario.IdUsuario)
+            it.putString("CURP", moduloUsuario.CURP)
+            it.putString("Contrasena", moduloUsuario.Contrasena)
+            it.putString("CorreoElectronico", moduloUsuario.CorreoElectronico)
+            it.putString("Nombres", moduloUsuario.Nombres)
+            it.putString("Apellido1", moduloUsuario.Apellido1)
+            it.putString("Apellido2", moduloUsuario.Apellido2)
+            it.putInt("IdPerfil", moduloUsuario.IdPerfil)
+            it.putInt("ActivoUsuario", moduloUsuario.ActivoUsuario)
+        }
+    }
+
+    fun SharedPreferences.getUser():ModuloUsuario? {
+        val idUsuario = getInt("IdUsuario", -1)
+        val curp = getString("CURP", null)
+        val contrasena=getString("Contrasena",null)
+        val correoElectronico = getString("CorreoElectronico", null)
+        val nombres = getString("Nombres", null)
+        val apellido1 = getString("Apellido1", null)
+        val apellido2 = getString("Apellido2", null)
+        val idPerfil = getInt("IdPerfil", -1)
+        val activoUsuario = getInt("ActivoUsuario", -1)
+
+
+        return if (idUsuario != -1 && curp != null && contrasena!=null &&correoElectronico != null && nombres != null &&
+            apellido1 != null && apellido2 != null && idPerfil != -1
+        ) {
+            ModuloUsuario(idUsuario, curp,contrasena, correoElectronico, nombres, apellido1, apellido2, idPerfil, activoUsuario)
+        } else {
+            null
+        }
+    }
+
+    fun SharedPreferences.TieneUser(): Boolean {
+        val idUsuario = getInt("IdUsuario", -1)
+        val curp = getString("CURP", null)
+        val contrasena=getString("Contrasena",null)
+        val correoElectronico = getString("CorreoElectronico", null)
+        val nombres = getString("Nombres", null)
+        val apellido1 = getString("Apellido1", null)
+        val apellido2 = getString("Apellido2", null)
+        val idPerfil = getInt("IdPerfil", -1)
+        val activoUsuario = getInt("ActivoUsuario", -1)
+
+        return idUsuario != -1 && curp != null && contrasena!=null && correoElectronico != null && nombres != null &&
+                apellido1 != null && apellido2 != null && idPerfil != -1 && activoUsuario != -1
+    }
+
+    fun SharedPreferences.saveEstadoUser(objeto: Int) {
+        edit { it.putInt("Objeto", objeto) }
+    }
+
+    fun SharedPreferences.getEstadoUser(): Int?{
+        return getInt("Objeto", -1)
+    }
+
+    fun SharedPreferences.TieneEstadoUser(): Boolean{
+        return contains("Objeto")
     }
 
     fun SharedPreferences.TieneSesion(): Boolean {
@@ -56,13 +120,32 @@ object PreferenceHelper {
         return getString("TotalExamenes", null)
     }
 
+
+
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.edit()
         operation(editor)
         editor.apply()
     }
 
+    fun SharedPreferences.saveModuloUsuarios(usuario: List<Usuario>) {
+        val jsonString = Gson().toJson(usuario)
+        edit { it.putString("Usuarios", jsonString) }
+    }
 
+    fun SharedPreferences.getModuloUsuarios(): List<Usuario>? {
+        val jsonString = getString("Usuarios", null)
+        return if (jsonString != null) {
+            val type = object : TypeToken<List<Usuario>>() {}.type
+            Gson().fromJson(jsonString, type)
+        } else {
+            null
+        }
+    }
+
+    fun SharedPreferences.TieneModuloUsuarios(): Boolean {
+        return contains("Usuarios")
+    }
 
     /**
      * puts a value for the given [key].
@@ -195,6 +278,7 @@ object PreferenceHelper {
     fun SharedPreferences.TieneExamenesUsuario(): Boolean {
         return contains("ExamenesUsuario")
     }
+
 
     fun SharedPreferences.getExamenesUsuario(): List<ExamenUsuario>? {
         val jsonString = getString("ExamenesUsuario", null)

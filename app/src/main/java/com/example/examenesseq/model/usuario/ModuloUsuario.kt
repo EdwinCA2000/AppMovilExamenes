@@ -1,6 +1,6 @@
 package com.example.examenesseq.model.usuario
 
-data class Usuario(
+data class ModuloUsuario (
     val IdUsuario: Int,
     val CURP: String,
     val Contrasena: String,
@@ -10,4 +10,5 @@ data class Usuario(
     val Apellido2: String,
     val IdPerfil: Int,
     val ActivoUsuario: Int
-)
+    )
+

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.inicio.perfil.perfil_usuario"
+    tools:context=".fragments.inicio.perfil.PerfilUsuario"
     android:background="@color/graylight"
     android:orientation="vertical">
 

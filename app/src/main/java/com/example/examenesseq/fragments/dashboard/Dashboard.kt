@@ -59,10 +59,12 @@ class Dashboard : Fragment() {
         obtenerTotalExamenesCompletados()
         obtenerExamenesUsers()
 
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             mostrarDialogoCerrarSesion()
         }
 
+        irAUsers()
         return binding.root
     }
 
@@ -206,5 +208,17 @@ class Dashboard : Fragment() {
 
     fun irALogin(){
         findNavController().navigate(R.id.action_dashboard_to_login2)
+    }
+
+    fun irAUsers(){
+        binding.llUsuarios.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboard_to_administrar_usuarios)
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
