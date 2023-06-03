@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
+import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
+import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
+import com.example.examenesseq.model.usuario.ModuloUsuario
 import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
@@ -52,6 +55,24 @@ interface ApiServicio {
         @Query(value="Apellido1")Apellido1:String,
         @Query(value="Apellido2")Apellido2: String,
     ):Call<LoginRespuesta>
+
+    @POST(value="tecnologiaeducativa.ceneval/actionEditarModuloUsuario")
+    fun actualizarUsuario(
+        @Query(value="IdUsuario")IdUsuario: Int,
+        @Query(value="Nombres")Nombres: String,
+        @Query(value="Apellido1")Apellido1:String,
+        @Query(value="Apellido2")Apellido2: String,
+        @Query(value="CURP")CURP:String,
+        @Query(value="CorreoElectronico")CorreoElectronico: String,
+        @Query(value="Contrasena")Contrasena:String,
+        @Query(value="ActivoUsuario")ActivoUsuario:Int,
+    ):Call<ModuloUsuarioRespuesta>
+
+    @GET(value="tecnologiaeducativa.ceneval/actionActivarUsuario")
+    fun actualizarEstadoUser(
+        @Query(value="IdUsuario")IdUsuario: Int,
+        @Query(value="ActivoUsuario")ActivoUsuario:Int
+    ):Call<RespuestaActivarUser>
 
     @GET("tecnologiaeducativa.Sesion/actionCerrarSesion")
     fun cerrarSesion(): Call<Unit>
