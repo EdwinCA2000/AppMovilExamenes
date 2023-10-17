@@ -34,7 +34,7 @@ class ExamenHistorialAdapter(var con: Context, var list: List<ExamenUsuario>): R
         val examenHistorial = list[position]
 
         val tituloExamen=examenHistorial.TituloExamen
-        val fechaFin=examenHistorial.TiempoExamenFinal.toString()
+        val fechaFin=examenHistorial.FechaFinal.toString()
         val duracionExamen=examenHistorial.TiempoTranscurrido
         val calificacion= examenHistorial.TotalCalificacion
 

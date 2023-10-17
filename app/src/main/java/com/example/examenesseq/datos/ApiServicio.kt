@@ -11,7 +11,6 @@ import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
-import com.example.examenesseq.model.usuario.ModuloUsuario
 import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
@@ -80,20 +79,20 @@ interface ApiServicio {
     @GET("tecnologiaeducativa.ceneval/jsonTotalModuloUsuarios")
     fun obtenerTotalUsuariosRegistrados(): Call <LoginRespuesta>
 
-    @GET("tecnologiaeducativa.ceneval/jsonTotalExamenesUsuarios")
+    @GET("tecnologiaeducativa.ceneval/jsonExamenesCompletados")
     fun obtenerTotalExamenCompletados(): Call <LoginRespuesta>
 
     @GET("tecnologiaeducativa.ceneval/jsonExamenesUsuario")
     fun obtenerExamenesUsuario(): Call <List<ExamenUsuario>>
 
     @GET("tecnologiaeducativa.ceneval/jsonModuloUsuarios")
-    fun obtenerModuloUsuarios(): Call <List<Usuario>>
+    fun obtenerModuloUsuarios(): Call <ModuloUsuarioRespuesta>
 
 
 
 
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.11:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.9:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

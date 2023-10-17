@@ -14,14 +14,12 @@ import androidx.core.content.edit
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentDashboardBinding
-import com.example.examenesseq.databinding.FragmentInicioBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneExamenCompletados
 import com.example.examenesseq.util.PreferenceHelper.TieneExamenesUsuario
-import com.example.examenesseq.util.PreferenceHelper.TieneIdentidad
 import com.example.examenesseq.util.PreferenceHelper.TieneUsuarios
 import com.example.examenesseq.util.PreferenceHelper.getExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad

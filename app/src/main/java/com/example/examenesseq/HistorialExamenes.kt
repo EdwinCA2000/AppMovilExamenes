@@ -52,9 +52,7 @@ class HistorialExamenes : Fragment() {
                 override fun onResponse(call: Call<List<ExamenUsuario>>, response: Response<List<ExamenUsuario>>) {
                     if (response.isSuccessful) {
                         val exameneusuario = response.body()
-                        val jsessionid = response.headers()["Set-Cookie"] ?: ""
-                        Log.d("JSESSIONID", jsessionid)
-                        preferences.setJSessionId(jsessionid)
+
                         if (!exameneusuario.isNullOrEmpty()) {
                             examenHistorialAdapter= ExamenHistorialAdapter(requireContext(),exameneusuario)
                             binding.recyclerHistorial.adapter = examenHistorialAdapter

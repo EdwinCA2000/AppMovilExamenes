@@ -4,6 +4,5 @@ import com.example.examenesseq.model.usuario.ModuloUsuario
 
 class ModuloUsuarioRespuesta (
     val Error: Int,
-    val Objeto: ModuloUsuario,
-    val Mensaje: String
+    val Objeto: List<ModuloUsuario>
     )

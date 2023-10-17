@@ -19,6 +19,7 @@ import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
+import com.example.examenesseq.model.usuario.ModuloUsuario
 import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneEstadoUser
@@ -33,7 +34,7 @@ import retrofit2.Response
 import java.util.regex.Pattern
 
 
-class ModalDatosUsuarios(private val usuario: Usuario) : DialogFragment() {
+class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() {
 
     private lateinit var txtNombre: EditText
     private lateinit var txtApellido1: EditText
@@ -210,36 +211,43 @@ class ModalDatosUsuarios(private val usuario: Usuario) : DialogFragment() {
                             val userObjeto=usuarioActualizado.Objeto
                             preferences.saveUsuario(userObjeto)
 
-                            val nombUser = userObjeto.Nombres
-                            val ape1 = userObjeto.Apellido1
-                            val ape2 = userObjeto.Apellido2
-                            val curpUser = userObjeto.CURP
-                            val correoEle = userObjeto.CorreoElectronico
-                            val activoUser = userObjeto.ActivoUsuario
+                            for (usuariosObjeto in userObjeto){
+                                val nombUser = usuariosObjeto.Nombres
+                                val ape1 = usuariosObjeto.Apellido1
+                                val ape2 = usuariosObjeto.Apellido2
+                                val curpUser = usuariosObjeto.CURP
+                                val correoEle = usuariosObjeto.CorreoElectronico
+                                val activoUser = usuariosObjeto.ActivoUsuario
 
-                            txtNombre.setText(nombUser)
-                            txtApellido1.setText(ape1)
-                            txtApellido2.setText(ape2)
-                            txtCURP.setText(curpUser)
-                            txtCorreo.setText(correoEle)
+                                txtNombre.setText(nombUser)
+                                txtApellido1.setText(ape1)
+                                txtApellido2.setText(ape2)
+                                txtCURP.setText(curpUser)
+                                txtCorreo.setText(correoEle)
 
-                            if (activoUser == 1) {
-                                btnEstado.text = "DESACTIVAR"
-                                cardEstadoUser.setCardBackgroundColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.green
+                                if (activoUser == 1) {
+                                    btnEstado.text = "DESACTIVAR"
+                                    cardEstadoUser.setCardBackgroundColor(
+                                        ContextCompat.getColor(
+                                            requireContext(),
+                                            R.color.green
+                                        )
                                     )
-                                )
-                            } else {
-                                btnEstado.text = "ACTIVAR"
-                                cardEstadoUser.setCardBackgroundColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.red
+                                } else {
+                                    btnEstado.text = "ACTIVAR"
+                                    cardEstadoUser.setCardBackgroundColor(
+                                        ContextCompat.getColor(
+                                            requireContext(),
+                                            R.color.red
+                                        )
                                     )
-                                )
+                                }
                             }
+
+
+
+
+
 
                             if (txtContrasena.text.toString()!="" && txtContrasenConfirmar.text.toString()!="")
                             {

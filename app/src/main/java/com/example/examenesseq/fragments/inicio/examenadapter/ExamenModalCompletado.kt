@@ -44,7 +44,7 @@ class ExamenModalCompletado(private val examen: Examen, private val examenUsuari
             view.findViewById<TextView>(R.id.calificacion).text="$calificacion"
             view.findViewById<TextView>(R.id.calificacion).setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
         }
-        val fechaFin=examenUsuario.TiempoExamenFinal.toString()
+        val fechaFin=examenUsuario.FechaFinal.toString()
         view.findViewById<TextView>(R.id.fechaFinalizacion).text=parsearFecha(fechaFin)
 
         val tiempoTranscurrido=examenUsuario.TiempoTranscurrido

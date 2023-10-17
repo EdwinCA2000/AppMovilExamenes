@@ -1,7 +1,6 @@
 package com.example.examenesseq.fragments.dashboard.usuarios
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.model.usuario.Usuario
+import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.util.PreferenceHelper
-import com.example.examenesseq.util.PreferenceHelper.TieneUser
-import com.example.examenesseq.util.PreferenceHelper.TieneUsuarios
-import com.example.examenesseq.util.PreferenceHelper.getModuloUsuarios
-import com.example.examenesseq.util.PreferenceHelper.saveModuloUsuarios
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,24 +44,28 @@ class AdministrarUsuarios : Fragment() {
 
     fun obtenerModuloUsuarios(){
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
-        apiServicio.obtenerModuloUsuarios().enqueue(object: Callback<List<Usuario>> {
-            override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
+        apiServicio.obtenerModuloUsuarios().enqueue(object: Callback<ModuloUsuarioRespuesta> {
+            override fun onResponse(call: Call<ModuloUsuarioRespuesta>, response: Response<ModuloUsuarioRespuesta>) {
                 binding.recargarUsuarios.isRefreshing = false
                 if (response.isSuccessful){
                     val usuarios=response.body()
                     if (usuarios != null) {
                         usuariosAdapter=UsuariosAdapter(requireContext(),usuarios)
                         binding.recyclerUsers.adapter=usuariosAdapter
-                        preferences.saveModuloUsuarios(usuarios)
+
 
                     }else{
-                        usuariosAdapter=UsuariosAdapter(requireContext(), emptyList())
-                        binding.recyclerUsers.adapter=usuariosAdapter
+                        val usuariosAdapter = usuarios?.let {
+                            UsuariosAdapter(requireContext(),
+                                it
+                            )
+                        }
+                        binding.recyclerUsers.adapter = usuariosAdapter
                     }
                 }
             }
 
-            override fun onFailure(call: Call<List<Usuario>>, t: Throwable) {
+            override fun onFailure(call: Call<ModuloUsuarioRespuesta>, t: Throwable) {
                 Toast.makeText(requireContext(), "No se logro conectar al servidor para obtener los usuarios", Toast.LENGTH_SHORT).show()
             }
 

@@ -30,17 +30,20 @@ object PreferenceHelper {
         edit { it.putString("JSESSIONID", jsessionid) }
     }
 
-    fun SharedPreferences.saveUsuario(moduloUsuario: ModuloUsuario) {
+    fun SharedPreferences.saveUsuario(moduloUsuario: List<ModuloUsuario>) {
         edit {
-            it.putInt("IdUsuario", moduloUsuario.IdUsuario)
-            it.putString("CURP", moduloUsuario.CURP)
-            it.putString("Contrasena", moduloUsuario.Contrasena)
-            it.putString("CorreoElectronico", moduloUsuario.CorreoElectronico)
-            it.putString("Nombres", moduloUsuario.Nombres)
-            it.putString("Apellido1", moduloUsuario.Apellido1)
-            it.putString("Apellido2", moduloUsuario.Apellido2)
-            it.putInt("IdPerfil", moduloUsuario.IdPerfil)
-            it.putInt("ActivoUsuario", moduloUsuario.ActivoUsuario)
+            for (usuario in moduloUsuario){
+                it.putInt("IdUsuario", usuario.IdUsuario)
+                it.putString("CURP", usuario.CURP)
+                it.putString("Contrasena", usuario.Contrasena)
+                it.putString("CorreoElectronico", usuario.CorreoElectronico)
+                it.putString("Nombres", usuario.Nombres)
+                it.putString("Apellido1", usuario.Apellido1)
+                it.putString("Apellido2", usuario.Apellido2)
+                it.putInt("IdRolUsuario", usuario.IdRolUsuario)
+                it.putInt("ActivoUsuario", usuario.ActivoUsuario)
+            }
+
         }
     }
 
@@ -166,14 +169,14 @@ object PreferenceHelper {
 
     fun SharedPreferences.saveIdentidad(identidad: Identidad) {
         edit {
-            if (identidad.IdPerfil==2){
+            if (identidad.IdRolUsuario==2){
                 it.putInt("IdUsuario", identidad.IdUsuario)
                 it.putString("CURP", identidad.CURP)
                 it.putString("CorreoElectronico", identidad.CorreoElectronico)
                 it.putString("Nombres", identidad.Nombres)
                 it.putString("Apellido1", identidad.Apellido1)
                 it.putString("Apellido2", identidad.Apellido2)
-                it.putInt("IdPerfil", identidad.IdPerfil)
+                it.putInt("IdPerfil", identidad.IdRolUsuario)
                 it.putInt("ActivoUsuario", identidad.ActivoUsuario)
             }else{
                 it.putInt("IdUsuario", identidad.IdUsuario)
@@ -181,7 +184,7 @@ object PreferenceHelper {
                 it.putString("Nombres", identidad.Nombres)
                 it.putString("Apellido1", identidad.Apellido1)
                 it.putString("Apellido2", identidad.Apellido2)
-                it.putInt("IdPerfil", identidad.IdPerfil)
+                it.putInt("IdRolUsuario", identidad.IdRolUsuario)
                 it.putInt("ActivoUsuario", identidad.ActivoUsuario)
             }
 

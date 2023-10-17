@@ -4,8 +4,8 @@ import java.sql.Timestamp
 
 data class ExamenUsuario(
     val IdExamenUsuario: Int,
-    val TiempoExamenInicio: Timestamp,
-    val TiempoExamenFinal: Timestamp,
+    val FechaInicio: Timestamp,
+    val FechaFinal: Timestamp,
     val TiempoTranscurrido: Int,
     val TotalCalificacion: Int,
     val IdExamen: Int,

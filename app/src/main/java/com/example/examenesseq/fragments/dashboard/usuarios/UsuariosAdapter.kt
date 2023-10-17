@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.R
-import com.example.examenesseq.fragments.inicio.examenadapter.ExamenModalCompletado
+import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneEstadoUser
@@ -20,7 +19,7 @@ import com.example.examenesseq.util.PreferenceHelper.getEstadoUser
 import com.example.examenesseq.util.PreferenceHelper.getUser
 
 
-class UsuariosAdapter(var con: Context, var list: List<Usuario>): RecyclerView.Adapter<UsuariosAdapter.ViewHolder>() {
+class UsuariosAdapter(var con: Context, var list: ModuloUsuarioRespuesta): RecyclerView.Adapter<UsuariosAdapter.ViewHolder>() {
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v){
         var txtNombreUser=v.findViewById<TextView>(R.id.tituloUserTxt)
@@ -34,11 +33,11 @@ class UsuariosAdapter(var con: Context, var list: List<Usuario>): RecyclerView.A
     }
 
     override fun getItemCount(): Int {
-        return list.count()
+        return list.Objeto.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val usuarios= list[position]
+        val usuarios= list.Objeto[position]
 
         val nombreCompleto= usuarios.Nombres + " " + usuarios.Apellido1 + " " + usuarios.Apellido2
         val correoUser=usuarios.CorreoElectronico

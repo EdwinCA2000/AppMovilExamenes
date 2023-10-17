@@ -29,7 +29,7 @@ class Bienvenida : Fragment() {
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         if(preferences.TieneSesion()){
             val identidad=preferences.getIdentidad()
-            if (identidad?.IdPerfil==2){
+            if (identidad?.IdRolUsuario==2){
                 irAInicio()
             }else{
                 irADashboard()
