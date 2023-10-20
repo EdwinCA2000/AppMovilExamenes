@@ -9,7 +9,7 @@ import com.example.examenesseq.fragments.dashboard.usuarios.AdministrarUsuarios
 import com.example.examenesseq.fragments.dashboard.usuarios.ModalDatosUsuarios
 
 
-class MainActivity : AppCompatActivity() , ModalDatosUsuarios.ModalListener{
+class MainActivity : AppCompatActivity() , ModalDatosUsuarios.ModalListener {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

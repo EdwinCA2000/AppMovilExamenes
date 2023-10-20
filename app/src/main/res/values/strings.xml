@@ -21,4 +21,10 @@
     <string name="no_has_completado_ning_n_examen">No has completado ningún examen</string>
     <string name="con_nuestra_aplicaci_n_podr_s_acceder_y_consultar_una_amplia_variedad_de_ex_menes">Con nuestra aplicación, podrás acceder y consultar una amplia variedad de exámenes</string>
     <string name="eduqroo_ex_menes">EduQROO Exámenes</string>
+    <string name="epco">EPCO</string>
+    <string name="iniciar_sesi_n_o_registrate">Iniciar Sesión o Registrate</string>
+    <string name="inicia_sesi_n_o_crea_una_cuenta_para_que_puedas_acceder_al_catalog_de_examenes">Inicia Sesión o crea una cuenta para que puedas acceder al catalogó de examenes</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="crea_una_cuenta">Crea una cuenta</string>
+    <string name="m_s_tarde">Más tarde</string>
 </resources>

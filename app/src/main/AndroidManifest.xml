@@ -12,14 +12,14 @@
         android:label="@string/eduqroo_ex_menes"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTema"
-        tools:targetApi="31"
+        android:theme="@style/Theme.AnimatedSplashScreenDemo"
+        tools:targetApi="34"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:exported="true"
-            android:theme="@style/AppTema">
+            android:theme="@style/Theme.AnimatedSplashScreenDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

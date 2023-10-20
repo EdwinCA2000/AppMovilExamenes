@@ -4,11 +4,13 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.examen.DaoExamen
@@ -81,6 +83,8 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
 
         val idSecciones=daoExamen.obtenerIdsSecciones(requireContext(),idExamen)
 
+        val btnIniciarExamen=view.findViewById<Button>(R.id.btnIniciarExamen)
+
 
         for (i in 0 until titulosSecciones.size) {
             val titulo = titulosSecciones[i]
@@ -94,6 +98,11 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
             }
 
             contenedorSecciones.addView(textView)
+        }
+
+        btnIniciarExamen.setOnClickListener{
+            findNavController().navigate(R.id.action_inicio_to_preguntas)
+            dialog?.dismiss()
         }
 
         builder.setView(view)

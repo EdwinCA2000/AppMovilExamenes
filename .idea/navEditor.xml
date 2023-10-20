@@ -57,6 +57,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_dashboard_to_administrar_usuarios">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_dashboard_to_login2">
                               <value>
                                 <LayoutPositions />
@@ -110,6 +115,11 @@
                               </value>
                             </entry>
                             <entry key="action_inicio_to_perfil_usuario">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_inicio_to_preguntas">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -177,6 +187,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="preguntas">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="577" />
+                            <option name="y" value="-520" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

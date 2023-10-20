@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_inicio_to_historial_examenes2"
             app:destination="@id/historial_examenes2" />
+        <action
+            android:id="@+id/action_inicio_to_preguntas"
+            app:destination="@id/preguntas" />
     </fragment>
     <fragment
         android:id="@+id/dashboard"
@@ -110,5 +113,10 @@
         android:name="com.example.examenesseq.fragments.dashboard.usuarios.AdministrarUsuarios"
         android:label="fragment_administrar_usuarios"
         tools:layout="@layout/fragment_administrar_usuarios" />
+    <fragment
+        android:id="@+id/preguntas"
+        android:name="com.example.examenesseq.preguntas"
+        android:label="Preguntas"
+        tools:layout="@layout/preguntas" />
 
 </navigation>
