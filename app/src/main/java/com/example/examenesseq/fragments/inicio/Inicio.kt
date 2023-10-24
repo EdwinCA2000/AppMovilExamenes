@@ -103,9 +103,6 @@ class Inicio : Fragment() {
                 if (response.isSuccessful) {
                     val examenes = response.body()
                     val preferences = PreferenceHelper.defaultPrefs(requireContext())
-                    val jsessionid = response.headers()["Set-Cookie"] ?: ""
-                    Log.d("JSESSIONID", jsessionid)
-                    preferences.setJSessionId(jsessionid)
                     if (!examenes.isNullOrEmpty()) {
                         preferences.saveExamenes(examenes)
                         obtenerDatosDeExamenUsuario(examenes)
@@ -142,9 +139,6 @@ class Inicio : Fragment() {
                 override fun onResponse(call: Call<List<ExamenUsuario>>, response: Response<List<ExamenUsuario>>) {
                     if (response.isSuccessful) {
                         val exameneusuario = response.body()
-                        val jsessionid = response.headers()["Set-Cookie"] ?: ""
-                        Log.d("JSESSIONID", jsessionid)
-                        preferences.setJSessionId(jsessionid)
                         if (!exameneusuario.isNullOrEmpty()) {
                             examenAdapter = ExamenAdapter(requireContext(), examenes, exameneusuario)
                             binding.listaExamenes.adapter = examenAdapter
@@ -174,9 +168,6 @@ class Inicio : Fragment() {
                 if (response.isSuccessful) {
                     val secciones = response.body()
                     val preferences = PreferenceHelper.defaultPrefs(requireContext())
-                    val jsessionid = response.headers()["Set-Cookie"] ?: ""
-                    Log.d("JSESSIONID", jsessionid)
-                    preferences.setJSessionId(jsessionid)
                     if (!secciones.isNullOrEmpty()) {
                         preferences.saveSecciones(secciones)
 
@@ -207,9 +198,6 @@ class Inicio : Fragment() {
                 if (response.isSuccessful) {
                     val identidad = response.body()
                     val preferences = PreferenceHelper.defaultPrefs(requireContext())
-                    val jsessionid = response.headers()["Set-Cookie"] ?: ""
-                    Log.d("JSESSIONID", jsessionid)
-                    preferences.setJSessionId(jsessionid)
 
                     if (preferences.TieneIdentidad()){
                         val identidadUser=preferences.getIdentidad()

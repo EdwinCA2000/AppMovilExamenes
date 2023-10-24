@@ -7,6 +7,9 @@ import android.util.Log
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
+import com.example.examenesseq.datos.respuesta.RespuestaExamen
+import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
+import com.example.examenesseq.datos.respuesta.Respuestas
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
@@ -88,9 +91,39 @@ interface ApiServicio {
     @GET("tecnologiaeducativa.ceneval/jsonModuloUsuarios")
     fun obtenerModuloUsuarios(): Call <ModuloUsuarioRespuesta>
 
+    @GET("tecnologiaeducativa.Examen/jsonExamenCeneval")
+    fun obtenerExamen(@Query(value="IdExamen")idExamen: Int): Call <RespuestaExamen>
 
+    @POST("tecnologiaeducativa.Examen/actionGuardarExamenUsuario")
+    fun guardarExamenUsuario(
+        @Query(value="time")time: Int,
+        @Query(value="calif")calif: Int,
+        @Query(value="idexamen")idexamen: Int
+    ): Call <LoginRespuesta>
 
+    @GET("tecnologiaeducativa.Examen/jsonExamenUsuario")
+    fun obtenerDatosExamenUsuario(
+        @Query(value="IdExamen")idExamen: Int,
+        @Query(value="IdExamenUsuario")idExamenusuario: Int): Call <RespuestaExamenUsuario>
 
+    @POST("tecnologiaeducativa.Examen/actionGuardarEditarRespuesta")
+    fun guardarRespuestaUsuario(
+        @Query(value="idRespuesta")idRespuesta: Int,
+        @Query(value="idPregunta")idPregunta: Int,
+        @Query(value="idOpcion")idOpcion: Int,
+        @Query(value="idExamen")idexamen: Int
+
+    ): Call <Respuestas>
+
+    @POST("tecnologiaeducativa.Examen/actionFinalizarExamen")
+    fun finalizarExamenUsuario(
+        @Query(value="idexamenU")idexamenU: Int,
+        @Query(value="intentos")intentos: Int,
+        @Query(value="estado")estado: Int,
+        @Query(value="tiempoRestante")tiempoRestante: String,
+        @Query(value="time")time: Int
+
+    ): Call <LoginRespuesta>
     companion object Factory {
         private const val BASE_URL = "http://192.168.0.9:8080/Ceneval/"
         fun create(context: Context): ApiServicio {

@@ -2,15 +2,28 @@
     <!-- Base application theme. -->
     <style name="Theme.AnimatedSplashScreenDemo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/greyLight</item>
+        <item name="colorPrimaryVariant">@color/greyLight</item>
+        <item name="colorOnPrimary">@color/greyLight</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/darkGray</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:fillColor">@color/white</item>
+
         <!-- Customize your theme here. -->
+
+
+    </style>
+
+    <style name="Theme.ButtonChanger"
+        parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <item name="colorPrimary">@color/colorSEQ</item>
     </style>
 </resources>

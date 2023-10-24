@@ -30,6 +30,20 @@ object PreferenceHelper {
         edit { it.putString("JSESSIONID", jsessionid) }
     }
 
+    fun SharedPreferences.setDatosExamen(idExamen: Int,duracionExamen:Int) {
+        edit { it.putInt("idExamen", idExamen)
+            it.putInt("duracionExamen", duracionExamen)}
+    }
+
+    fun SharedPreferences.getIdExamen(): Int {
+        return getInt("idExamen", 0)
+    }
+
+    fun SharedPreferences.getDuracionExamen(): Int {
+        return getInt("duracionExamen", 0)
+    }
+
+
     fun SharedPreferences.saveUsuario(moduloUsuario: List<ModuloUsuario>) {
         edit {
             for (usuario in moduloUsuario){

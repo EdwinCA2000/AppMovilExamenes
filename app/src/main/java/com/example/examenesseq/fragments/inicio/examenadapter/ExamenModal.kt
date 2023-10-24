@@ -3,7 +3,6 @@ package com.example.examenesseq.fragments.inicio.examenadapter
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,14 +14,13 @@ import com.example.examenesseq.R
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.examen.DaoExamen
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
+import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
 import com.example.examenesseq.model.examen.Examen
-import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.util.PreferenceHelper
-import com.example.examenesseq.util.PreferenceHelper.getCantidadPreguntas
-import com.example.examenesseq.util.PreferenceHelper.getSecciones
+import com.example.examenesseq.util.PreferenceHelper.TieneExamenesUsuario
+import com.example.examenesseq.util.PreferenceHelper.getExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.saveCantidadPreguntas
-import com.example.examenesseq.util.PreferenceHelper.saveSecciones
-import com.example.examenesseq.util.PreferenceHelper.setJSessionId
+import com.example.examenesseq.util.PreferenceHelper.setDatosExamen
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,10 +66,6 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
         val cantidadSecciones= daoExamen.obtenerCantidadSecciones(requireContext(),idExamen)
 
 
-
-
-
-
         if(cantidadSecciones==1){
             view.findViewById<TextView>(R.id.cantidadPreguntas).text="$cantidadSecciones sección"
         }else{
@@ -84,6 +78,20 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
         val idSecciones=daoExamen.obtenerIdsSecciones(requireContext(),idExamen)
 
         val btnIniciarExamen=view.findViewById<Button>(R.id.btnIniciarExamen)
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        if (preferences.TieneExamenesUsuario()) {
+            val examenUsuario = preferences.getExamenesUsuario()
+            val examenIniciado = examenUsuario?.find { it.IdExamen == idExamen && it.Estado == 1 }
+
+            if (examenIniciado != null) {
+                btnIniciarExamen.text = "Continuar Examen"
+            } else {
+                btnIniciarExamen.text = "Iniciar Examen"
+            }
+        } else {
+            btnIniciarExamen.text = "Iniciar Examen"
+        }
+
 
 
         for (i in 0 until titulosSecciones.size) {
@@ -100,10 +108,96 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
             contenedorSecciones.addView(textView)
         }
 
-        btnIniciarExamen.setOnClickListener{
-            findNavController().navigate(R.id.action_inicio_to_preguntas)
-            dialog?.dismiss()
+        btnIniciarExamen.setOnClickListener {
+
+            val builder = AlertDialog.Builder(requireContext())
+            val dialogView = layoutInflater.inflate(R.layout.dialogconfirmacion, null)
+            builder.setView(dialogView)
+            val dialogconfirmacion= builder.create()
+
+            val btnSi = dialogView.findViewById<Button>(R.id.btnSi)
+            val btnNo = dialogView.findViewById<Button>(R.id.btnNo)
+            val txtConfirmacion=dialogView.findViewById<TextView>(R.id.txtPreguntaConfirmacion)
+
+            if (preferences.TieneExamenesUsuario()) {
+                val examenUsuario = preferences.getExamenesUsuario()
+                val examenIniciado = examenUsuario?.find { it.IdExamen == idExamen && it.Estado == 1 }
+
+                if (examenIniciado != null) {
+                    txtConfirmacion.text="Estás seguro de continuar el ${examen.TituloExamen}?"
+                } else {
+                    txtConfirmacion.text="Estás seguro de iniciar el ${examen.TituloExamen}?"
+                }
+            } else {
+                txtConfirmacion.text="Estás seguro de iniciar el ${examen.TituloExamen}?"
+            }
+
+            btnSi.setOnClickListener {
+                // Navegar a la pantalla de preguntas
+                preferences.setDatosExamen(idExamen,duracionExamen)
+                findNavController().navigate(R.id.action_inicio_to_preguntas)
+                if (preferences.TieneExamenesUsuario()){
+                    val examenUsuario = preferences.getExamenesUsuario()
+                    val examenIniciado = examenUsuario?.find { it.IdExamen == idExamen && it.Estado == 1 }
+
+                    if (examenIniciado != null) {
+                        val idExamenUsuarioIniciado = examenIniciado.IdExamenUsuario
+                        apiServicio.obtenerDatosExamenUsuario(idExamen,idExamenUsuarioIniciado).enqueue(object : Callback<RespuestaExamenUsuario>{
+                            override fun onResponse(
+                                call: Call<RespuestaExamenUsuario>,
+                                response: Response<RespuestaExamenUsuario>
+                            ) {
+                                if (response.isSuccessful){
+                                    val respuesta=response.body()
+                                    if (respuesta != null) {
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(
+                                call: Call<RespuestaExamenUsuario>,
+                                t: Throwable
+                            ) {
+                                Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                                Log.e("API Failure", "Error: ${t.message}", t)
+                            }
+
+                        })
+                    }
+                }else{
+                    val time=0
+                    val calif=0
+                    apiServicio.guardarExamenUsuario(time,calif,examen.IdExamen).enqueue(object : Callback<LoginRespuesta>{
+                        override fun onResponse(
+                            call: Call<LoginRespuesta>,
+                            response: Response<LoginRespuesta>
+                        ) {
+                            if (response.isSuccessful){
+                                val respuesta=response.body()
+                                if (respuesta != null) {
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LoginRespuesta>, t: Throwable) {
+                            Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                            Log.e("API Failure", "Error: ${t.message}", t)
+                        }
+
+                    })
+                }
+                dialogconfirmacion.dismiss()
+                dialog?.dismiss()
+            }
+
+            btnNo.setOnClickListener {
+                dialogconfirmacion.dismiss()
+            }
+
+            dialogconfirmacion.show()
+
         }
+
 
         builder.setView(view)
             .setTitle("Detalles del examen")
@@ -113,6 +207,7 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
 
         return builder.create()
     }
+
 
     private fun obtenerTotalPreguntas(idSeccion: Int, callback: (Int) -> Unit) {
         apiServicio.obtenerTotalPreguntas(idSeccion).enqueue(object : Callback<LoginRespuesta> {

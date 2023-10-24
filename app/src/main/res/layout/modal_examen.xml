@@ -11,8 +11,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center"
-        android:src="@drawable/book_alert_outline"
-        app:tint="@color/colorSEQ"/>
+        android:src="@drawable/book_alert_outline" />
 
     <TextView
         android:id="@+id/tituloModal"
@@ -21,7 +20,7 @@
         android:text="Examen"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="@color/colorSEQ"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"/>
 
@@ -32,7 +31,7 @@
         android:layout_marginBottom="16dp"
         android:text="lorem ipsum"
         android:textSize="15sp"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:justificationMode="inter_word"/>
 
     <LinearLayout
@@ -138,8 +137,9 @@
         android:id="@+id/btnIniciarExamen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/loginbtnestilo"
-        android:text="Iniciar Examen" />
+        android:text="Iniciar Examen"
+        android:textColor="?android:attr/textColorSecondary"/>
 
 </LinearLayout>

@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorSEQ"
+        android:background="?attr/colorPrimary"
         tools:context=".fragments.login.login"
         android:padding="24dp">
 
@@ -47,6 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:text="@string/iniciar_sesi_n"
+            android:theme="@style/Theme.ButtonChanger"
+            android:textColor="?android:attr/textColorPrimary"
             android:background="@drawable/estilo_button_login2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

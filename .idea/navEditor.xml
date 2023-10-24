@@ -46,6 +46,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="container2">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-145" />
+                            <option name="y" value="-439" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="dashboard">
                     <value>
                       <LayoutPositions>
@@ -198,6 +210,18 @@
                           <Point>
                             <option name="x" value="577" />
                             <option name="y" value="-520" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="preguntasmultiple">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-111" />
+                            <option name="y" value="-456" />
                           </Point>
                         </option>
                       </LayoutPositions>

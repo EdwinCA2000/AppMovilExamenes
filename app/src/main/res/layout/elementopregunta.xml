@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/transparent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="9dp">
+
+                <TextView
+                    android:id="@+id/txtNumPregunta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/nunitobold"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/preguntaTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/nunitobold"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:id="@+id/imgPregunta"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    />
+
+                <Button
+                    android:id="@+id/btnRespuesta1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/loginbtnestilo3"
+                    android:textColor="@color/black"
+                    android:contentDescription="Respuesta1"/>
+
+                <Button
+                    android:id="@+id/btnRespuesta2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/loginbtnestilo3"
+                    android:textColor="@color/black"
+                    android:contentDescription="Respuesta2"/>
+
+                <Button
+                    android:id="@+id/btnRespuesta3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/loginbtnestilo3"
+                    android:textColor="@color/black"
+                    android:contentDescription="Respuesta3"/>
+
+                <Button
+                    android:id="@+id/btnRespuesta4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/loginbtnestilo3"
+                    android:textColor="@color/black"
+                    android:contentDescription="Respuesta4"/>
+
+                <Button
+                    android:id="@+id/btnResponder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/loginbtnestilo"
+                    android:text="Responder"
+                    android:textColor="@color/white" />
+                <Button
+                    android:id="@+id/btnFinalizarExamen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/loginbtnestilo"
+                    android:visibility="gone"
+                    android:text="Finalizar Examen"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

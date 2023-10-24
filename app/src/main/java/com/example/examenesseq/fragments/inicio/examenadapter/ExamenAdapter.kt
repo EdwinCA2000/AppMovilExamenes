@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -67,31 +66,27 @@ class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
             holder.Estado.setCardBackgroundColor(ContextCompat.getColor(con, R.color.red))
         }
 
-
-
-        holder.itemView.setOnClickListener {
-            val detalleExamenModalCompletado = examenUsuarioDetails?.let { it1 -> ExamenModalCompletado(examen, it1) }
-            if (detalleExamenModalCompletado != null) {
-                detalleExamenModalCompletado.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModalCompletado")
-            }else{
-                val detalleExamenModal = ExamenModal(examen)
-                detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
-            }
-        }
-
-
-        // Obtener el estado del ExamenUsuario
         val estado = examenUsuarioDetails?.Estado
 
+        holder.itemView.setOnClickListener {
+            if (estado == 1) {
+                val detalleExamenModal = ExamenModal(examen)
+                detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
+            } else {
+                if (examenUsuarioDetails != null) {
+                    val detalleExamenModalCompletado = ExamenModalCompletado(examen, examenUsuarioDetails)
+                    detalleExamenModalCompletado.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModalCompletado")
+                } else {
+                    val detalleExamenModal = ExamenModal(examen)
+                    detalleExamenModal.show((con as AppCompatActivity).supportFragmentManager, "DetalleExamenModal")
+                }
+            }
+        }
         when(estado){
             1 -> holder.imgExamen.setImageResource(R.drawable.book_alert_outline)
             2 -> holder.imgExamen.setImageResource(R.drawable.book_check_outline)
             3 -> holder.imgExamen.setImageResource(R.drawable.book_check_outline)
             else -> holder.imgExamen.setImageResource(R.drawable.book_alert_outline)
         }
-
-
     }
-
-
 }

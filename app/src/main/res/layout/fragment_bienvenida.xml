@@ -12,8 +12,8 @@
 
         <RelativeLayout
             android:id="@+id/app_logo"
-            android:layout_width="60dp"
-            android:layout_height="91dp"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="38dp"
@@ -22,10 +22,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/logo3"
+                android:elevation="4dp" />
+
             <TextView
                 android:id="@+id/epco"
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_below="@+id/logo"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="2dp"
                 android:gravity="center_horizontal|center_vertical"
@@ -35,13 +43,6 @@
                 android:shadowRadius="1.8"
                 android:text="@string/epco"
                 android:textAppearance="@style/epco" />
-
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@drawable/logonuevo2"
-                android:elevation="4dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -100,7 +101,6 @@
                 android:fontFamily="@font/nunitoregular"
                 android:gravity="center"
                 android:text="@string/inicia_sesi_n_o_crea_una_cuenta_para_que_puedas_acceder_al_catalog_de_examenes"
-
                 />
 
             <Button
@@ -111,8 +111,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="11dp"
                 android:background="@drawable/loginbtnestilo"
-                android:fontFamily="@font/nunitoregular"
-                android:text="@string/iniciar_sesi_n" />
+                android:fontFamily="@font/nunitobold"
+                android:text="@string/iniciar_sesi_n"
+                android:textColor="?android:attr/textColorSecondary"/>
 
             <Button
                 android:id="@+id/btnRegistro"
@@ -122,9 +123,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="11dp"
                 android:background="@drawable/loginbtnestilo2"
+                android:textColor="?android:attr/textColorPrimary"
                 android:fontFamily="@font/nunitobold"
                 android:text="@string/crea_una_cuenta"
-                android:textColor="@color/colorSEQ"
+
                 android:theme="@style/Theme.ButtonChanger" />
 
             <TextView

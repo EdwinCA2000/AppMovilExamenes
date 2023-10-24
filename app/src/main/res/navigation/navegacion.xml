@@ -117,6 +117,11 @@
         android:id="@+id/preguntas"
         android:name="com.example.examenesseq.preguntas"
         android:label="Preguntas"
-        tools:layout="@layout/preguntas" />
+        tools:layout="@layout/preguntas" >
+        <action
+            android:id="@+id/action_preguntas_to_inicio"
+            app:destination="@id/inicio" />
+    </fragment>
+    
 
 </navigation>
