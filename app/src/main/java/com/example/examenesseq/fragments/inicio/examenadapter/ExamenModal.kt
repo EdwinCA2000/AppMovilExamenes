@@ -136,7 +136,6 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
                 // Navegar a la pantalla de preguntas
                 preferences.setDatosExamen(idExamen,duracionExamen)
                 findNavController().navigate(R.id.action_inicio_to_preguntas)
-                if (preferences.TieneExamenesUsuario()){
                     val examenUsuario = preferences.getExamenesUsuario()
                     val examenIniciado = examenUsuario?.find { it.IdExamen == idExamen && it.Estado == 1 }
 
@@ -163,29 +162,30 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
                             }
 
                         })
-                    }
-                }else{
-                    val time=0
-                    val calif=0
-                    apiServicio.guardarExamenUsuario(time,calif,examen.IdExamen).enqueue(object : Callback<LoginRespuesta>{
-                        override fun onResponse(
-                            call: Call<LoginRespuesta>,
-                            response: Response<LoginRespuesta>
-                        ) {
-                            if (response.isSuccessful){
-                                val respuesta=response.body()
-                                if (respuesta != null) {
+                    }else{
+                        val time=0
+                        val calif=0
+                        apiServicio.guardarExamenUsuario(time,calif,examen.IdExamen).enqueue(object : Callback<LoginRespuesta>{
+                            override fun onResponse(
+                                call: Call<LoginRespuesta>,
+                                response: Response<LoginRespuesta>
+                            ) {
+                                if (response.isSuccessful){
+                                    val respuesta=response.body()
+                                    if (respuesta != null) {
+                                        Log.e("Respuesta",respuesta.Mensaje)
+                                    }
                                 }
                             }
-                        }
 
-                        override fun onFailure(call: Call<LoginRespuesta>, t: Throwable) {
-                            Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
-                            Log.e("API Failure", "Error: ${t.message}", t)
-                        }
+                            override fun onFailure(call: Call<LoginRespuesta>, t: Throwable) {
+                                Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                                Log.e("API Failure", "Error: ${t.message}", t)
+                            }
 
-                    })
-                }
+                        })
+                    }
+
                 dialogconfirmacion.dismiss()
                 dialog?.dismiss()
             }
