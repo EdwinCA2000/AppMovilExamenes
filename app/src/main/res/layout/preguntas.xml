@@ -21,6 +21,7 @@
         <ProgressBar
             android:id="@+id/barraProgresoExamen"
             style="?android:attr/progressBarStyleHorizontal"
+            android:progressTintMode="add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="100"

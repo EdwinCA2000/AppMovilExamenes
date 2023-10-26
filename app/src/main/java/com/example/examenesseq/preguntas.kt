@@ -58,7 +58,10 @@ class preguntas : Fragment() {
     private var idOpcionSeleccionada: Int = -1
     private var tiempoRestanteMilisegundos: Long = 0
     private var tiempoTranscurridoMilisegundos: Long = 0
-    private var idExamenUsuario: Int=0
+    private var idExamenUsuario: Int = 0
+    private var cantidadTotalPreguntas = 0
+    private var preguntaActualEnExamen = 0
+
 
 
 
@@ -71,6 +74,7 @@ class preguntas : Fragment() {
 
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         val duracionExamen = preferences.getDuracionExamen() * 60000
+        obtenerCantidadTotalPreguntas()
         obtenerDatosDeExamenUsuario()
         iniciarTemporizador(duracionExamen, binding.temporizador)
         onStart()
@@ -121,32 +125,43 @@ class preguntas : Fragment() {
         }
         countDownTimer?.start()
     }
+
     private fun obtenerDatosDeExamenUsuario() {
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         val idExamen = preferences.getIdExamen()
-        val idUsuario= preferences.getIdentidad()?.IdUsuario
+        val idUsuario = preferences.getIdentidad()?.IdUsuario
         if (idUsuario != null) {
-            apiServicio.obtenerExamenUsuario(idUsuario).enqueue(object : Callback<List<ExamenUsuario>> {
-                override fun onResponse(call: Call<List<ExamenUsuario>>, response: Response<List<ExamenUsuario>>) {
-                    if (response.isSuccessful) {
-                        val exameneusuario = response.body()
-                        if (!exameneusuario.isNullOrEmpty()) {
-                            val datosUsuario=exameneusuario.find {  it.IdExamen == idExamen && it.Estado == 1  }
-                            if (datosUsuario != null) {
-                                idExamenUsuario=datosUsuario.IdExamenUsuario
+            apiServicio.obtenerExamenUsuario(idUsuario)
+                .enqueue(object : Callback<List<ExamenUsuario>> {
+                    override fun onResponse(
+                        call: Call<List<ExamenUsuario>>,
+                        response: Response<List<ExamenUsuario>>
+                    ) {
+                        if (response.isSuccessful) {
+                            val exameneusuario = response.body()
+                            if (!exameneusuario.isNullOrEmpty()) {
+                                val datosUsuario =
+                                    exameneusuario.find { it.IdExamen == idExamen && it.Estado == 1 }
+                                if (datosUsuario != null) {
+                                    idExamenUsuario = datosUsuario.IdExamenUsuario
+                                }
                             }
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Hubo error en la respuesta del servidor",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toast.makeText(requireContext(), "Hubo error en la respuesta del servidor", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-                override fun onFailure(call: Call <List<ExamenUsuario>>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
-                    Log.e("API Failure", "Error: ${t.message}", t)
-                }
+                    override fun onFailure(call: Call<List<ExamenUsuario>>, t: Throwable) {
+                        Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT)
+                            .show()
+                        Log.e("API Failure", "Error: ${t.message}", t)
+                    }
 
-            })
+                })
         }
     }
     private fun obtenerPreguntas() {
@@ -165,7 +180,6 @@ class preguntas : Fragment() {
                         mostrarPregunta(
                             respuestaSeccion[indiceSeccionActual].Preguntas, respuestaSeccion
                         )
-                        avanzarAPreguntaSiguiente()
                     }
                 }
             }
@@ -177,10 +191,33 @@ class preguntas : Fragment() {
         })
     }
 
+    private fun obtenerCantidadTotalPreguntas() {
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        val idExamen = preferences.getIdExamen()
+
+        apiServicio.obtenerExamen(idExamen).enqueue(object : Callback<RespuestaExamen> {
+            override fun onResponse(
+                call: Call<RespuestaExamen>, response: Response<RespuestaExamen>
+            ) {
+                if (response.isSuccessful) {
+                    val respuesta = response.body()
+                    val respuestaSeccion = respuesta?.Secciones
+                    if (respuestaSeccion != null) {
+                        cantidadTotalPreguntas = respuestaSeccion.sumOf { it.Preguntas.size }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<RespuestaExamen>, t: Throwable) {
+            }
+        })
+    }
+
 
     fun mostrarPregunta(preguntasExamen: List<PreguntasExamen>, secciones: List<SeccionesExamen>) {
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         val idExamen = preferences.getIdExamen()
+
         if (indicePreguntaActual < preguntasExamen.size) {
             val pregunta = preguntasExamen[indicePreguntaActual]
             val preguntaView =
@@ -192,7 +229,6 @@ class preguntas : Fragment() {
             val btnRespuesta2 = preguntaView.findViewById<Button>(R.id.btnRespuesta2)
             val btnRespuesta3 = preguntaView.findViewById<Button>(R.id.btnRespuesta3)
             val btnRespuesta4 = preguntaView.findViewById<Button>(R.id.btnRespuesta4)
-            val imgPregunta = preguntaView.findViewById<ImageView>(R.id.imgPregunta)
 
             txtNumPregunta.text = "Pregunta ${pregunta.Numero}"
 
@@ -213,8 +249,6 @@ class preguntas : Fragment() {
                         3 -> btnRespuesta4.text = text
                     }
                 }
-            } else {
-
             }
             binding.container.removeAllViews()
             binding.container.addView(preguntaView)
@@ -272,7 +306,6 @@ class preguntas : Fragment() {
                             idOpcion = idOpcion,
                             idExamen = examenIniciado?.IdExamenUsuario ?: -1
                         )
-                        Log.e("Respuestas", respuestaActual.toString())
                     }
                 }
             }
@@ -304,9 +337,15 @@ class preguntas : Fragment() {
                                     call: Call<Respuestas>, response: Response<Respuestas>
                                 ) {
                                     if (response.isSuccessful) {
-                                        val respuestaGuardada = response.body()
-                                        _binding?.barraProgresoExamen?.progress =
-                                            _binding?.barraProgresoExamen?.progress!! + 1
+                                        preguntaActualEnExamen++
+                                        var progresoActual: Int
+
+                                        if (preguntaActualEnExamen==cantidadTotalPreguntas){
+                                            progresoActual=100
+                                        }else{
+                                            progresoActual=(preguntaActualEnExamen * 100) / cantidadTotalPreguntas
+                                        }
+                                        _binding?.barraProgresoExamen?.progress = progresoActual
                                         idOpcionSeleccionada=-1
                                     } else {
                                     }
@@ -321,33 +360,31 @@ class preguntas : Fragment() {
                         }
                     } else {
                     }
-                    if (indiceSeccionActual < secciones.size) {
-                        mostrarPregunta(secciones[indiceSeccionActual].Preguntas, secciones)
-                    } else {
-                        val btnMostrarFinal = preguntaView.findViewById<Button>(R.id.btnFinalizarExamen)
-                        btnMostrarFinal.visibility = View.VISIBLE
-                        btnResponder.visibility = View.GONE
 
-                        btnMostrarFinal.setOnClickListener {
-                            val idExamenUsuario= idExamenUsuario
-                            val intentos=3
-                            val intentoFinalizar=intentos-1
-                            val estadoFinalizado=2
-                            val tiempoRestante=convertirMilisAString(tiempoRestanteMilisegundos)
-                            val tiempoTranscurrido = TimeUnit.MILLISECONDS.toMinutes(tiempoTranscurridoMilisegundos).toInt()
-                            finalizarExamen(idExamenUsuario,intentoFinalizar,estadoFinalizado,tiempoRestante,tiempoTranscurrido)
+                    if (indicePreguntaActual < preguntasExamen.size - 1) {
+                        avanzarAPreguntaSiguiente()
+                        mostrarPregunta(preguntasExamen, secciones)
+                    } else {
+                        avanzarASeccionSiguiente()
+                        if (indiceSeccionActual < secciones.size) {
+                            mostrarPregunta(secciones[indiceSeccionActual].Preguntas, secciones)
+                        } else {
+                            val btnMostrarFinal = preguntaView.findViewById<Button>(R.id.btnFinalizarExamen)
+                            btnMostrarFinal.visibility = View.VISIBLE
+                            btnResponder.visibility = View.GONE
+
+                            btnMostrarFinal.setOnClickListener {
+                                val idExamenUsuario = idExamenUsuario
+                                val intentos = 3
+                                val intentoFinalizar = intentos - 1
+                                val estadoFinalizado = 2
+                                val tiempoRestante = convertirMilisAString(tiempoRestanteMilisegundos)
+                                val tiempoTranscurrido = TimeUnit.MILLISECONDS.toMinutes(tiempoTranscurridoMilisegundos).toInt()
+                                finalizarExamen(idExamenUsuario, intentoFinalizar, estadoFinalizado, tiempoRestante, tiempoTranscurrido)
+                            }
                         }
                     }
-                    avanzarAPreguntaSiguiente()
                 }
-            }
-        } else {
-
-            avanzarASeccionSiguiente()
-
-            if (indiceSeccionActual < secciones.size) {
-                mostrarPregunta(secciones[indiceSeccionActual].Preguntas, secciones)
-            } else {
             }
         }
     }
@@ -374,8 +411,9 @@ class preguntas : Fragment() {
         val horas = TimeUnit.MILLISECONDS.toHours(tiempoEnMilisegundos)
         val minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoEnMilisegundos) - TimeUnit.HOURS.toMinutes(horas)
         val segundos = TimeUnit.MILLISECONDS.toSeconds(tiempoEnMilisegundos) - TimeUnit.MINUTES.toSeconds(minutos)
+        val segundosRestantes = segundos % 60
 
-        return String.format("%02d:%02d:%02d", horas, minutos, segundos)
+        return String.format("%02d:%02d:%02d", horas, minutos, segundosRestantes)
     }
 
 
@@ -384,7 +422,7 @@ class preguntas : Fragment() {
         return documento.text()
     }
 
-    fun limpiarTextoPregunta(textoHTML: String): String {
+    fun limpiarTextoPregunta(textoHTML: String): String  {
         val textoSinHTML = eliminarEtiquetasHTML(textoHTML)
 
         val indiceEspacio = textoSinHTML.indexOf(' ')
