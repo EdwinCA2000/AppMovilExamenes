@@ -14,8 +14,8 @@
             android:id="@+id/action_bienvenida_to_login"
             app:destination="@id/login" />
         <action
-            android:id="@+id/action_bienvenida_to_registro"
-            app:destination="@id/registro" />
+            android:id="@+id/action_bienvenida_to_registroInicio"
+            app:destination="@id/registroInicio" />
     </fragment>
     <fragment
         android:id="@+id/login"
@@ -26,29 +26,14 @@
             android:id="@+id/action_login_to_bienvenida"
             app:destination="@id/bienvenida" />
         <action
-            android:id="@+id/action_login_to_registro"
-            app:destination="@id/registro" />
-        <action
             android:id="@+id/action_login_to_inicio"
             app:destination="@id/inicio" />
         <action
             android:id="@+id/action_login_to_dashboard"
             app:destination="@id/dashboard" />
-    </fragment>
-    <fragment
-        android:id="@+id/registro"
-        android:name="com.example.examenesseq.fragments.registro.Registro"
-        android:label="Registro"
-        tools:layout="@layout/fragment_registro" >
         <action
-            android:id="@+id/action_registro_to_bienvenida"
-            app:destination="@id/bienvenida" />
-        <action
-            android:id="@+id/action_registro_to_login"
-            app:destination="@id/login" />
-        <action
-            android:id="@+id/action_registro_to_inicio"
-            app:destination="@id/inicio" />
+            android:id="@+id/action_login_to_registroInicio"
+            app:destination="@id/registroInicio" />
     </fragment>
     <fragment
         android:id="@+id/inicio"
@@ -69,6 +54,12 @@
         <action
             android:id="@+id/action_inicio_to_preguntas"
             app:destination="@id/preguntas" />
+        <action
+            android:id="@+id/action_inicio_to_noHayInternet"
+            app:destination="@id/noHayInternet" />
+        <action
+            android:id="@+id/action_inicio_to_falloServidor"
+            app:destination="@id/falloServidor" />
     </fragment>
     <fragment
         android:id="@+id/dashboard"
@@ -101,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/historial_examenes2"
-        android:name="com.example.examenesseq.HistorialExamenes"
+        android:name="com.example.examenesseq.fragments.inicio.HistorialExamenes"
         android:label="Historial de examenes"
         tools:layout="@layout/fragment_historial_examenes" >
         <action
@@ -115,13 +106,38 @@
         tools:layout="@layout/fragment_administrar_usuarios" />
     <fragment
         android:id="@+id/preguntas"
-        android:name="com.example.examenesseq.preguntas"
+        android:name="com.example.examenesseq.fragments.inicio.Preguntas"
         android:label="Preguntas"
         tools:layout="@layout/preguntas" >
         <action
             android:id="@+id/action_preguntas_to_inicio"
             app:destination="@id/inicio" />
     </fragment>
-    
+    <fragment
+        android:id="@+id/infoCuenta"
+        android:name="com.example.examenesseq.fragments.registro.InfoCuenta"
+        android:label="fragment_info_cuenta"
+        tools:layout="@layout/fragment_info_cuenta" />
+    <fragment
+        android:id="@+id/infoPersonal"
+        android:name="com.example.examenesseq.fragments.registro.InfoPersonal"
+        android:label="fragment_info_personal"
+        tools:layout="@layout/fragment_info_personal" />
+    <fragment
+        android:id="@+id/registroInicio"
+        android:name="com.example.examenesseq.fragments.registro.RegistroInicio"
+        android:label="fragment_registro_inicio"
+        tools:layout="@layout/fragment_registro_inicio" />
+    <fragment
+        android:id="@+id/noHayInternet"
+        android:name="com.example.examenesseq.util.NoHayInternet"
+        android:label="fragment_no_hay_internet"
+        tools:layout="@layout/fragment_no_hay_internet" />
+    <fragment
+        android:id="@+id/falloServidor"
+        android:name="com.example.examenesseq.util.FalloServidor"
+        android:label="fragment_fallo_servidor"
+        tools:layout="@layout/fragment_fallo_servidor" />
+
 
 </navigation>

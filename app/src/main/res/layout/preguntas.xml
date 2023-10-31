@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorSEQ"
     android:padding="9dp"
-    tools:context=".preguntas">
+    tools:context=".fragments.inicio.Preguntas">
 
     <LinearLayout
         android:layout_width="match_parent"

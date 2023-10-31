@@ -1,4 +1,4 @@
-package com.example.examenesseq
+package com.example.examenesseq.fragments.inicio
 
 
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -17,15 +16,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.examenesseq.R
 import com.example.examenesseq.databinding.PreguntasBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaExamen
 import com.example.examenesseq.datos.respuesta.Respuestas
-import com.example.examenesseq.fragments.inicio.examenadapter.ExamenAdapter
-import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.PreguntasExamen
+import com.example.examenesseq.model.examen.RespuestasExamen
 import com.example.examenesseq.model.examen.SeccionesExamen
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneExamenesUsuario
@@ -33,7 +32,6 @@ import com.example.examenesseq.util.PreferenceHelper.getDuracionExamen
 import com.example.examenesseq.util.PreferenceHelper.getExamenesUsuario
 import com.example.examenesseq.util.PreferenceHelper.getIdExamen
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
-import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
 import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +39,7 @@ import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
 
-class preguntas : Fragment() {
+class Preguntas : Fragment() {
 
     private var _binding: PreguntasBinding? = null
     private val binding get() = _binding!!
@@ -367,7 +365,8 @@ class preguntas : Fragment() {
                     } else {
                         avanzarASeccionSiguiente()
                         if (indiceSeccionActual < secciones.size) {
-                            mostrarPregunta(secciones[indiceSeccionActual].Preguntas, secciones)
+                            mostrarPregunta(secciones[indiceSeccionActual].Preguntas, secciones
+                            )
                         } else {
                             val btnMostrarFinal = preguntaView.findViewById<Button>(R.id.btnFinalizarExamen)
                             btnMostrarFinal.visibility = View.VISIBLE
@@ -388,6 +387,16 @@ class preguntas : Fragment() {
             }
         }
     }
+    fun preguntaYaRespondida(idExamen: Int, respuestaUsuario: RespuestasExamen): Boolean {
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        val IdExamenUsuario = preferences.getExamenesUsuario()
+        val examenIniciado = IdExamenUsuario?.find { it.IdExamen == idExamen && it.Estado == 1 }
+        val idExamenUsuario = examenIniciado?.IdExamenUsuario
+
+        return respuestaUsuario.idExamen == idExamenUsuario
+    }
+
+
 
     private fun finalizarExamen(idExamenU: Int,intentos: Int, estado: Int, tiempoRestante:String, time: Int){
         apiServicio.finalizarExamenUsuario(idExamenU,intentos,estado,tiempoRestante,time).enqueue(object : Callback<LoginRespuesta>{
@@ -449,6 +458,7 @@ class preguntas : Fragment() {
         indicePreguntaActual = 0
         indiceSeccionActual++
     }
+
 
 
     override fun onStart() {

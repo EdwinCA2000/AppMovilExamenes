@@ -1,4 +1,4 @@
-package com.example.examenesseq
+package com.example.examenesseq.fragments.inicio
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,6 @@ import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.getIdentidad
 import com.example.examenesseq.util.PreferenceHelper.saveExamenesUsuario
-import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

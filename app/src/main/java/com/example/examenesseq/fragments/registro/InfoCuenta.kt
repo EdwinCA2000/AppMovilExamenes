@@ -8,9 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
-import com.example.examenesseq.databinding.FragmentRegistroBinding
+import com.example.examenesseq.databinding.FragmentInfoCuentaBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.util.PreferenceHelper
@@ -21,63 +22,57 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.regex.Pattern
 
-class Registro : Fragment() {
 
+class InfoCuenta : Fragment() {
 
     private val apiServicio: ApiServicio by lazy {
         ApiServicio.create(requireContext())
     }
-
-    private var _binding: FragmentRegistroBinding? = null
+    private var _binding: FragmentInfoCuentaBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var registroViewModel: RegistroViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentRegistroBinding.inflate(inflater, container, false)
+        _binding = FragmentInfoCuentaBinding.inflate(inflater, container, false)
+        val registroInicioFragment = parentFragment as RegistroInicio
+        registroInicioFragment.isSecondTabEnabled=true
+        registroInicioFragment.updateTabState()
 
-        binding.btnRegistrarse.setOnClickListener {
-            performRegistro()
-        }
         return binding.root
     }
 
-    private fun irAInicio(){
-        findNavController().navigate(R.id.action_registro_to_inicio)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        registroViewModel = ViewModelProvider(requireActivity())[RegistroViewModel::class.java]
+
+        binding.btnRegistrarse.setOnClickListener{
+            performRegistro()
+        }
     }
 
     private fun validarRegistro(): Boolean {
-        val etNombres = binding.etNombresRegistro.text.toString()
-        val etApellido1 = binding.etApellidoPaterno.text.toString()
-        val etApellido2 = binding.etApellidoMaterno.text.toString()
         val etCorreoElectronico = binding.etCorreoElectronicoRegistro.text.toString()
-        val etCURP = binding.etCurp.text.toString()
         val etContrasena = binding.etContrasenaRegistro.text.toString()
         val etConfirmarPassword = binding.etConfirmarContrasena.text.toString()
 
-        // Validar que la contraseña y su confirmación sean iguales
         if (etContrasena != etConfirmarPassword) {
             Toast.makeText(requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
             return false
         }
 
-
-        // Validar que la CURP tenga una longitud de 18 caracteres
-        if (etCURP.length != 18) {
-            Toast.makeText(requireContext(), "La CURP no es válida", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        // Validar que los campos no estén vacíos
-        if (etNombres.isEmpty() || etApellido1.isEmpty() || etApellido2.isEmpty() || etCorreoElectronico.isEmpty() || etCURP.isEmpty() || etContrasena.isEmpty()) {
+        if (etCorreoElectronico.isEmpty() || etContrasena.isEmpty()) {
             Toast.makeText(requireContext(), "Por favor complete todos los campos", Toast.LENGTH_SHORT).show()
             return false
         }
 
         return true
     }
+
     private fun validarCorreo(email: String): Boolean {
         val pattern: Pattern = Patterns.EMAIL_ADDRESS
         return pattern.matcher(email).matches()
@@ -85,11 +80,11 @@ class Registro : Fragment() {
 
     private fun performRegistro(){
         val idUsuario=0
-        val etNombres=binding.etNombresRegistro.text.toString()
-        val etApellido1=binding.etApellidoPaterno.text.toString()
-        val etApellido2=binding.etApellidoMaterno.text.toString()
+        val nombres = registroViewModel.nombres
+        val apellido1 = registroViewModel.apellido1
+        val apellido2= registroViewModel.apellido2
+        val curp= registroViewModel.curp
         val etCorreoElectronico=binding.etCorreoElectronicoRegistro.text.toString()
-        val etCURP= binding.etCurp.text.toString()
         val etContrasena=binding.etContrasenaRegistro.text.toString()
 
         if(!validarCorreo(etCorreoElectronico)){
@@ -98,7 +93,7 @@ class Registro : Fragment() {
         }else if (!validarRegistro()) {
             return
         }else{
-            val call =apiServicio.postRegistro(idUsuario,etCURP,etContrasena,etCorreoElectronico,etNombres,etApellido1,etApellido2)
+            val call =apiServicio.postRegistro(idUsuario,curp,etContrasena,etCorreoElectronico,nombres,apellido1,apellido2)
             call.enqueue(object: Callback<LoginRespuesta> {
                 override fun onResponse(
                     call: Call<LoginRespuesta>,
@@ -131,9 +126,7 @@ class Registro : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun irAInicio(){
+        findNavController().navigate(R.id.inicio)
     }
-
 }

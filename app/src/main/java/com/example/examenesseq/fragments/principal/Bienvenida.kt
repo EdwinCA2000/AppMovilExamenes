@@ -46,7 +46,7 @@ class Bienvenida : Fragment() {
         }
 
         binding.btnRegistro.setOnClickListener {
-            findNavController().navigate(R.id.action_bienvenida_to_registro)
+            findNavController().navigate(R.id.action_bienvenida_to_registroInicio)
         }
     }
 

@@ -50,7 +50,7 @@ class Login : Fragment() {
     }
 
     private fun irARegistro(){
-        findNavController().navigate(R.id.action_login_to_registro)
+        findNavController().navigate(R.id.action_login_to_registroInicio)
     }
 
     private fun irADashboard() {

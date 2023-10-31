@@ -1,6 +1,10 @@
 package com.example.examenesseq.fragments.inicio
 
 import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -92,8 +96,6 @@ class Inicio : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         obtenerDatosSesion()
-        obtenerExamenesDisponibles()
-        obtenerSeccionesExamen()
     }
 
 
@@ -123,8 +125,9 @@ class Inicio : Fragment() {
             }
 
             override fun onFailure(call: Call <List<Examen>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.e("API Failure", "Error: ${t.message}", t)
+                //Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                //Log.e("API Failure", "Error: ${t.message}", t)
+                findNavController().navigate(R.id.action_inicio_to_falloServidor)
             }
 
         })
@@ -153,8 +156,9 @@ class Inicio : Fragment() {
                 }
 
                 override fun onFailure(call: Call <List<ExamenUsuario>>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
-                    Log.e("API Failure", "Error: ${t.message}", t)
+                    //Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                    //Log.e("API Failure", "Error: ${t.message}", t)
+                    //findNavController().navigate(R.id.action_inicio_to_falloServidor)
                 }
 
             })
@@ -182,8 +186,9 @@ class Inicio : Fragment() {
             }
 
             override fun onFailure(call: Call <List<Secciones>>, t: Throwable) {
-                Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.e("API Failure", "Error: ${t.message}", t)
+                //Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                //Log.e("API Failure", "Error: ${t.message}", t)
+                //findNavController().navigate(R.id.action_inicio_to_falloServidor)
             }
 
         })
@@ -192,33 +197,38 @@ class Inicio : Fragment() {
 
 
     private fun obtenerDatosSesion() {
+        if (!isNetworkConnected(requireContext())) {
+            // No hay conexión a Internet, muestra un fragmento de error por falta de conexión.
+            findNavController().navigate(R.id.action_inicio_to_noHayInternet)
+        }else{
+            apiServicio.getDatosSesion().enqueue(object : Callback<Identidad> {
+                override fun onResponse(call: Call<Identidad>, response: Response<Identidad>) {
+                    if (response.isSuccessful) {
+                        val identidad = response.body()
+                        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+                        if (preferences.TieneIdentidad()){
+                            val identidadUser=preferences.getIdentidad()
+                            val nombreCompleto=identidadUser?.Nombres + " " + identidadUser?.Apellido1 + " " + identidadUser?.Apellido2
+                            binding.textUser.text=nombreCompleto
+                            binding.textCorreo.text=identidadUser?.CorreoElectronico
+                        }else{
+                            val nombreCompleto= identidad?.Nombres + " " + identidad?.Apellido1 + " " + identidad?.Apellido2
+                            binding.textUser.text=nombreCompleto
+                            binding.textCorreo.text=identidad?.CorreoElectronico
+                        }
+                        obtenerExamenesDisponibles()
+                        obtenerSeccionesExamen()
 
-        apiServicio.getDatosSesion().enqueue(object : Callback<Identidad> {
-            override fun onResponse(call: Call<Identidad>, response: Response<Identidad>) {
-                if (response.isSuccessful) {
-                    val identidad = response.body()
-                    val preferences = PreferenceHelper.defaultPrefs(requireContext())
-
-                    if (preferences.TieneIdentidad()){
-                        val identidadUser=preferences.getIdentidad()
-                        val nombreCompleto=identidadUser?.Nombres + " " + identidadUser?.Apellido1 + " " + identidadUser?.Apellido2
-                        binding.textUser.text=nombreCompleto
-                        binding.textCorreo.text=identidadUser?.CorreoElectronico
-                    }else{
-                        val nombreCompleto= identidad?.Nombres + " " + identidad?.Apellido1 + " " + identidad?.Apellido2
-                        binding.textUser.text=nombreCompleto
-                        binding.textCorreo.text=identidad?.CorreoElectronico
+                    } else {
+                        Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener la cantidad de preguntas", Toast.LENGTH_SHORT).show()
                     }
-
-                } else {
-                    Toast.makeText(requireContext(), "Hubo un error en la respuesta del servidor para obtener la cantidad de preguntas", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<Identidad>, t: Throwable) {
-                Toast.makeText(requireContext(), "Hubo una falla en el servidor", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<Identidad>, t: Throwable) {
+                    findNavController().navigate(R.id.action_inicio_to_falloServidor)
+                }
+            })
+        }
     }
 
     private fun mostrarDialogoCerrarSesion() {
@@ -269,6 +279,20 @@ class Inicio : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val network = connectivityManager.activeNetwork
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+            return networkCapabilities != null && (networkCapabilities.hasTransport(
+                NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
     }
 
 }

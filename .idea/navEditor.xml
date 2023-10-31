@@ -36,24 +36,12 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_bienvenida_to_registro">
+                            <entry key="action_bienvenida_to_registroInicio">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="container2">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-145" />
-                            <option name="y" value="-439" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -84,6 +72,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="falloServidor">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="167" />
+                            <option name="y" value="-534" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="historial_examenes2">
                     <value>
                       <LayoutPositions>
@@ -105,6 +105,30 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="infoCuenta">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="233" />
+                            <option name="y" value="581" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="infoPersonal">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="52" />
+                            <option name="y" value="583" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="inicio">
                     <value>
                       <LayoutPositions>
@@ -122,6 +146,11 @@
                               </value>
                             </entry>
                             <entry key="action_inicio_to_login">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_inicio_to_noHayInternet">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -167,12 +196,24 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_login_to_registro">
+                            <entry key="action_login_to_registroInicio">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="noHayInternet">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="345" />
+                            <option name="y" value="-530" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -212,48 +253,26 @@
                             <option name="y" value="-520" />
                           </Point>
                         </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="preguntasmultiple">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-111" />
-                            <option name="y" value="-456" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="registro">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="234" />
-                            <option name="y" value="212" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_registro_to_bienvenida">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_registro_to_inicio">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_registro_to_login">
+                            <entry key="action_preguntas_to_inicio">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="registroInicio">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="232" />
+                            <option name="y" value="274" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
