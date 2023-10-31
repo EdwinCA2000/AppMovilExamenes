@@ -6,3 +6,4 @@
 .gradle/kotlin/
 .gradle/vcs-1/
 .gradle/file-system.probe/
+local.properties
