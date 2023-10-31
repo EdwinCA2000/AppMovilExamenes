@@ -4,6 +4,8 @@ package com.example.examenesseq.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
+import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
@@ -16,11 +18,11 @@ import com.google.gson.reflect.TypeToken
 
 object PreferenceHelper {
 
-    fun defaultPrefs(context: Context): SharedPreferences
-            = PreferenceManager.getDefaultSharedPreferences(context)
+    fun defaultPrefs(context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun customPrefs(context: Context, name: String): SharedPreferences
-            = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+    fun customPrefs(context: Context, name: String): SharedPreferences =
+        context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
     fun SharedPreferences.getJSessionId(): String? {
         return getString("JSESSIONID", null)
@@ -30,9 +32,11 @@ object PreferenceHelper {
         edit { it.putString("JSESSIONID", jsessionid) }
     }
 
-    fun SharedPreferences.setDatosExamen(idExamen: Int,duracionExamen:Int) {
-        edit { it.putInt("idExamen", idExamen)
-            it.putInt("duracionExamen", duracionExamen)}
+    fun SharedPreferences.setDatosExamen(idExamen: Int, duracionExamen: Int) {
+        edit {
+            it.putInt("idExamen", idExamen)
+            it.putInt("duracionExamen", duracionExamen)
+        }
     }
 
     fun SharedPreferences.getIdExamen(): Int {
@@ -44,27 +48,26 @@ object PreferenceHelper {
     }
 
 
-    fun SharedPreferences.saveUsuario(moduloUsuario: List<ModuloUsuario>) {
+    fun SharedPreferences.saveUsuario(actualizarUsuarioRespuesta: ActualizarUsuarioRespuesta) {
         edit {
-            for (usuario in moduloUsuario){
-                it.putInt("IdUsuario", usuario.IdUsuario)
-                it.putString("CURP", usuario.CURP)
-                it.putString("Contrasena", usuario.Contrasena)
-                it.putString("CorreoElectronico", usuario.CorreoElectronico)
-                it.putString("Nombres", usuario.Nombres)
-                it.putString("Apellido1", usuario.Apellido1)
-                it.putString("Apellido2", usuario.Apellido2)
-                it.putInt("IdRolUsuario", usuario.IdRolUsuario)
-                it.putInt("ActivoUsuario", usuario.ActivoUsuario)
-            }
+            val actualizarUsuarioRespuestaList = actualizarUsuarioRespuesta.Objeto
+
+            it.putInt("IdUsuario", actualizarUsuarioRespuestaList.IdUsuario)
+            it.putString("CURP", actualizarUsuarioRespuestaList.CURP)
+            it.putString("CorreoElectronico", actualizarUsuarioRespuestaList.CorreoElectronico)
+            it.putString("Nombres", actualizarUsuarioRespuestaList.Nombres)
+            it.putString("Apellido1", actualizarUsuarioRespuestaList.Apellido1)
+            it.putString("Apellido2", actualizarUsuarioRespuestaList.Apellido2)
+
 
         }
     }
 
-    fun SharedPreferences.getUser():ModuloUsuario? {
+
+    fun SharedPreferences.getUser(): ModuloUsuario? {
         val idUsuario = getInt("IdUsuario", -1)
         val curp = getString("CURP", null)
-        val contrasena=getString("Contrasena",null)
+        val contrasena = getString("Contrasena", null)
         val correoElectronico = getString("CorreoElectronico", null)
         val nombres = getString("Nombres", null)
         val apellido1 = getString("Apellido1", null)
@@ -73,10 +76,20 @@ object PreferenceHelper {
         val activoUsuario = getInt("ActivoUsuario", -1)
 
 
-        return if (idUsuario != -1 && curp != null && contrasena!=null &&correoElectronico != null && nombres != null &&
+        return if (idUsuario != -1 && curp != null && contrasena != null && correoElectronico != null && nombres != null &&
             apellido1 != null && apellido2 != null && idPerfil != -1
         ) {
-            ModuloUsuario(idUsuario, curp,contrasena, correoElectronico, nombres, apellido1, apellido2, idPerfil, activoUsuario)
+            ModuloUsuario(
+                idUsuario,
+                curp,
+                contrasena,
+                correoElectronico,
+                nombres,
+                apellido1,
+                apellido2,
+                idPerfil,
+                activoUsuario
+            )
         } else {
             null
         }
@@ -85,15 +98,15 @@ object PreferenceHelper {
     fun SharedPreferences.TieneUser(): Boolean {
         val idUsuario = getInt("IdUsuario", -1)
         val curp = getString("CURP", null)
-        val contrasena=getString("Contrasena",null)
+        val contrasena = getString("Contrasena", null)
         val correoElectronico = getString("CorreoElectronico", null)
         val nombres = getString("Nombres", null)
         val apellido1 = getString("Apellido1", null)
         val apellido2 = getString("Apellido2", null)
-        val idPerfil = getInt("IdPerfil", -1)
+        val idPerfil = getInt("IdRolUsuario", -1)
         val activoUsuario = getInt("ActivoUsuario", -1)
 
-        return idUsuario != -1 && curp != null && contrasena!=null && correoElectronico != null && nombres != null &&
+        return idUsuario != -1 && curp != null && contrasena != null && correoElectronico != null && nombres != null &&
                 apellido1 != null && apellido2 != null && idPerfil != -1 && activoUsuario != -1
     }
 
@@ -101,11 +114,11 @@ object PreferenceHelper {
         edit { it.putInt("Objeto", objeto) }
     }
 
-    fun SharedPreferences.getEstadoUser(): Int?{
+    fun SharedPreferences.getEstadoUser(): Int? {
         return getInt("Objeto", -1)
     }
 
-    fun SharedPreferences.TieneEstadoUser(): Boolean{
+    fun SharedPreferences.TieneEstadoUser(): Boolean {
         return contains("Objeto")
     }
 
@@ -113,7 +126,7 @@ object PreferenceHelper {
         return contains("JSESSIONID")
     }
 
-    fun SharedPreferences.setTotalUser(totalUser: String){
+    fun SharedPreferences.setTotalUser(totalUser: String) {
         edit { it.putString("TotalUser", totalUser) }
     }
 
@@ -125,7 +138,7 @@ object PreferenceHelper {
         return getString("TotalUser", null)
     }
 
-    fun SharedPreferences.setTotalExamenesComple(totalUser: String){
+    fun SharedPreferences.setTotalExamenesComple(totalUser: String) {
         edit { it.putString("TotalExamenes", totalUser) }
     }
 
@@ -136,7 +149,6 @@ object PreferenceHelper {
     fun SharedPreferences.getTotalExamenComple(): String? {
         return getString("TotalExamenes", null)
     }
-
 
 
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
@@ -183,7 +195,7 @@ object PreferenceHelper {
 
     fun SharedPreferences.saveIdentidad(identidad: Identidad) {
         edit {
-            if (identidad.IdRolUsuario==2){
+            if (identidad.IdRolUsuario == 2) {
                 it.putInt("IdUsuario", identidad.IdUsuario)
                 it.putString("CURP", identidad.CURP)
                 it.putString("CorreoElectronico", identidad.CorreoElectronico)
@@ -192,7 +204,7 @@ object PreferenceHelper {
                 it.putString("Apellido2", identidad.Apellido2)
                 it.putInt("IdPerfil", identidad.IdRolUsuario)
                 it.putInt("ActivoUsuario", identidad.ActivoUsuario)
-            }else{
+            } else {
                 it.putInt("IdUsuario", identidad.IdUsuario)
                 it.putString("CorreoElectronico", identidad.CorreoElectronico)
                 it.putString("Nombres", identidad.Nombres)
@@ -206,21 +218,29 @@ object PreferenceHelper {
     }
 
 
-
     fun SharedPreferences.getIdentidad(): Identidad? {
         val idUsuario = getInt("IdUsuario", -1)
         val correoElectronico = getString("CorreoElectronico", null)
         val nombres = getString("Nombres", null)
         val apellido1 = getString("Apellido1", null)
         val apellido2 = getString("Apellido2", null)
-        val idPerfil = getInt("IdPerfil", -1)
+        val idPerfil = getInt("IdRolUsuario", -1)
         val activoUsuario = getInt("ActivoUsuario", -1)
         val curp = if (idPerfil == 2) getString("CURP", null) else ""
 
         return if (idUsuario != -1 && curp != null && correoElectronico != null && nombres != null &&
             apellido1 != null && apellido2 != null && idPerfil != -1
         ) {
-            Identidad(idUsuario, curp, correoElectronico, nombres, apellido1, apellido2, idPerfil, activoUsuario)
+            Identidad(
+                idUsuario,
+                curp,
+                correoElectronico,
+                nombres,
+                apellido1,
+                apellido2,
+                idPerfil,
+                activoUsuario
+            )
         } else {
             null
         }
@@ -292,6 +312,7 @@ object PreferenceHelper {
         val jsonString = Gson().toJson(examenes)
         edit { it.putString("ExamenesUsuario", jsonString) }
     }
+
     fun SharedPreferences.TieneExamenesUsuario(): Boolean {
         return contains("ExamenesUsuario")
     }
@@ -306,10 +327,6 @@ object PreferenceHelper {
             null
         }
     }
-
-
-
-
 
 
     /**

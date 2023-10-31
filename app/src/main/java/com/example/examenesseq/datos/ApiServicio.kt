@@ -4,6 +4,7 @@ package com.example.examenesseq.datos
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
@@ -55,7 +56,7 @@ interface ApiServicio {
         @Query(value="CorreoElectronico")CorreoElectronico: String,
         @Query(value="Nombres")Nombres: String,
         @Query(value="Apellido1")Apellido1:String,
-        @Query(value="Apellido2")Apellido2: String,
+        @Query(value="Apellido2")Apellido2: String
     ):Call<LoginRespuesta>
 
     @POST(value="tecnologiaeducativa.ceneval/actionEditarModuloUsuario")
@@ -65,10 +66,8 @@ interface ApiServicio {
         @Query(value="Apellido1")Apellido1:String,
         @Query(value="Apellido2")Apellido2: String,
         @Query(value="CURP")CURP:String,
-        @Query(value="CorreoElectronico")CorreoElectronico: String,
-        @Query(value="Contrasena")Contrasena:String,
-        @Query(value="ActivoUsuario")ActivoUsuario:Int,
-    ):Call<ModuloUsuarioRespuesta>
+        @Query(value="CorreoElectronico")CorreoElectronico: String
+    ):Call<ActualizarUsuarioRespuesta>
 
     @GET(value="tecnologiaeducativa.ceneval/actionActivarUsuario")
     fun actualizarEstadoUser(

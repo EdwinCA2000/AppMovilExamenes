@@ -50,6 +50,7 @@ class AdministrarUsuarios : Fragment() {
                 if (response.isSuccessful){
                     val usuarios=response.body()
                     if (usuarios != null) {
+
                         usuariosAdapter=UsuariosAdapter(requireContext(),usuarios)
                         binding.recyclerUsers.adapter=usuariosAdapter
 

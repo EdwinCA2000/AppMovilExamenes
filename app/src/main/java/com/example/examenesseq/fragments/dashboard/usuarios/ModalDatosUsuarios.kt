@@ -17,6 +17,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
+import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
 import com.example.examenesseq.model.usuario.ModuloUsuario
@@ -41,10 +42,10 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
     private lateinit var txtApellido2: EditText
     private lateinit var txtCURP: EditText
     private lateinit var txtCorreo: EditText
-    private lateinit var txtContrasena: EditText
-    private lateinit var txtContrasenConfirmar: EditText
     private lateinit var cardEstadoUser: CardView
+    private lateinit var btnGuardar: Button
     private lateinit var btnEstado: Button
+    private var estado=-1
     private var modalListener: ModalListener? = null
 
 
@@ -62,9 +63,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
         txtApellido2 = view.findViewById(R.id.etApellido2)
         txtCURP = view.findViewById(R.id.etCURP)
         txtCorreo = view.findViewById(R.id.etCorreoElectronico)
-        txtContrasena = view.findViewById(R.id.etContrasena)
-        txtContrasenConfirmar = view.findViewById(R.id.etConfirmarContrasena)
-        val btnGuardar = view.findViewById<Button>(R.id.btnGuardar)
+        btnGuardar = view.findViewById(R.id.btnGuardar)
         btnEstado = view.findViewById(R.id.btnEstado)
         cardEstadoUser = view.findViewById(R.id.estadoUsuarioCard)
 
@@ -75,7 +74,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
         val apellido2 = users.Apellido2
         val curp = users.CURP
         val correo = users.CorreoElectronico
-        val estado = users.ActivoUsuario
+        estado = users.ActivoUsuario
         //Establecer el estado del usuario con el cardview
         if (estado == 1) {
             btnEstado.text = "DESACTIVAR"
@@ -100,8 +99,8 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
             txtCURP.setText(curpUser)
             txtCorreo.setText(correoElect)
         }else if (preferences.TieneEstadoUser()){
-            val estadoUsuario=preferences.getEstadoUser()
-            if (estadoUsuario == 1) {
+
+            if (estado == 1) {
                 //setear datos normalmente
                 txtNombre.setText(nombres)
                 txtApellido1.setText(apellido1)
@@ -131,11 +130,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
 
         //actions
         btnGuardar.setOnClickListener {
-            if (txtContrasena.text.toString()!="" && txtContrasenConfirmar.text.toString()!=""){
                 actualizarUsuario()
-            }else{
-                actualizarUsuario()
-            }
         }
 
         btnEstado.setOnClickListener {
@@ -154,15 +149,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
 
     private fun validarRegistro(): Boolean {
         val curp = txtCURP.text.toString()
-        val contrasena = txtContrasena.text.toString()
-        val contrasenaConfirmar = txtContrasenConfirmar.text.toString()
 
-        // Validar que la contraseña y su confirmación sean iguales
-        if (contrasena != contrasenaConfirmar) {
-            Toast.makeText(requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT)
-                .show()
-            return false
-        }
         // Validar que la CURP tenga una longitud de 18 caracteres
         if (curp.length != 18) {
             Toast.makeText(requireContext(), "La CURP no es válida", Toast.LENGTH_SHORT).show()
@@ -178,9 +165,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
         val apellido2 = txtApellido2.text.toString()
         val curp = txtCURP.text.toString()
         val correo = txtCorreo.text.toString()
-        val contrasena = txtContrasena.text.toString()
 
-        val activoUsuario = if (btnEstado.text == "DESACTIVAR")  1 else 0
 
 
         if (!validarCorreo(correo)) {
@@ -195,29 +180,29 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
                 apellido1,
                 apellido2,
                 curp,
-                correo,
-                contrasena,
-                activoUsuario
+                correo
             )
-            call.enqueue(object : Callback<ModuloUsuarioRespuesta> {
+            call.enqueue(object : Callback<ActualizarUsuarioRespuesta> {
                 override fun onResponse(
-                    call: Call<ModuloUsuarioRespuesta>,
-                    response: Response<ModuloUsuarioRespuesta>
+                    call: Call<ActualizarUsuarioRespuesta>,
+                    response: Response<ActualizarUsuarioRespuesta>
                 ) {
+                    Log.e("response",response.toString())
                     if (response.isSuccessful) {
                         val usuarioActualizado = response.body()
+                        Log.e("usuarioActualizado",usuarioActualizado.toString())
                         if (usuarioActualizado != null) {
                             val preferences = PreferenceHelper.defaultPrefs(requireContext())
                             val userObjeto=usuarioActualizado.Objeto
-                            preferences.saveUsuario(userObjeto)
+                            preferences.saveUsuario(usuarioActualizado)
 
-                            for (usuariosObjeto in userObjeto){
-                                val nombUser = usuariosObjeto.Nombres
-                                val ape1 = usuariosObjeto.Apellido1
-                                val ape2 = usuariosObjeto.Apellido2
-                                val curpUser = usuariosObjeto.CURP
-                                val correoEle = usuariosObjeto.CorreoElectronico
-                                val activoUser = usuariosObjeto.ActivoUsuario
+
+                                val nombUser = userObjeto.Nombres
+                                val ape1 = userObjeto.Apellido1
+                                val ape2 = userObjeto.Apellido2
+                                val curpUser = userObjeto.CURP
+                                val correoEle = userObjeto.CorreoElectronico
+                                val activoUser = estado
 
                                 txtNombre.setText(nombUser)
                                 txtApellido1.setText(ape1)
@@ -225,7 +210,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
                                 txtCURP.setText(curpUser)
                                 txtCorreo.setText(correoEle)
 
-                                if (activoUser == 1) {
+                                if (estado == 1) {
                                     btnEstado.text = "DESACTIVAR"
                                     cardEstadoUser.setCardBackgroundColor(
                                         ContextCompat.getColor(
@@ -242,18 +227,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
                                         )
                                     )
                                 }
-                            }
 
-
-
-
-
-
-                            if (txtContrasena.text.toString()!="" && txtContrasenConfirmar.text.toString()!="")
-                            {
-                                txtContrasena.setText("")
-                                txtContrasenConfirmar.setText("")
-                            }
                             Toast.makeText(requireContext(),"Haz actualizado los datos correctamente", Toast.LENGTH_SHORT).show()
                             dismiss()
                         }
@@ -262,8 +236,9 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
                     }
                 }
 
-                override fun onFailure(call: Call<ModuloUsuarioRespuesta>, t: Throwable) {
-                    Toast.makeText(requireContext(), "No se logro actualizar los datos debido al servidor", Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<ActualizarUsuarioRespuesta>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Fallo: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("API Failure", "Error: ${t.message}", t)
                 }
             })
         }

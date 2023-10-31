@@ -8,30 +8,25 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@color/transparent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/card_account_details"
+            app:tint="@color/colorSEQ" />
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/card_account_details"
-                app:tint="@color/colorSEQ" />
-        </LinearLayout>
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -39,10 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        tools:layout_editor_absoluteX="24dp">
 
         <EditText
             android:id="@+id/etNombreAlumno"
@@ -113,45 +106,16 @@
             android:paddingEnd="18dp"
             android:textColor="@color/black" />
 
-        <EditText
-            android:id="@+id/etContrasena"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/input_custom"
-            android:drawableEnd="@drawable/ic_contrasena"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:textColor="@color/black"/>
-
-        <EditText
-            android:id="@+id/etConfirmarContrasena"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/input_custom"
-            android:drawableEnd="@drawable/ic_contrasena"
-            android:ems="10"
-            android:hint="Confirmar Contrasena"
-            android:inputType="textPassword"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:textColor="@color/black"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -163,8 +127,8 @@
             android:background="@drawable/estilo_button_login"
             android:backgroundTint="@color/colorSEQ"
             android:text="GUARDAR"
-            android:textSize="14sp"
             android:textColor="@color/white"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -181,9 +145,9 @@
             android:background="@drawable/estilo_button_login"
             android:backgroundTint="@color/colorSEQ"
             android:text="ACTIVAR"
-            android:textSize="14sp"
             android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
