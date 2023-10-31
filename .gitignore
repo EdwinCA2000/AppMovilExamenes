@@ -1,9 +1,11 @@
-/.idea/
-/captures/
-/gradle/
-.gradle/8.0/
-.gradle/buildOutputCleanup/
-.gradle/kotlin/
-.gradle/vcs-1/
-.gradle/file-system.probe/
+# Ignorar todas las carpetas .gradle en todas partes
+**/.gradle/
+.gradle
+
+# Ignorar carpetas de construcción
+build/
+
+# Ignorar el archivo local.properties
 local.properties
+.idea/
+
