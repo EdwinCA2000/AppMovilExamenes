@@ -3,6 +3,7 @@ package com.example.examenesseq.fragments.dashboard
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +52,8 @@ class Dashboard : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         val identidadAdmin=preferences.getIdentidad()
-        val nombreCompletoAdmin=identidadAdmin?.Nombres + " " + identidadAdmin?.Apellido1 + " " + identidadAdmin?.Apellido2
+        Log.e("identidad",identidadAdmin.toString())
+        val nombreCompletoAdmin= identidadAdmin!!.Nombres + " " + identidadAdmin.Apellido1 + " " + identidadAdmin.Apellido2
         binding.nombreAdmintxt.text=nombreCompletoAdmin
         obtenerTotalUsers()
         obtenerTotalExamenesCompletados()

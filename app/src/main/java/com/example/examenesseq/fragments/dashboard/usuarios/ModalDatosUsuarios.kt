@@ -47,6 +47,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
     private lateinit var btnEstado: Button
     private var estado=-1
     private var modalListener: ModalListener? = null
+    private var usuarioEditado: ModuloUsuario? = null
 
 
     private val apiServicio: ApiServicio by lazy {
@@ -67,14 +68,16 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
         btnEstado = view.findViewById(R.id.btnEstado)
         cardEstadoUser = view.findViewById(R.id.estadoUsuarioCard)
 
-
-        val users = usuario
-        val nombres = users.Nombres
-        val apellido1 = users.Apellido1
-        val apellido2 = users.Apellido2
-        val curp = users.CURP
-        val correo = users.CorreoElectronico
-        estado = users.ActivoUsuario
+        usuarioEditado = usuario.copy()
+        val users = usuarioEditado
+        val nombres = users?.Nombres
+        val apellido1 = users?.Apellido1
+        val apellido2 = users?.Apellido2
+        val curp = users?.CURP
+        val correo = users?.CorreoElectronico
+        if (users != null) {
+            estado = users.ActivoUsuario
+        }
         //Establecer el estado del usuario con el cardview
         if (estado == 1) {
             btnEstado.text = "DESACTIVAR"
@@ -165,7 +168,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
         val apellido2 = txtApellido2.text.toString()
         val curp = txtCURP.text.toString()
         val correo = txtCorreo.text.toString()
-
+        val idUsuario= usuarioEditado?.IdUsuario ?: -1
 
 
         if (!validarCorreo(correo)) {
@@ -175,7 +178,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
             return
         } else {
             val call = apiServicio.actualizarUsuario(
-                usuario.IdUsuario,
+                idUsuario,
                 nombres,
                 apellido1,
                 apellido2,
@@ -192,17 +195,12 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
                         val usuarioActualizado = response.body()
                         Log.e("usuarioActualizado",usuarioActualizado.toString())
                         if (usuarioActualizado != null) {
-                            val preferences = PreferenceHelper.defaultPrefs(requireContext())
                             val userObjeto=usuarioActualizado.Objeto
-                            preferences.saveUsuario(usuarioActualizado)
-
-
                                 val nombUser = userObjeto.Nombres
                                 val ape1 = userObjeto.Apellido1
                                 val ape2 = userObjeto.Apellido2
                                 val curpUser = userObjeto.CURP
                                 val correoEle = userObjeto.CorreoElectronico
-                                val activoUser = estado
 
                                 txtNombre.setText(nombUser)
                                 txtApellido1.setText(ape1)

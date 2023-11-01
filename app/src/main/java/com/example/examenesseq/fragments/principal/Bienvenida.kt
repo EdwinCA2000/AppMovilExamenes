@@ -27,14 +27,21 @@ class Bienvenida : Fragment() {
         _binding = FragmentBienvenidaBinding.inflate(inflater, container, false)
         (activity as AppCompatActivity).supportActionBar?.hide()
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
-        if(preferences.TieneSesion()){
-            val identidad=preferences.getIdentidad()
-            if (identidad?.IdRolUsuario==2){
-                irAInicio()
-            }else{
-                irADashboard()
-            }
+        if (preferences.TieneSesion()) {
+            val identidad = if (preferences.TieneIdentidad()) {
+                val identidad = preferences.getIdentidad()
+                if (identidad != null) {
+                    if (identidad.IdRolUsuario == 2) {
+                        irAInicio()
+                    } else {
+                        irADashboard()
+                    }
+                } else {
 
+                }
+            } else {
+                // Puede implementar un manejo de error o redireccionar a una pantalla de inicio de sesión.
+            }
         }
         actions()
         return binding.root
