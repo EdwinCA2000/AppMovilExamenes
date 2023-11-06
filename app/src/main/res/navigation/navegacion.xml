@@ -74,6 +74,9 @@
         <action
             android:id="@+id/action_dashboard_to_administrar_usuarios"
             app:destination="@id/administrar_usuarios" />
+        <action
+            android:id="@+id/action_dashboard_to_crearExamen1"
+            app:destination="@id/crearExamen1" />
     </fragment>
     <fragment
         android:id="@+id/perfil_usuario"
@@ -138,6 +141,24 @@
         android:name="com.example.examenesseq.util.FalloServidor"
         android:label="fragment_fallo_servidor"
         tools:layout="@layout/fragment_fallo_servidor" />
+    <fragment
+        android:id="@+id/crearExamen1"
+        android:name="com.example.examenesseq.fragments.crearExamen.CrearExamen1"
+        android:label="Datos del examen"
+        tools:layout="@layout/fragment_crear_examen1" >
+        <action
+            android:id="@+id/action_crearExamen1_to_crearExamen2"
+            app:destination="@id/crearExamen2" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearExamen2"
+        android:name="com.example.examenesseq.fragments.crearExamen.CrearExamen2"
+        android:label="Descripción y Bievenida del examen"
+        tools:layout="@layout/fragment_crear_examen2" >
+        <action
+            android:id="@+id/action_crearExamen2_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
 
 
 </navigation>

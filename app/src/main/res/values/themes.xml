@@ -18,7 +18,7 @@
         <!-- Customize your theme here. -->
         <item name="background">@color/white</item>
 
-
+        <item name="android:timePickerDialogTheme">@style/MyTimePickerDialogTheme</item>
     </style>
 <style name="ButtonWhiteBackground">
     <item android:drawable="@drawable/btnseleccionado" name="android:state_pressed">true</item>
@@ -36,5 +36,7 @@
         parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/grey</item>
     </style>
+
+
 
 </resources>

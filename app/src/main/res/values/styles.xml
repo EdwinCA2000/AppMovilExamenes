@@ -29,6 +29,14 @@
     </style>
 
 
+    <style name="MyTimePickerDialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:timePickerStyle">@style/MyTimePicker</item>
+    </style>
+
+    <style name="MyTimePicker">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 
 
 

@@ -27,4 +27,19 @@
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="crea_una_cuenta">Crea una cuenta</string>
     <string name="m_s_tarde">Más tarde</string>
+
+
+    <string-array name="duracion_exam_options">
+        <item>Duración del examen</item>
+        <item>1 hora</item>
+        <item>2 horas</item>
+        <item>3 horas</item>
+    </string-array>
+
+    <string-array name="estado_exam_options">
+        <item>Estado del examen</item>
+        <item>Activo</item>
+        <item>Inactivo</item>
+    </string-array>
+
 </resources>

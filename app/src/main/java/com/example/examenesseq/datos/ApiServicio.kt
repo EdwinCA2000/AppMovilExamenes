@@ -11,6 +11,8 @@ import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
 import com.example.examenesseq.datos.respuesta.RespuestaExamen
 import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
 import com.example.examenesseq.datos.respuesta.Respuestas
+import com.example.examenesseq.datos.respuesta.crearExamenResponse
+import com.example.examenesseq.model.crearExamen.ExamenResponse
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
@@ -123,8 +125,20 @@ interface ApiServicio {
         @Query(value="time")time: Int
 
     ): Call <LoginRespuesta>
+    @POST("tecnologiaeducativa.ceneval/actionGuardarEditarExamenes")
+    fun crearExamen(
+        @Query(value="IdExamen")idExamen: Int,
+        @Query(value="TituloExamen")tituloExamen: String,
+        @Query(value="Activo")activo: Int,
+        @Query(value="FechaCreacion")fechaCreacion: String,
+        @Query(value="FechaInicio")fechaInicio: String,
+        @Query(value="FechaFinal")fechaFinal: String,
+        @Query(value="TiempoExamen")tiempoExamen: Int,
+        @Query(value="DescripcionExamen")descripcionExamen: String,
+        @Query(value="TextoBienvenida")textoBienvenida: String
+    ): Call <ExamenResponse>
     companion object Factory {
-        private const val BASE_URL = "http://192.168.0.7:8080/Ceneval/"
+        private const val BASE_URL = "http://192.168.0.10:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor { chain ->

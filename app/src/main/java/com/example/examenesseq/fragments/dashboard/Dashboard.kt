@@ -65,6 +65,7 @@ class Dashboard : Fragment() {
         }
 
         irAUsers()
+        irACrearExamen()
         return binding.root
     }
 
@@ -213,6 +214,12 @@ class Dashboard : Fragment() {
     fun irAUsers(){
         binding.llUsuarios.setOnClickListener {
             findNavController().navigate(R.id.action_dashboard_to_administrar_usuarios)
+        }
+    }
+
+    fun irACrearExamen(){
+        binding.llCrearExamen.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboard_to_crearExamen1)
         }
     }
 
