@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -19,7 +20,7 @@ class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
         var txtTitulo=v.findViewById<TextView>(R.id.tituloExamenTxt)
         var txtCalificacion=v.findViewById<TextView>(R.id.txtCalificacion)
         var txtCalifNumero=v.findViewById<TextView>(R.id.txtCalifNum)
-        var Estado=v.findViewById<CardView>(R.id.estadoExamen)
+        var llEstado=v.findViewById<LinearLayout>(R.id.llExamenUsuarios)
         var imgExamen=v.findViewById<ImageView>(R.id.ic_examen)
     }
 
@@ -61,9 +62,9 @@ class ExamenAdapter(var con: Context, var list: List<Examen>, var list2: List<Ex
         val estadoExamen=examen.Activo
 
         if (estadoExamen == 1) {
-            holder.Estado.setCardBackgroundColor(ContextCompat.getColor(con, R.color.green))
-        } else {
-            holder.Estado.setCardBackgroundColor(ContextCompat.getColor(con, R.color.red))
+            holder.llEstado.setBackgroundResource(R.drawable.border_stroke_activo)
+        } else if (estadoExamen == 0) {
+            holder.llEstado.setBackgroundResource(R.drawable.border_stroke_inactivo)
         }
 
         val estado = examenUsuarioDetails?.Estado

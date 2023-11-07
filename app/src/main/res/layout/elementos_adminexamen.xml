@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
@@ -10,18 +11,18 @@
     app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:id="@+id/llAdminUsuarios"
+        android:id="@+id/llExamenAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_stroke_inactivo"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border_stroke_inactivo">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="6dp">
             <ImageView
-                android:id="@+id/ic_user"
+                android:id="@+id/ic_examen"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentStart="true"
@@ -29,40 +30,32 @@
                 android:layout_gravity="center"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                app:srcCompat="@drawable/ic_usuario"/>
+                app:srcCompat="@drawable/book_check_outline"
+                app:tint="@color/colorSEQ" />
+
             <LinearLayout
-                android:id="@+id/contenedorDatosUser"
+                android:id="@+id/icon_examen"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
+                android:gravity="center"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/ic_user"
+                android:layout_toEndOf="@+id/ic_examen"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tituloUserTxt"
+                    android:id="@+id/tituloExamenTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txtCorreo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
+                    android:text="Examen"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

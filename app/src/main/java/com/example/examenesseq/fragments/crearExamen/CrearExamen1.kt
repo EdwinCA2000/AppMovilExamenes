@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
@@ -35,6 +36,7 @@ class CrearExamen1 : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCrearExamen1Binding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         //Duración examen
         val spinnerDuracionExamen = binding.spinnerDuracionExamen
@@ -153,7 +155,7 @@ class CrearExamen1 : Fragment() {
         val duracionExamenSeleccionado = duracionExamenOpciones[duracionExamenIndex]
         val duracionExamenValor = duracionExamenSeleccionado.duracionExamen
 
-        val estadoExamenSeleccionado = estadoExamenOpciones[duracionExamenIndex]
+        val estadoExamenSeleccionado = estadoExamenOpciones[estadoExamenIndex]
         val estadoExamenValor = estadoExamenSeleccionado.estadoExamen
 
         crearExamenViewModel.tituloExamen=etTituloExamen

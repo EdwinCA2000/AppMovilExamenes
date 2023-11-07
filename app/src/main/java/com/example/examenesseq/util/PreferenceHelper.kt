@@ -202,7 +202,7 @@ object PreferenceHelper {
                 it.putString("Nombres", identidad.Nombres)
                 it.putString("Apellido1", identidad.Apellido1)
                 it.putString("Apellido2", identidad.Apellido2)
-                it.putInt("IdPerfil", identidad.IdRolUsuario)
+                it.putInt("IdRolUsuario", identidad.IdRolUsuario)
                 it.putInt("ActivoUsuario", identidad.ActivoUsuario)
             } else {
                 it.putInt("IdUsuario", identidad.IdUsuario)

@@ -60,8 +60,8 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
 
         //Tiempo transcurrido
         val duracionExamen= examen.TiempoExamen
-        conversorHoras(duracionExamen)
-
+        val duracionExamenReal=conversorHoras(duracionExamen)
+        view.findViewById<TextView>(R.id.duracionExamen).text=duracionExamenReal
         val idExamen= examen.IdExamen
         val cantidadSecciones= daoExamen.obtenerCantidadSecciones(requireContext(),idExamen)
 
@@ -231,13 +231,15 @@ class ExamenModal(private val examen: Examen) : DialogFragment() {
             }
         })
     }
-    fun conversorHoras(duracionExam: Int){
+    fun conversorHoras(duracionExam: Int): String{
+        var duracionExamen=""
         if(duracionExam>=60){
-            val duracionHoras=duracionExam/60
-            view?.findViewById<TextView>(R.id.duracionExamen)?.text ?:  "$duracionHoras horas"
+            val calculoHoras=duracionExam/60
+            duracionExamen= "$calculoHoras horas"
         }else{
-            view?.findViewById<TextView>(R.id.duracionExamen)?.text ?:  "$duracionExam minutos"
+            duracionExamen= "$duracionExam minutos"
         }
+        return duracionExamen
     }
     fun parsearFecha(fechas: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)

@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentCrearExamen2Binding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.model.crearExamen.ExamenResponse
@@ -98,6 +100,7 @@ class CrearExamen2 : Fragment() {
             ) {
                 if (response.isSuccessful){
                     Toast.makeText(requireContext(), "Has creado el examen exitosamente", Toast.LENGTH_SHORT).show()
+                    irAdministrarExamenes()
                 }
             }
 
@@ -107,8 +110,9 @@ class CrearExamen2 : Fragment() {
             }
 
         })
-
     }
 
-
+    private fun irAdministrarExamenes(){
+        findNavController().navigate(R.id.action_crearExamen2_to_administrarExamenes)
+    }
 }

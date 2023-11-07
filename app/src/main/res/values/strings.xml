@@ -27,6 +27,7 @@
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="crea_una_cuenta">Crea una cuenta</string>
     <string name="m_s_tarde">Más tarde</string>
+    <string name="agregar_examen">Agregar Examen</string>
 
 
     <string-array name="duracion_exam_options">

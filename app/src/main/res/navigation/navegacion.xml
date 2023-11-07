@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_dashboard_to_crearExamen1"
             app:destination="@id/crearExamen1" />
+        <action
+            android:id="@+id/action_dashboard_to_administrarExamenes"
+            app:destination="@id/administrarExamenes" />
     </fragment>
     <fragment
         android:id="@+id/perfil_usuario"
@@ -105,7 +108,7 @@
     <fragment
         android:id="@+id/administrar_usuarios"
         android:name="com.example.examenesseq.fragments.dashboard.usuarios.AdministrarUsuarios"
-        android:label="fragment_administrar_usuarios"
+        android:label="Administrar Usuarios"
         tools:layout="@layout/fragment_administrar_usuarios" />
     <fragment
         android:id="@+id/preguntas"
@@ -156,7 +159,19 @@
         android:label="Descripción y Bievenida del examen"
         tools:layout="@layout/fragment_crear_examen2" >
         <action
-            android:id="@+id/action_crearExamen2_to_dashboard"
+            android:id="@+id/action_crearExamen2_to_administrarExamenes"
+            app:destination="@id/administrarExamenes" />
+    </fragment>
+    <fragment
+        android:id="@+id/administrarExamenes"
+        android:name="com.example.examenesseq.fragments.adminExamen.AdministrarExamenes"
+        android:label="Administrar Examenes"
+        tools:layout="@layout/fragment_administrar_examenes" >
+        <action
+            android:id="@+id/action_administrarExamenes_to_crearExamen1"
+            app:destination="@id/crearExamen1" />
+        <action
+            android:id="@+id/action_administrarExamenes_to_dashboard"
             app:destination="@id/dashboard" />
     </fragment>
 

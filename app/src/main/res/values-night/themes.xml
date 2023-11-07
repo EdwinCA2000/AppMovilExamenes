@@ -7,7 +7,6 @@
         <item name="colorOnPrimary">@color/greyLight</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorPrimaryDark</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/darkGray</item>
         <item name="android:textColorPrimary">@color/textColorPrimaryDark</item>
         <item name="android:textColorSecondary">@color/white</item>

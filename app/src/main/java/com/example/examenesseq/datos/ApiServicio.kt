@@ -4,6 +4,7 @@ package com.example.examenesseq.datos
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.examenesseq.fragments.adminExamen.AdminExamenesData
 import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
@@ -11,13 +12,11 @@ import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
 import com.example.examenesseq.datos.respuesta.RespuestaExamen
 import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
 import com.example.examenesseq.datos.respuesta.Respuestas
-import com.example.examenesseq.datos.respuesta.crearExamenResponse
 import com.example.examenesseq.model.crearExamen.ExamenResponse
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
-import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
 import okhttp3.OkHttpClient
@@ -137,6 +136,9 @@ interface ApiServicio {
         @Query(value="DescripcionExamen")descripcionExamen: String,
         @Query(value="TextoBienvenida")textoBienvenida: String
     ): Call <ExamenResponse>
+
+    @GET("tecnologiaeducativa.ceneval/jsonExamenesAdmin")
+    fun getExamenesAdmin(): Call<List<AdminExamenesData>>
     companion object Factory {
         private const val BASE_URL = "http://192.168.0.10:8080/Ceneval/"
         fun create(context: Context): ApiServicio {

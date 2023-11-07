@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
@@ -32,6 +33,7 @@ class AdministrarUsuarios : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAdministrarUsuariosBinding.inflate(inflater, container, false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         binding.recyclerUsers.layoutManager = LinearLayoutManager(requireContext())
 
         binding.recargarUsuarios.setOnRefreshListener {

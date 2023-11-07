@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -24,7 +25,7 @@ class UsuariosAdapter(var con: Context, var list: ModuloUsuarioRespuesta): Recyc
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v){
         var txtNombreUser=v.findViewById<TextView>(R.id.tituloUserTxt)
         var txtCorreoUser=v.findViewById<TextView>(R.id.txtCorreo)
-        var EstadoUser=v.findViewById<CardView>(R.id.estadoUser)
+        var llEstadoUser=v.findViewById<LinearLayout>(R.id.llAdminUsuarios)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,11 +48,10 @@ class UsuariosAdapter(var con: Context, var list: ModuloUsuarioRespuesta): Recyc
         holder.txtCorreoUser.text=correoUser
 
         if (estadoUser == 1) {
-            holder.EstadoUser.setCardBackgroundColor(ContextCompat.getColor(con, R.color.green))
-        } else {
-            holder.EstadoUser.setCardBackgroundColor(ContextCompat.getColor(con, R.color.red))
+            holder.llEstadoUser.setBackgroundResource(R.drawable.border_stroke_activo)
+        } else if (estadoUser == 0) {
+            holder.llEstadoUser.setBackgroundResource(R.drawable.border_stroke_inactivo)
         }
-
         holder.itemView.setOnClickListener {
             val usuariosModal = ModalDatosUsuarios(usuarios)
             usuariosModal.show((con as AppCompatActivity).supportFragmentManager, "DatosUsuarioModal")
