@@ -84,4 +84,6 @@ dependencies {
 
     implementation "androidx.viewpager:viewpager:1.0.0"
     implementation 'org.jsoup:jsoup:1.14.2'
+    //Charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

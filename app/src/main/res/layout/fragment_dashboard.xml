@@ -286,6 +286,7 @@
             app:cardElevation="12dp">
 
             <LinearLayout
+                android:id="@+id/llReportes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"

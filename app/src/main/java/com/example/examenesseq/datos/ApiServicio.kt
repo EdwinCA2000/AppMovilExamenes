@@ -4,6 +4,7 @@ package com.example.examenesseq.datos
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.examenesseq.fragments.Reportes.Data.GraficasData
 import com.example.examenesseq.fragments.adminExamen.AdminExamenesData
 import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
@@ -139,6 +140,10 @@ interface ApiServicio {
 
     @GET("tecnologiaeducativa.ceneval/jsonExamenesAdmin")
     fun getExamenesAdmin(): Call<List<AdminExamenesData>>
+
+    @POST("tecnologiaeducativa.ceneval/jsonGraficas")
+    fun getJsonGraficas(@Query(value="IdExamen")idExamen: Int): Call<List<List<GraficasData>>>
+
     companion object Factory {
         private const val BASE_URL = "http://192.168.0.10:8080/Ceneval/"
         fun create(context: Context): ApiServicio {

@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_dashboard_to_administrarExamenes"
             app:destination="@id/administrarExamenes" />
+        <action
+            android:id="@+id/action_dashboard_to_reportes"
+            app:destination="@id/reportes" />
     </fragment>
     <fragment
         android:id="@+id/perfil_usuario"
@@ -174,6 +177,11 @@
             android:id="@+id/action_administrarExamenes_to_dashboard"
             app:destination="@id/dashboard" />
     </fragment>
+    <fragment
+        android:id="@+id/reportes"
+        android:name="com.example.examenesseq.fragments.Reportes.Reportes"
+        android:label="fragment_reportes"
+        tools:layout="@layout/fragment_reportes" />
 
 
 </navigation>

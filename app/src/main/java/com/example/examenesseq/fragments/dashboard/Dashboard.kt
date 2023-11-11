@@ -67,6 +67,7 @@ class Dashboard : Fragment() {
         irAUsers()
         irACrearExamen()
         irAdministrarExamenes()
+        irAReportes()
         return binding.root
     }
 
@@ -230,6 +231,11 @@ class Dashboard : Fragment() {
         }
     }
 
+    fun irAReportes(){
+        binding.llReportes.setOnClickListener{
+            findNavController().navigate(R.id.action_dashboard_to_reportes)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
