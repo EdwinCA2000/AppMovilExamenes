@@ -10,6 +10,7 @@ import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
+import com.example.examenesseq.datos.respuesta.RespuestaEliminarUser
 import com.example.examenesseq.datos.respuesta.RespuestaExamen
 import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
 import com.example.examenesseq.datos.respuesta.Respuestas
@@ -144,6 +145,8 @@ interface ApiServicio {
     @POST("tecnologiaeducativa.ceneval/jsonGraficas")
     fun getJsonGraficas(@Query(value="IdExamen")idExamen: Int): Call<List<List<GraficasData>>>
 
+    @POST("tecnologiaeducativa.ceneval/actionEliminarUsuario")
+    fun eliminarUsuario(@Query(value="IdUsuario")idUsuario: Int): Call <RespuestaEliminarUser>
     companion object Factory {
         private const val BASE_URL = "http://192.168.0.10:8080/Ceneval/"
         fun create(context: Context): ApiServicio {

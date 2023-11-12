@@ -7,18 +7,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.R
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
-import com.example.examenesseq.model.usuario.Usuario
-import com.example.examenesseq.util.PreferenceHelper
-import com.example.examenesseq.util.PreferenceHelper.TieneEstadoUser
-import com.example.examenesseq.util.PreferenceHelper.TieneUser
-import com.example.examenesseq.util.PreferenceHelper.getEstadoUser
-import com.example.examenesseq.util.PreferenceHelper.getUser
-
 
 class UsuariosAdapter(var con: Context, var list: ModuloUsuarioRespuesta): RecyclerView.Adapter<UsuariosAdapter.ViewHolder>() {
 

@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
+import com.example.examenesseq.datos.respuesta.RespuestaEliminarUser
 import com.example.examenesseq.util.PreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +44,61 @@ class AdministrarUsuarios : Fragment() {
         }
         obtenerModuloUsuarios()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,  ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false // No permitir el movimiento de elementos
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Eliminar el elemento cuando se realiza un deslizamiento
+                val position = viewHolder.absoluteAdapterPosition
+                eliminarUsuario(position)
+            }
+        })
+
+        // Vincular el ItemTouchHelper con el RecyclerView
+        itemTouchHelper.attachToRecyclerView(binding.recyclerUsers)
+    }
+
+    private fun eliminarUsuario(position: Int) {
+        val usuarioAEliminar = usuariosAdapter.list.Objeto[position]
+        apiServicio.eliminarUsuario(usuarioAEliminar.IdUsuario).enqueue(object : Callback<RespuestaEliminarUser>{
+            override fun onResponse(
+                call: Call<RespuestaEliminarUser>,
+                response: Response<RespuestaEliminarUser>
+            ) {
+                if (response.isSuccessful){
+                    val respuesta=response.body()
+                    if (respuesta != null) {
+                        val nuevaLista = usuariosAdapter.list.Objeto.toMutableList()
+                        nuevaLista.removeAt(position)
+
+                        // Actualizar la lista en el adaptador
+                        usuariosAdapter.list.Objeto = nuevaLista
+
+                        // Notificar al adaptador sobre el cambio
+                        usuariosAdapter.notifyItemRemoved(position)
+
+                        Toast.makeText(requireContext(),"Se elimino el usuario ${usuarioAEliminar.Nombres + " "+ usuarioAEliminar.Apellido1+" "+usuarioAEliminar.Apellido2}",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<RespuestaEliminarUser>, t: Throwable) {
+                Toast.makeText(requireContext(),"No se logró conectar al servidor para eliminar el usuario",Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
 

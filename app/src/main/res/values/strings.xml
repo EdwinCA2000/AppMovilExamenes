@@ -28,6 +28,9 @@
     <string name="crea_una_cuenta">Crea una cuenta</string>
     <string name="m_s_tarde">Más tarde</string>
     <string name="agregar_examen">Agregar Examen</string>
+    <string name="no_ha_realizado_ning_n_examen">¡No ha realizado ningún examen!</string>
+    <string name="complet_el_examen_en">Completó el examen en:</string>
+    <string name="aprob_con">Aprobó con:</string>
 
 
     <string-array name="duracion_exam_options">

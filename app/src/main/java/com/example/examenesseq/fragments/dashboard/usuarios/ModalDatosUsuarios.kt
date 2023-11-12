@@ -8,27 +8,23 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
-import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
-import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
 import com.example.examenesseq.model.usuario.ModuloUsuario
-import com.example.examenesseq.model.usuario.Usuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.PreferenceHelper.TieneEstadoUser
 import com.example.examenesseq.util.PreferenceHelper.TieneUser
-import com.example.examenesseq.util.PreferenceHelper.getEstadoUser
 import com.example.examenesseq.util.PreferenceHelper.getUser
 import com.example.examenesseq.util.PreferenceHelper.saveEstadoUser
-import com.example.examenesseq.util.PreferenceHelper.saveUsuario
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,10 +41,10 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
     private lateinit var cardEstadoUser: CardView
     private lateinit var btnGuardar: Button
     private lateinit var btnEstado: Button
+    private lateinit var llHistorialUser: LinearLayout
     private var estado=-1
     private var modalListener: ModalListener? = null
     private var usuarioEditado: ModuloUsuario? = null
-
 
     private val apiServicio: ApiServicio by lazy {
         ApiServicio.create(requireContext())
@@ -67,6 +63,7 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
         btnGuardar = view.findViewById(R.id.btnGuardar)
         btnEstado = view.findViewById(R.id.btnEstado)
         cardEstadoUser = view.findViewById(R.id.estadoUsuarioCard)
+        llHistorialUser= view.findViewById(R.id.llHistorialExamen)
 
         usuarioEditado = usuario.copy()
         val users = usuarioEditado
@@ -138,6 +135,11 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
 
         btnEstado.setOnClickListener {
             actualizarEstadoUsuario()
+        }
+
+        llHistorialUser.setOnClickListener{
+            findNavController().navigate(R.id.action_administrar_usuarios_to_historialExamenUsers)
+            dialog?.dismiss()
         }
 
 
@@ -284,11 +286,12 @@ class ModalDatosUsuarios(private val usuario: ModuloUsuario) : DialogFragment() 
     }
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        modalListener?.onModalClosed()
+        modalListener?.onModalClosed(usuario.IdUsuario)
     }
 
+
     interface ModalListener {
-        fun onModalClosed()
+        fun onModalClosed(userId: Int)
     }
 
     override fun onAttach(context: Context) {

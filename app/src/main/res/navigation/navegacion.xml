@@ -112,7 +112,11 @@
         android:id="@+id/administrar_usuarios"
         android:name="com.example.examenesseq.fragments.dashboard.usuarios.AdministrarUsuarios"
         android:label="Administrar Usuarios"
-        tools:layout="@layout/fragment_administrar_usuarios" />
+        tools:layout="@layout/fragment_administrar_usuarios">
+        <action
+            android:id="@+id/action_administrar_usuarios_to_historialExamenUsers"
+            app:destination="@id/historialExamenUsers" />
+    </fragment>
     <fragment
         android:id="@+id/preguntas"
         android:name="com.example.examenesseq.fragments.inicio.Preguntas"
@@ -182,6 +186,11 @@
         android:name="com.example.examenesseq.fragments.Reportes.Reportes"
         android:label="fragment_reportes"
         tools:layout="@layout/fragment_reportes" />
+    <fragment
+        android:id="@+id/historialExamenUsers"
+        android:name="com.example.examenesseq.fragments.dashboard.historialUsers.HistorialExamenUsers"
+        android:label="Historial de examenes del usuario"
+        tools:layout="@layout/fragment_historial_examen_users" />
 
 
 </navigation>
