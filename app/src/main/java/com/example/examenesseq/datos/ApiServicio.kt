@@ -19,6 +19,7 @@ import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
 import com.example.examenesseq.model.usuario.Identidad
+import com.example.examenesseq.model.usuario.ModuloUsuario
 import com.example.examenesseq.util.PreferenceHelper
 import com.example.examenesseq.util.gson
 import okhttp3.OkHttpClient
@@ -147,6 +148,16 @@ interface ApiServicio {
 
     @POST("tecnologiaeducativa.ceneval/actionEliminarUsuario")
     fun eliminarUsuario(@Query(value="IdUsuario")idUsuario: Int): Call <RespuestaEliminarUser>
+
+    @POST("tecnologiaeducativa.ceneval/actionAgregarUsuarios")
+    fun agregarUsuario(
+        @Query(value="CURP")curp: String,
+        @Query(value="Contrasena")contrasena: String,
+        @Query(value="CorreoElectronico")correo: String,
+        @Query(value="Nombres")nombres: String,
+        @Query(value="Apellido1")apellido1: String,
+        @Query(value="Apellido2")apellido2: String
+    ): Call <ModuloUsuario>
     companion object Factory {
         private const val BASE_URL = "http://192.168.0.10:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
@@ -183,9 +194,5 @@ interface ApiServicio {
             }
 
         }
-
-
-
-
     }
 }

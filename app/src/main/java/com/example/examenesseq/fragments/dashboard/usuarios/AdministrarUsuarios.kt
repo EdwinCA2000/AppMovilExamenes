@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentAdministrarUsuariosBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
@@ -37,12 +40,18 @@ class AdministrarUsuarios : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentAdministrarUsuariosBinding.inflate(inflater, container, false)
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_administrar_usuarios_to_dashboard)
+        }
         binding.recyclerUsers.layoutManager = LinearLayoutManager(requireContext())
 
         binding.recargarUsuarios.setOnRefreshListener {
             obtenerModuloUsuarios()
         }
         obtenerModuloUsuarios()
+        binding.fabAgregarUser.setOnClickListener{
+            CrearUsuario()
+        }
         return binding.root
     }
 
@@ -133,7 +142,9 @@ class AdministrarUsuarios : Fragment() {
         })
     }
 
-
+    private fun CrearUsuario(){
+        findNavController().navigate(R.id.action_administrar_usuarios_to_agregarUsuarios)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

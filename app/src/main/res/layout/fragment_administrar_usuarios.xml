@@ -7,10 +7,16 @@
     android:layout_height="match_parent"
     android:padding="12dp"
     tools:context=".fragments.dashboard.usuarios.AdministrarUsuarios">
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/recargarUsuarios"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerUsers"
             android:layout_width="match_parent"
@@ -23,5 +29,18 @@
             app:layout_constraintVertical_bias="0.5" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregarUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorSEQ"
+        android:contentDescription="@string/agregar_usuario"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.90" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

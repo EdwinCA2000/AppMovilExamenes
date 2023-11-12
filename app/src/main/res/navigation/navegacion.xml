@@ -116,6 +116,12 @@
         <action
             android:id="@+id/action_administrar_usuarios_to_historialExamenUsers"
             app:destination="@id/historialExamenUsers" />
+        <action
+            android:id="@+id/action_administrar_usuarios_to_agregarUsuarios"
+            app:destination="@id/agregarUsuarios" />
+        <action
+            android:id="@+id/action_administrar_usuarios_to_dashboard"
+            app:destination="@id/dashboard" />
     </fragment>
     <fragment
         android:id="@+id/preguntas"
@@ -191,6 +197,15 @@
         android:name="com.example.examenesseq.fragments.dashboard.historialUsers.HistorialExamenUsers"
         android:label="Historial de examenes del usuario"
         tools:layout="@layout/fragment_historial_examen_users" />
+    <fragment
+        android:id="@+id/agregarUsuarios"
+        android:name="com.example.examenesseq.fragments.dashboard.usuarios.AgregarUsuarios"
+        android:label="Agregar Usuario"
+        tools:layout="@layout/fragment_agregar_usuarios" >
+        <action
+            android:id="@+id/action_agregarUsuarios_to_administrar_usuarios"
+            app:destination="@id/administrar_usuarios" />
+    </fragment>
 
 
 </navigation>
