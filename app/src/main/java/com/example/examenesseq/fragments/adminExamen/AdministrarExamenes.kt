@@ -10,10 +10,14 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentAdministrarExamenesBinding
 import com.example.examenesseq.datos.ApiServicio
+import com.example.examenesseq.datos.respuesta.RespuestaEliminarExamen
+import com.example.examenesseq.datos.respuesta.RespuestaEliminarUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +49,30 @@ class AdministrarExamenes : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,  ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false // No permitir el movimiento de elementos
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Eliminar el elemento cuando se realiza un deslizamiento
+                val position = viewHolder.absoluteAdapterPosition
+                eliminarExamen(position)
+            }
+        })
+
+        // Vincular el ItemTouchHelper con el RecyclerView
+        itemTouchHelper.attachToRecyclerView(binding.listaExamenesAdmin)
+    }
+
     private fun obtenerExamenes(){
         apiServicio.getExamenesAdmin().enqueue(object : Callback<List<AdminExamenesData>>{
             override fun onResponse(
@@ -70,5 +98,36 @@ class AdministrarExamenes : Fragment() {
         binding.fabAgregarExamen.setOnClickListener{
             findNavController().navigate(R.id.action_administrarExamenes_to_crearExamen1)
         }
+    }
+
+    private fun eliminarExamen(idExamen: Int){
+        val examenAeliminar = adminExamenAdapter.list[idExamen]
+        apiServicio.deleteExamen(examenAeliminar.IdExamen).enqueue(object : Callback<RespuestaEliminarExamen>{
+            override fun onResponse(
+                call: Call<RespuestaEliminarExamen>,
+                response: Response<RespuestaEliminarExamen>
+            ) {
+                if (response.isSuccessful){
+                    val respuesta=response.body()
+                    if (respuesta != null) {
+                        val nuevaLista = adminExamenAdapter.list.toMutableList()
+                        nuevaLista.removeAt(idExamen)
+
+                        // Actualizar la lista en el adaptador
+                        adminExamenAdapter.list = nuevaLista
+
+                        // Notificar al adaptador sobre el cambio
+                        adminExamenAdapter.notifyItemRemoved(idExamen)
+
+                        Toast.makeText(requireContext(),"Se elimino el examen ${examenAeliminar.TituloExamen}",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<RespuestaEliminarExamen>, t: Throwable) {
+                Toast.makeText(requireContext(),"No se logró conectar al servidor para eliminar el usuario",Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 }

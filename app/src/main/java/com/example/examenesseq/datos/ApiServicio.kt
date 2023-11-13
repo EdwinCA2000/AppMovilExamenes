@@ -10,6 +10,7 @@ import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
+import com.example.examenesseq.datos.respuesta.RespuestaEliminarExamen
 import com.example.examenesseq.datos.respuesta.RespuestaEliminarUser
 import com.example.examenesseq.datos.respuesta.RespuestaExamen
 import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
@@ -148,6 +149,9 @@ interface ApiServicio {
 
     @POST("tecnologiaeducativa.ceneval/actionEliminarUsuario")
     fun eliminarUsuario(@Query(value="IdUsuario")idUsuario: Int): Call <RespuestaEliminarUser>
+
+    @POST("tecnologiaeducativa.ceneval/actionEliminarExamen")
+    fun deleteExamen(@Query(value="IdExamen")idExamen: Int): Call <RespuestaEliminarExamen>
 
     @POST("tecnologiaeducativa.ceneval/actionAgregarUsuarios")
     fun agregarUsuario(
