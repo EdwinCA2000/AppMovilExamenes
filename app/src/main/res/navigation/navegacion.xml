@@ -186,6 +186,9 @@
         <action
             android:id="@+id/action_administrarExamenes_to_dashboard"
             app:destination="@id/dashboard" />
+        <action
+            android:id="@+id/action_administrarExamenes_to_editarExamen"
+            app:destination="@id/editarExamen" />
     </fragment>
     <fragment
         android:id="@+id/reportes"
@@ -205,6 +208,15 @@
         <action
             android:id="@+id/action_agregarUsuarios_to_administrar_usuarios"
             app:destination="@id/administrar_usuarios" />
+    </fragment>
+    <fragment
+        android:id="@+id/editarExamen"
+        android:name="com.example.examenesseq.EditarExamen"
+        android:label="Editar Examen"
+        tools:layout="@layout/fragment_editar_examen" >
+        <action
+            android:id="@+id/action_editarExamen_to_administrarExamenes"
+            app:destination="@id/administrarExamenes" />
     </fragment>
 
 

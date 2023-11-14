@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.examenesseq.ExamenViewModel
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentAdministrarExamenesBinding
 import com.example.examenesseq.datos.ApiServicio
@@ -22,7 +25,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AdministrarExamenes : Fragment() {
+class AdministrarExamenes : Fragment(),AdminExamenAdapter.OnItemClickListener {
+    private var selectedPosition: Int? = null
 
     private var _binding: FragmentAdministrarExamenesBinding? = null
     private val binding get() = _binding!!
@@ -32,13 +36,14 @@ class AdministrarExamenes : Fragment() {
     }
 
     private lateinit var adminExamenAdapter: AdminExamenAdapter
-
+    private lateinit var examenViewModel: ExamenViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAdministrarExamenesBinding.inflate(inflater, container, false)
+        examenViewModel = ViewModelProvider(requireActivity())[ExamenViewModel::class.java]
         binding.listaExamenesAdmin.layoutManager = LinearLayoutManager(requireContext())
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -50,6 +55,7 @@ class AdministrarExamenes : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,  ItemTouchHelper.RIGHT
@@ -83,6 +89,7 @@ class AdministrarExamenes : Fragment() {
                     val respuesta=response.body()
                     adminExamenAdapter = AdminExamenAdapter(requireContext(), respuesta!!)
                     binding.listaExamenesAdmin.adapter = adminExamenAdapter
+                    adminExamenAdapter.setOnItemClickListener(this@AdministrarExamenes)
                 }
             }
 
@@ -130,4 +137,25 @@ class AdministrarExamenes : Fragment() {
 
         })
     }
+
+    override fun onItemClick(position: Int, examenData: AdminExamenesData) {
+        examenViewModel.selectedExamenData = examenData
+        if (selectedPosition == position) {
+            // Ya está seleccionado, deseleccionar
+            selectedPosition = null
+            binding.btnEditar.visibility = View.GONE
+        } else {
+            // Seleccionar el nuevo elemento
+            selectedPosition = position
+            binding.btnEditar.visibility = View.VISIBLE
+            binding.btnEditar.setOnClickListener{
+                findNavController().navigate(R.id.action_administrarExamenes_to_editarExamen)
+            }
+        }
+
+        // Notificar al adaptador sobre el cambio en la selección
+        adminExamenAdapter.setSelectedPosition(selectedPosition)
+    }
+
+
 }
