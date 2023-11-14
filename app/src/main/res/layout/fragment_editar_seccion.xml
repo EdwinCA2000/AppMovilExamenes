@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.adminExamen.EditarExamen"
+    tools:context=".secciones.EditarSeccion"
     android:background="@color/graylight"
     android:orientation="vertical"
     android:padding="24dp">
 
     <TextView
-        android:id="@+id/txtExamen"
+        android:id="@+id/txtSeccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,32 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtExamen">
-
-        <EditText
-            android:id="@+id/etTituloExamenEditar"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/input_custom"
-            android:drawableEnd="@drawable/ic_examen"
-            android:ems="10"
-            android:hint="Titulo del Examen"
-            android:inputType="text"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:textColor="@color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout9"
+        android:id="@+id/llOrdenSeccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -56,24 +31,21 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <EditText
-            android:id="@+id/etFechaInicioEditar"
+            android:id="@+id/etOrdenSeccionEditar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/input_custom"
-            android:clickable="true"
-            android:drawableEnd="@drawable/ic_choose_date"
+            android:drawableEnd="@drawable/ic_numeros"
             android:ems="10"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="Fecha de Inicio"
-            android:inputType="text"
+            android:hint="Orden de la sección"
+            android:inputType="number"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout13"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -81,47 +53,23 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+        app:layout_constraintTop_toBottomOf="@+id/txtSeccion">
 
         <EditText
-            android:id="@+id/etFechaFinalEditar"
+            android:id="@+id/etTituloSeccionEditar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/input_custom"
-            android:clickable="true"
-            android:drawableEnd="@drawable/ic_choose_date"
+            android:drawableEnd="@drawable/ic_examen"
             android:ems="10"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="Fecha de Finalización"
+            android:hint="Titulo de la Sección"
             android:inputType="text"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:textColor="@color/black" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
 
-        <Spinner
-            android:id="@+id/spinnerDuracionExamenEditar"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/spinner_custom"
-            android:entries="@array/duracion_exam_options"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:textColor="@color/black" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout11"
@@ -132,10 +80,10 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+        app:layout_constraintTop_toBottomOf="@+id/llOrdenSeccion">
 
         <Spinner
-            android:id="@+id/spinnerEstadoExamenEditar"
+            android:id="@+id/spinnerEstadoSeccionEditar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/spinner_custom"
@@ -158,54 +106,30 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
 
         <EditText
-            android:id="@+id/etDescripcionExamenEditar"
+            android:id="@+id/etDescripcionSeccionEditar"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@drawable/input_custom"
             android:ems="10"
             android:textSize="15sp"
             android:gravity="start|top"
-            android:hint="Descripción del examen"
-            android:inputType="textMultiLine"
-            android:padding="8dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll">
-
-        <EditText
-            android:id="@+id/etBienvenidaExamenEditar"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/input_custom"
-            android:ems="10"
-            android:textSize="15sp"
-            android:gravity="start|top"
-            android:hint="Bienvenida del examen"
+            android:hint="Descripción de la Sección"
             android:inputType="textMultiLine"
             android:padding="8dp" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnEditarExamen"
+        android:id="@+id/btnEditarSeccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:background="@drawable/loginbtnestilo"
         android:fontFamily="@font/nunitobold"
-        android:text="EDITAR EXAMEN"
+        android:text="EDITAR SECCIÓN"
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

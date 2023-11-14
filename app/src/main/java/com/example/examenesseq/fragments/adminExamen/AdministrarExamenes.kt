@@ -9,18 +9,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.examenesseq.ExamenViewModel
+import com.example.examenesseq.secciones.viewmodel.ExamenViewModel
+import com.example.examenesseq.secciones.viewmodel.IdExamenViewModel
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentAdministrarExamenesBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.RespuestaEliminarExamen
-import com.example.examenesseq.datos.respuesta.RespuestaEliminarUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +36,7 @@ class AdministrarExamenes : Fragment(),AdminExamenAdapter.OnItemClickListener {
 
     private lateinit var adminExamenAdapter: AdminExamenAdapter
     private lateinit var examenViewModel: ExamenViewModel
+    private lateinit var idExamenViewModel: IdExamenViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +44,7 @@ class AdministrarExamenes : Fragment(),AdminExamenAdapter.OnItemClickListener {
         // Inflate the layout for this fragment
         _binding = FragmentAdministrarExamenesBinding.inflate(inflater, container, false)
         examenViewModel = ViewModelProvider(requireActivity())[ExamenViewModel::class.java]
+        idExamenViewModel = ViewModelProvider(requireActivity())[IdExamenViewModel::class.java]
         binding.listaExamenesAdmin.layoutManager = LinearLayoutManager(requireContext())
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -139,17 +140,24 @@ class AdministrarExamenes : Fragment(),AdminExamenAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, examenData: AdminExamenesData) {
-        examenViewModel.selectedExamenData = examenData
         if (selectedPosition == position) {
             // Ya está seleccionado, deseleccionar
             selectedPosition = null
             binding.btnEditar.visibility = View.GONE
+            binding.btnSecciones .visibility= View.GONE
         } else {
             // Seleccionar el nuevo elemento
             selectedPosition = position
             binding.btnEditar.visibility = View.VISIBLE
+            binding.btnSecciones.visibility= View.VISIBLE
             binding.btnEditar.setOnClickListener{
+                examenViewModel.selectedExamenData = examenData
                 findNavController().navigate(R.id.action_administrarExamenes_to_editarExamen)
+            }
+
+            binding.btnSecciones.setOnClickListener{
+                idExamenViewModel.idExamen=examenData.IdExamen
+                findNavController().navigate(R.id.action_administrarExamenes_to_administrarSecciones)
             }
         }
 

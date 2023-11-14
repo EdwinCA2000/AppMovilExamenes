@@ -1,4 +1,4 @@
-package com.example.examenesseq
+package com.example.examenesseq.fragments.adminExamen
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -12,16 +12,15 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentEditarExamenBinding
 import com.example.examenesseq.datos.ApiServicio
-import com.example.examenesseq.fragments.adminExamen.AdminExamenesData
-import com.example.examenesseq.fragments.crearExamen.CrearExamenViewModel
 import com.example.examenesseq.fragments.crearExamen.adapter.DuracionExamenAdapter
 import com.example.examenesseq.fragments.crearExamen.adapter.EstadoExamenAdapter
 import com.example.examenesseq.fragments.crearExamen.data.DuracionExamenData
 import com.example.examenesseq.fragments.crearExamen.data.EstadoExamenData
-import com.example.examenesseq.fragments.registro.RegistroViewModel
 import com.example.examenesseq.model.crearExamen.ExamenResponse
+import com.example.examenesseq.secciones.viewmodel.ExamenViewModel
 import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback

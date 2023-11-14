@@ -169,7 +169,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="12dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="12dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/llUsuarios"
@@ -207,7 +207,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="12dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="12dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/llExamenes"
@@ -245,7 +245,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="12dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="12dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/llCrearExamen"
@@ -283,7 +283,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="12dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="12dp">
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/llReportes"
@@ -299,7 +299,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_reporte"
                     app:tint="@color/white"/>
-                
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

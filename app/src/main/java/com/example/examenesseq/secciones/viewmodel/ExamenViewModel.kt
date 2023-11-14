@@ -1,4 +1,4 @@
-package com.example.examenesseq
+package com.example.examenesseq.secciones.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.examenesseq.fragments.adminExamen.AdminExamenesData

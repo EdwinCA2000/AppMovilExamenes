@@ -4,7 +4,7 @@ data class Secciones(
     val IdSeccion: Int,
     val TituloSeccion: String,
     val DescripcionSeccion: String,
-    val Activo: Int,
+    var Activo: Int,
     val IdExamen: Int,
     val Orden: Int
 )

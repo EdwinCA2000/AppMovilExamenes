@@ -9,12 +9,15 @@ import com.example.examenesseq.fragments.adminExamen.AdminExamenesData
 import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
 import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
+import com.example.examenesseq.datos.respuesta.RespuestaActivarSeccion
 import com.example.examenesseq.datos.respuesta.RespuestaActivarUser
 import com.example.examenesseq.datos.respuesta.RespuestaEliminarExamen
+import com.example.examenesseq.datos.respuesta.RespuestaEliminarSeccion
 import com.example.examenesseq.datos.respuesta.RespuestaEliminarUser
 import com.example.examenesseq.datos.respuesta.RespuestaExamen
 import com.example.examenesseq.datos.respuesta.RespuestaExamenUsuario
 import com.example.examenesseq.datos.respuesta.Respuestas
+import com.example.examenesseq.model.SeccionResponse
 import com.example.examenesseq.model.crearExamen.ExamenResponse
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
@@ -141,6 +144,22 @@ interface ApiServicio {
         @Query(value="TextoBienvenida")textoBienvenida: String
     ): Call <ExamenResponse>
 
+    @POST("tecnologiaeducativa.ceneval/actionGuardarEditarSecciones")
+    fun guardarEditarSecciones(
+        @Query(value="IdSeccion")idSeccion: Int,
+        @Query(value="TituloSeccion")tituloSeccion: String,
+        @Query(value="Activo")activo: Int,
+        @Query(value="IdExamen")idExamen: Int,
+        @Query(value="Orden")orden: Int,
+        @Query(value="DescripcionSeccion")descripcionSeccion: String
+    ): Call <SeccionResponse>
+
+    @POST("tecnologiaeducativa.ceneval/actionActivarSeccion")
+    fun activarDesactivarSeccion(
+        @Query(value="IdSeccion")idSeccion: Int,
+        @Query(value="Activo")activo: Int
+    ): Call <RespuestaActivarSeccion>
+
     @GET("tecnologiaeducativa.ceneval/jsonExamenesAdmin")
     fun getExamenesAdmin(): Call<List<AdminExamenesData>>
 
@@ -152,6 +171,8 @@ interface ApiServicio {
 
     @POST("tecnologiaeducativa.ceneval/actionEliminarExamen")
     fun deleteExamen(@Query(value="IdExamen")idExamen: Int): Call <RespuestaEliminarExamen>
+    @POST("tecnologiaeducativa.ceneval/actionEliminarSeccion")
+    fun deleteSeccion(@Query(value="IdSeccion")idSeccion: Int): Call <RespuestaEliminarSeccion>
 
     @POST("tecnologiaeducativa.ceneval/actionAgregarUsuarios")
     fun agregarUsuario(
@@ -162,6 +183,9 @@ interface ApiServicio {
         @Query(value="Apellido1")apellido1: String,
         @Query(value="Apellido2")apellido2: String
     ): Call <ModuloUsuario>
+
+    @GET("tecnologiaeducativa.ceneval/jsonSecciones")
+    fun getSeccionesDeExamen(@Query(value="IdExamen")idExamen: Int): Call<List<Secciones>>
     companion object Factory {
         private const val BASE_URL = "http://192.168.0.10:8080/Ceneval/"
         fun create(context: Context): ApiServicio {
