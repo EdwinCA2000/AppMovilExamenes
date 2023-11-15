@@ -6,13 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentLoginBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.LoginRespuesta
+import com.example.examenesseq.fragments.inicio.Inicio
 import com.example.examenesseq.util.PreferenceHelper
+import com.example.examenesseq.util.PreferenceHelper.getCredencialesUsuario
+import com.example.examenesseq.util.PreferenceHelper.saveCredencialesUsuario
 import com.example.examenesseq.util.PreferenceHelper.saveIdentidad
 import com.example.examenesseq.util.PreferenceHelper.setJSessionId
 import retrofit2.Call
@@ -42,7 +46,28 @@ class Login : Fragment() {
             irARegistro()
         }
 
+        recordarUsuario()
         return binding.root
+    }
+
+    private fun recordarUsuario(){
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        val credencial= preferences.getCredencialesUsuario()
+        if (credencial!=null){
+            val usuario = credencial.first
+            val contrasena = credencial.second
+            val recordar = credencial.third
+
+            if (recordar) {
+                binding.etCorreoElectronico.setText(usuario)
+                binding.etContrasena.setText(contrasena)
+                binding.cBRecuerdame.isChecked = true
+            } else {
+                binding.etCorreoElectronico.setText("")
+                binding.etContrasena.setText("")
+                binding.cBRecuerdame.isChecked = false
+            }
+        }
     }
 
     private fun irAInicio() {
@@ -60,6 +85,7 @@ class Login : Fragment() {
     private fun performLogin() {
         val etEmail = binding.etCorreoElectronico.text.toString()
         val etPassword = binding.etContrasena.text.toString()
+        val checkBoxRecordar = binding.cBRecuerdame.isChecked
 
         val call = apiServicio.postLogin(etEmail, etPassword)
         call.enqueue(object : Callback<LoginRespuesta> {
@@ -74,8 +100,21 @@ class Login : Fragment() {
                         val identidad = loginRespuesta.Objeto
                         val preferences = PreferenceHelper.defaultPrefs(requireContext())
                         val jsessionid = response.headers()["Set-Cookie"] ?: ""
-                        Log.d("JSESSIONID", jsessionid)
                         preferences.setJSessionId(jsessionid)
+                        if (checkBoxRecordar) {
+                            val usuario=binding.etCorreoElectronico.text.toString()
+                            val contrasena= binding.etContrasena.text.toString()
+                            preferences.saveCredencialesUsuario(usuario, contrasena, checkBoxRecordar)
+                        }else{
+                            if (preferences.getCredencialesUsuario()!=null){
+                                preferences.edit {
+                                    remove("Usuario")
+                                    remove("Contrasena")
+                                    remove("Recordar")
+                                    apply()
+                                }
+                            }
+                        }
                         if (etEmail.contains("@")) {
                             preferences.saveIdentidad(identidad)
                             irAInicio()

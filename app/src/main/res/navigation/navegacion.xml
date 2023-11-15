@@ -83,6 +83,12 @@
         <action
             android:id="@+id/action_dashboard_to_reportes"
             app:destination="@id/reportes" />
+        <action
+            android:id="@+id/action_dashboard_to_falloServidor"
+            app:destination="@id/falloServidor" />
+        <action
+            android:id="@+id/action_dashboard_to_noHayInternet"
+            app:destination="@id/noHayInternet" />
     </fragment>
     <fragment
         android:id="@+id/perfil_usuario"

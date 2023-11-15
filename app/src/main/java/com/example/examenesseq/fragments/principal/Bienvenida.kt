@@ -1,6 +1,7 @@
 package com.example.examenesseq.fragments.principal
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,20 +29,15 @@ class Bienvenida : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.hide()
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         if (preferences.TieneSesion()) {
-            val identidad = if (preferences.TieneIdentidad()) {
                 val identidad = preferences.getIdentidad()
+                Log.e("identidad",identidad.toString())
                 if (identidad != null) {
                     if (identidad.IdRolUsuario == 2) {
                         irAInicio()
                     } else {
                         irADashboard()
                     }
-                } else {
-
                 }
-            } else {
-                // Puede implementar un manejo de error o redireccionar a una pantalla de inicio de sesión.
-            }
         }
         actions()
         return binding.root

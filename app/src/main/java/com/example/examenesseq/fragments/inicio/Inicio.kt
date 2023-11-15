@@ -245,7 +245,7 @@ class Inicio : Fragment() {
             .show()
     }
 
-    fun cerrarSesionUser(){
+    private fun cerrarSesionUser(){
         apiServicio.cerrarSesion().enqueue(object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {

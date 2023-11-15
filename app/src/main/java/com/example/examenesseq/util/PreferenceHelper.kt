@@ -3,9 +3,9 @@ package com.example.examenesseq.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.preference.PreferenceManager
 import com.example.examenesseq.datos.respuesta.ActualizarUsuarioRespuesta
-import com.example.examenesseq.datos.respuesta.ModuloUsuarioRespuesta
 import com.example.examenesseq.model.examen.Examen
 import com.example.examenesseq.model.examen.ExamenUsuario
 import com.example.examenesseq.model.examen.Secciones
@@ -17,6 +17,34 @@ import com.google.gson.reflect.TypeToken
 
 
 object PreferenceHelper {
+
+    fun SharedPreferences.saveCredencialesUsuario(usuario: String, contrasena: String, recordar: Boolean) {
+        val encryptedUsuario = EncryptionHelper.encrypt(usuario)
+        val encryptedContrasena = EncryptionHelper.encrypt(contrasena)
+
+        edit {
+            it.putString("Usuario", encryptedUsuario)
+            it.putString("Contrasena", encryptedContrasena)
+            it.putBoolean("Recordar", recordar)
+        }
+    }
+
+
+    fun SharedPreferences.getCredencialesUsuario(): Triple<String, String, Boolean>? {
+        val encryptedUsuario = getString("Usuario", null)
+        val encryptedContrasena = getString("Contrasena", null)
+        val recordar = getBoolean("Recordar", false)
+
+        return if (encryptedUsuario != null && encryptedContrasena != null) {
+            val usuario = EncryptionHelper.decrypt(encryptedUsuario)
+            val contrasena = EncryptionHelper.decrypt(encryptedContrasena)
+            Triple(usuario, contrasena, recordar)
+        } else {
+            null
+        }
+    }
+
+
 
     fun defaultPrefs(context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)

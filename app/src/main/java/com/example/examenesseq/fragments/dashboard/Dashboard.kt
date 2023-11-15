@@ -2,6 +2,10 @@ package com.example.examenesseq.fragments.dashboard
 
 
 import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -70,35 +74,54 @@ class Dashboard : Fragment() {
         irAReportes()
         return binding.root
     }
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val network = connectivityManager.activeNetwork
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+            return networkCapabilities != null && (networkCapabilities.hasTransport(
+                NetworkCapabilities.TRANSPORT_CELLULAR) || networkCapabilities.hasTransport(
+                NetworkCapabilities.TRANSPORT_WIFI))
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
+    }
 
     fun obtenerTotalUsers(){
-        val preferences = PreferenceHelper.defaultPrefs(requireContext())
-        apiServicio.obtenerTotalUsuariosRegistrados().enqueue(object: Callback <LoginRespuesta>{
-            override fun onResponse(
-                call: Call<LoginRespuesta>,
-                response: Response<LoginRespuesta>
-            ) {
-               if (response.isSuccessful){
-                   val totalUsers=response.body()
+        if (!isNetworkConnected(requireContext())) {
+            // No hay conexión a Internet, muestra un fragmento de error por falta de conexión.
+            findNavController().navigate(R.id.action_dashboard_to_noHayInternet)
+        }else{
+            val preferences = PreferenceHelper.defaultPrefs(requireContext())
+            apiServicio.obtenerTotalUsuariosRegistrados().enqueue(object: Callback <LoginRespuesta>{
+                override fun onResponse(
+                    call: Call<LoginRespuesta>,
+                    response: Response<LoginRespuesta>
+                ) {
+                    if (response.isSuccessful){
+                        val totalUsers=response.body()
 
-                   if (totalUsers!=null){
-                       val totalUsuarios= totalUsers.Mensaje
-                       binding.txtUserRegistrados.text=totalUsuarios
-                       preferences.setTotalUser(totalUsuarios)
-                   }else if (preferences.TieneUsuarios()){
-                       val totalUsuarios=preferences.getTotalUser()
-                       binding.txtUserRegistrados.text=totalUsuarios
-                   }else{
-                       Toast.makeText(requireContext(), "Hubo un fallo al obtener los usuarios registrados", Toast.LENGTH_SHORT).show()
-                   }
-               }
-            }
+                        if (totalUsers!=null){
+                            val totalUsuarios= totalUsers.Mensaje
+                            binding.txtUserRegistrados.text=totalUsuarios
+                            preferences.setTotalUser(totalUsuarios)
+                        }else if (preferences.TieneUsuarios()){
+                            val totalUsuarios=preferences.getTotalUser()
+                            binding.txtUserRegistrados.text=totalUsuarios
+                        }else{
+                        }
+                    }
+                }
 
-            override fun onFailure(call: Call<LoginRespuesta>, t: Throwable) {
-                Toast.makeText(requireContext(), "Ocurrio un error en el servidor para obtener los usuarios registrados", Toast.LENGTH_SHORT).show()
-            }
+                override fun onFailure(call: Call<LoginRespuesta>, t: Throwable) {
+                    findNavController().navigate(R.id.action_dashboard_to_falloServidor)
+                }
 
-        })
+            })
+        }
+
     }
 
     fun obtenerTotalExamenesCompletados(){
@@ -118,13 +141,11 @@ class Dashboard : Fragment() {
                         val totalExamenesComple=preferences.getTotalExamenComple()
                         binding.txtExamenesComple.text=totalExamenesComple
                     }else{
-                        Toast.makeText(requireContext(), "Hubo un fallo al obtener los examenes completados", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
 
             override fun onFailure(call: Call<LoginRespuesta>, t: Throwable) {
-                Toast.makeText(requireContext(), "Ocurrio un error en el servidor para obtener los examenes completados", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -150,7 +171,6 @@ class Dashboard : Fragment() {
                             ).toString()
                         }
                     }else{
-                        Toast.makeText(requireContext(), "Hubo un fallo al obtener los examenes completados", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
