@@ -80,8 +80,10 @@ class ModalPreguntas(private val idSeccion: Int, private val preguntas: Pregunta
             btnGuardarEditar.text="EDITAR PREGUNTA"
 
             btnGuardarEditar.setOnClickListener {
-                val idPregunta=preguntas.IdPregunta
-                ApiAgregarPregunta(idPregunta,idSeccion)
+                if (validarCampos()){
+                    val idPregunta=preguntas.IdPregunta
+                    ApiAgregarPregunta(idPregunta,idSeccion)
+                }
             }
 
         }else{
@@ -91,7 +93,9 @@ class ModalPreguntas(private val idSeccion: Int, private val preguntas: Pregunta
             cardEstadoPregunta.visibility=View.GONE
             btnGuardarEditar.text="GUARDAR PREGUNTA"
             btnGuardarEditar.setOnClickListener {
-                ApiAgregarPregunta(-1,idSeccion)
+                if (validarCampos()){
+                    ApiAgregarPregunta(-1,idSeccion)
+                }
             }
         }
 
@@ -144,6 +148,29 @@ class ModalPreguntas(private val idSeccion: Int, private val preguntas: Pregunta
 
         })
 
+    }
+
+    private fun validarCampos(): Boolean {
+        val etNumeroPregunta = txtNumeroPregunta.text.toString()
+
+
+        // Obtener el índice seleccionado en los spinners
+
+        //Estado Pregunta
+        val spinnerEstadoPreguntaIndex = spinnerEstadoPregunta.selectedItemPosition
+
+        //Tipo Pregunta
+
+        val spinnerTipoPreguntaIndex = spinnerTipoPregunta.selectedItemPosition
+
+
+        // Validar que los campos no estén vacíos
+        if (etNumeroPregunta.isEmpty() || spinnerEstadoPreguntaIndex == 0 || spinnerTipoPreguntaIndex == 0) {
+            Toast.makeText(requireContext(), "Por favor complete todos los campos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     override fun onDismiss(dialog: DialogInterface) {

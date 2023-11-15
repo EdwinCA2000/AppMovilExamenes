@@ -129,9 +129,17 @@ class AdministrarSecciones : Fragment(), AdminSeccionesAdapter.OnItemClickListen
             ) {
                 if (response.isSuccessful){
                     val respuesta=response.body()
-                    adminSeccionesAdapter = AdminSeccionesAdapter(requireContext(), respuesta!!)
-                    binding.listaSeccionesAdmin.adapter = adminSeccionesAdapter
-                    adminSeccionesAdapter.setOnItemClickListener(this@AdministrarSecciones)
+                    if (!respuesta.isNullOrEmpty()) {
+                        adminSeccionesAdapter = AdminSeccionesAdapter(requireContext(), respuesta)
+                        binding.listaSeccionesAdmin.adapter = adminSeccionesAdapter
+                        adminSeccionesAdapter.setOnItemClickListener(this@AdministrarSecciones)
+                        binding.imgNoSeccionesDisponibles.visibility=View.GONE
+                        binding.txtnoSeccionesDisponibles.visibility=View.GONE
+                    }else{
+                        binding.imgNoSeccionesDisponibles.visibility=View.VISIBLE
+                        binding.txtnoSeccionesDisponibles.visibility=View.VISIBLE
+                    }
+
                 }
             }
 

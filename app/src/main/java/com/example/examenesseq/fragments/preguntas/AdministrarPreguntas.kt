@@ -99,9 +99,17 @@ class AdministrarPreguntas : Fragment(), AdminPreguntasAdapter.OnItemClickListen
             ) {
                 if (response.isSuccessful){
                     val respuesta=response.body()
-                    adminPreguntasAdapter = AdminPreguntasAdapter(requireContext(), respuesta!!)
-                    binding.listaPreguntasAdmin.adapter = adminPreguntasAdapter
-                    adminPreguntasAdapter.setOnItemClickListener(this@AdministrarPreguntas)
+                    if (!respuesta.isNullOrEmpty()) {
+                        adminPreguntasAdapter = AdminPreguntasAdapter(requireContext(), respuesta)
+                        binding.listaPreguntasAdmin.adapter = adminPreguntasAdapter
+                        adminPreguntasAdapter.setOnItemClickListener(this@AdministrarPreguntas)
+                        binding.imgNoPreguntasDisponibles.visibility=View.GONE
+                        binding.txtnoPreguntasDisponibles.visibility=View.GONE
+                    }else{
+                        binding.imgNoPreguntasDisponibles.visibility=View.VISIBLE
+                        binding.txtnoPreguntasDisponibles.visibility=View.VISIBLE
+                    }
+
                 }
             }
 
