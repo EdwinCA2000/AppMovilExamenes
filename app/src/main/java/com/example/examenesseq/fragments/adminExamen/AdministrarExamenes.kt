@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.examenesseq.secciones.viewmodel.ExamenViewModel
-import com.example.examenesseq.secciones.viewmodel.IdExamenViewModel
+import com.example.examenesseq.fragments.secciones.viewmodel.ExamenViewModel
+import com.example.examenesseq.fragments.secciones.viewmodel.IdExamenViewModel
 import com.example.examenesseq.R
 import com.example.examenesseq.databinding.FragmentAdministrarExamenesBinding
 import com.example.examenesseq.datos.ApiServicio

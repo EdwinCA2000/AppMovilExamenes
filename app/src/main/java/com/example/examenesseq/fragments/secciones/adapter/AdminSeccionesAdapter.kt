@@ -1,4 +1,4 @@
-package com.example.examenesseq.secciones.adapter
+package com.example.examenesseq.fragments.secciones.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

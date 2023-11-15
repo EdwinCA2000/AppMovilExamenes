@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.secciones.AdministrarSecciones"
+    tools:context=".fragments.preguntas.AdministrarPreguntas"
     android:padding="12dp"
     android:clipToPadding="false">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaSeccionesAdmin"
+        android:id="@+id/listaPreguntasAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAgregarSeccion"
+        android:id="@+id/fabAgregarPregunta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="628dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEditarSeccion"
+        android:id="@+id/btnEditarPregunta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="572dp"
@@ -45,13 +45,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnPreguntas"
+        android:id="@+id/btnContenidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
         android:clickable="true"
         android:visibility="gone"
-        android:src="@drawable/ic_preguntas"
+        android:src="@drawable/content"
         app:backgroundTint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -67,4 +67,6 @@
         app:backgroundTint="@color/grisclaro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

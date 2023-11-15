@@ -1,4 +1,4 @@
-package com.example.examenesseq.secciones.adapter
+package com.example.examenesseq.fragments.secciones.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.examenesseq.secciones.data.EstadoSeccionData
+import com.example.examenesseq.fragments.secciones.data.EstadoSeccionData
 import com.example.examenesseq.R
 
 class EstadoSeccionAdapter (context: Context, val options: List<EstadoSeccionData>) :

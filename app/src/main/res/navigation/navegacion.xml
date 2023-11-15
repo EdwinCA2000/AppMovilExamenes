@@ -229,7 +229,7 @@
     </fragment>
     <fragment
         android:id="@+id/administrarSecciones"
-        android:name="com.example.examenesseq.secciones.AdministrarSecciones"
+        android:name="com.example.examenesseq.fragments.secciones.AdministrarSecciones"
         android:label="Administrar Secciones"
         tools:layout="@layout/fragment_administrar_secciones" >
         <action
@@ -241,10 +241,13 @@
         <action
             android:id="@+id/action_administrarSecciones_to_agregarSeccion"
             app:destination="@id/agregarSeccion" />
+        <action
+            android:id="@+id/action_administrarSecciones_to_administrarPreguntas"
+            app:destination="@id/administrarPreguntas" />
     </fragment>
     <fragment
         android:id="@+id/editarSeccion"
-        android:name="com.example.examenesseq.secciones.EditarSeccion"
+        android:name="com.example.examenesseq.fragments.secciones.EditarSeccion"
         android:label="Editar Sección"
         tools:layout="@layout/fragment_editar_seccion" >
         <action
@@ -253,11 +256,20 @@
     </fragment>
     <fragment
         android:id="@+id/agregarSeccion"
-        android:name="com.example.examenesseq.secciones.AgregarSeccion"
+        android:name="com.example.examenesseq.fragments.secciones.AgregarSeccion"
         android:label="Agregar Sección"
         tools:layout="@layout/fragment_agregar_seccion" >
         <action
             android:id="@+id/action_agregarSeccion_to_administrarSecciones"
+            app:destination="@id/administrarSecciones" />
+    </fragment>
+    <fragment
+        android:id="@+id/administrarPreguntas"
+        android:name="com.example.examenesseq.fragments.preguntas.AdministrarPreguntas"
+        android:label="Administrar Preguntas"
+        tools:layout="@layout/fragment_administrar_preguntas" >
+        <action
+            android:id="@+id/action_administrarPreguntas_to_administrarSecciones"
             app:destination="@id/administrarSecciones" />
     </fragment>
 

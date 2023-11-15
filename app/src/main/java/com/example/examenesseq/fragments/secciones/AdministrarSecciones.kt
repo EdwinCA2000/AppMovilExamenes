@@ -1,4 +1,4 @@
-package com.example.examenesseq.secciones
+package com.example.examenesseq.fragments.secciones
 
 import android.os.Bundle
 import android.util.Log
@@ -13,10 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.examenesseq.secciones.adapter.AdminSeccionesAdapter
-import com.example.examenesseq.secciones.viewmodel.IdExamenViewModel
+import com.example.examenesseq.fragments.preguntas.viewmodel.IdSeccionViewModel
+import com.example.examenesseq.fragments.secciones.adapter.AdminSeccionesAdapter
+import com.example.examenesseq.fragments.secciones.viewmodel.IdExamenViewModel
 import com.example.examenesseq.R
-import com.example.examenesseq.secciones.viewmodel.SeccionesViewModel
+import com.example.examenesseq.fragments.secciones.viewmodel.SeccionesViewModel
 import com.example.examenesseq.databinding.FragmentAdministrarSeccionesBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.datos.respuesta.RespuestaActivarSeccion
@@ -39,6 +40,7 @@ class AdministrarSecciones : Fragment(), AdminSeccionesAdapter.OnItemClickListen
     private lateinit var idExamenViewModel: IdExamenViewModel
     private lateinit var seccionesViewModel: SeccionesViewModel
     private lateinit var adminSeccionesAdapter: AdminSeccionesAdapter
+    private lateinit var idSeccionViewModel: IdSeccionViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +50,7 @@ class AdministrarSecciones : Fragment(), AdminSeccionesAdapter.OnItemClickListen
         _binding = FragmentAdministrarSeccionesBinding.inflate(inflater, container, false)
         seccionesViewModel = ViewModelProvider(requireActivity())[SeccionesViewModel::class.java]
         idExamenViewModel = ViewModelProvider(requireActivity())[IdExamenViewModel::class.java]
+        idSeccionViewModel = ViewModelProvider(requireActivity())[IdSeccionViewModel::class.java]
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.action_administrarSecciones_to_administrarExamenes)
         }
@@ -214,8 +217,8 @@ class AdministrarSecciones : Fragment(), AdminSeccionesAdapter.OnItemClickListen
             }
 
             binding.btnPreguntas.setOnClickListener {
-                //idExamenViewModel.idExamen=examenData.IdExamen
-                //findNavController().navigate(R.id.action_administrarExamenes_to_administrarSecciones)
+                idSeccionViewModel.idSeccion=seccionesData.IdSeccion
+                findNavController().navigate(R.id.action_administrarSecciones_to_administrarPreguntas)
             }
         }
 

@@ -1,4 +1,4 @@
-package com.example.examenesseq.secciones
+package com.example.examenesseq.fragments.secciones
 
 import android.os.Bundle
 import android.util.Log
@@ -10,61 +10,58 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.examenesseq.R
-import com.example.examenesseq.databinding.FragmentAgregarSeccionBinding
+import com.example.examenesseq.databinding.FragmentEditarSeccionBinding
 import com.example.examenesseq.datos.ApiServicio
 import com.example.examenesseq.model.SeccionResponse
-import com.example.examenesseq.secciones.adapter.EstadoSeccionAdapter
-import com.example.examenesseq.secciones.data.EstadoSeccionData
-import com.example.examenesseq.secciones.viewmodel.IdExamenViewModel
+import com.example.examenesseq.model.examen.Secciones
+import com.example.examenesseq.fragments.secciones.adapter.EstadoSeccionAdapter
+import com.example.examenesseq.fragments.secciones.data.EstadoSeccionData
+import com.example.examenesseq.fragments.secciones.viewmodel.SeccionesViewModel
 import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
-class AgregarSeccion : Fragment() {
-
-    private var _binding: FragmentAgregarSeccionBinding? = null
-    private val binding get() = _binding!!
+class EditarSeccion : Fragment() {
 
     private val apiServicio: ApiServicio by lazy {
         ApiServicio.create(requireContext())
     }
-    private lateinit var idExamenViewModel: IdExamenViewModel
+    private var _binding: FragmentEditarSeccionBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var seccionesViewModel: SeccionesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentAgregarSeccionBinding.inflate(inflater, container, false)
-        idExamenViewModel = ViewModelProvider(requireActivity())[IdExamenViewModel::class.java]
-        Log.e("idExamen",idExamenViewModel.idExamen.toString())
+        _binding = FragmentEditarSeccionBinding.inflate(inflater, container, false)
+        seccionesViewModel = ViewModelProvider(requireActivity())[SeccionesViewModel::class.java]
+        val secciones=seccionesViewModel.selectedSeccionData
 
-        val spinnerEstadoSeccion = binding.spinnerEstadoSeccionAgregar
+        val spinnerEstadoSeccion = binding.spinnerEstadoSeccionEditar
         val estadoSeccionOpciones = EstadoSeccionData.estadoSeccionOpciones
         val estadoSeccionAdapter = EstadoSeccionAdapter(requireContext(), estadoSeccionOpciones)
         spinnerEstadoSeccion.adapter = estadoSeccionAdapter
-        agregarSeccion()
+
+        if (secciones != null) {
+            cargarDatos(secciones)
+            editarSeccion(secciones.IdSeccion)
+        }
         return binding.root
     }
-
-    private fun agregarSeccion(){
-        binding.btnAgregarSeccion.setOnClickListener{
-            if (validarInputs()){
-                ApiAgregarSeccion()
-            }
+    private fun ApiEditarSeccion(idSeccion: Int){
+        val secciones=seccionesViewModel.selectedSeccionData
+        var idExamen=0
+        if (secciones != null) {
+            idExamen= secciones.IdExamen
         }
-    }
-
-    private fun ApiAgregarSeccion(){
-        val idSeccion=-1
-        val idExamen=idExamenViewModel.idExamen
-        val etTituloSeccion = binding.etTituloSeccionAgregar.text.toString()
-        val etOrden = binding.etOrdenSeccionAgregar.text.toString()
+        val etTituloSeccion = binding.etTituloSeccionEditar.text.toString()
+        val etOrden = binding.etOrdenSeccionEditar.text.toString()
 
 
-        val spinnerEstadoSeccion = binding.spinnerEstadoSeccionAgregar
+        val spinnerEstadoSeccion = binding.spinnerEstadoSeccionEditar
 
         // Obtener el índice seleccionado en los spinners
         val seccionIndex = spinnerEstadoSeccion.selectedItemPosition
@@ -73,7 +70,7 @@ class AgregarSeccion : Fragment() {
         val estadoSeccionValor = estadoSeccionSeleccionado.estadoSeccion
 
         val estadoSeccion=estadoSeccionValor
-        val etDescripcionSeccion=stringToHex(binding.etDescripcionSeccionAgregar.text.toString())
+        val etDescripcionSeccion=stringToHex(binding.etDescripcionSeccionEditar.text.toString())
 
         val call=apiServicio.guardarEditarSecciones(idSeccion,etTituloSeccion,estadoSeccion,idExamen,etOrden.toInt(),etDescripcionSeccion)
         call.enqueue(object : Callback<SeccionResponse> {
@@ -82,7 +79,7 @@ class AgregarSeccion : Fragment() {
                 response: Response<SeccionResponse>
             ) {
                 if (response.isSuccessful){
-                    Toast.makeText(requireContext(), "Has agregado la sección ${etTituloSeccion} exitosamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Has editado la sección exitosamente", Toast.LENGTH_SHORT).show()
                     irAdministrarSecciones()
                 }
             }
@@ -95,18 +92,17 @@ class AgregarSeccion : Fragment() {
         })
 
     }
-
     private fun validarInputs(): Boolean {
-        val etTituloSeccion = binding.etTituloSeccionAgregar.text.toString()
-        val etOrden = binding.etOrdenSeccionAgregar.text.toString()
+        val etTituloSeccion = binding.etTituloSeccionEditar.text.toString()
+        val etOrden = binding.etOrdenSeccionEditar.text.toString()
 
 
-        val spinnerEstadoSeccion = binding.spinnerEstadoSeccionAgregar
+        val spinnerEstadoSeccion = binding.spinnerEstadoSeccionEditar
 
         // Obtener el índice seleccionado en los spinners
         val seccionIndex = spinnerEstadoSeccion.selectedItemPosition
 
-        val etDescripcionSeccion=binding.etDescripcionSeccionAgregar.text.toString()
+        val etDescripcionSeccion=binding.etDescripcionSeccionEditar.text.toString()
 
         if (etTituloSeccion.isEmpty() || etOrden.isEmpty() || seccionIndex == 0 || etDescripcionSeccion.isEmpty()) {
             Toast.makeText(requireContext(), "Por favor complete todos los campos", Toast.LENGTH_SHORT).show()
@@ -114,6 +110,27 @@ class AgregarSeccion : Fragment() {
         }
 
         return true
+    }
+
+    private fun cargarDatos(secciones: Secciones){
+        binding.txtSeccion.text=secciones.TituloSeccion
+        binding.etTituloSeccionEditar.setText(secciones.TituloSeccion)
+        binding.etOrdenSeccionEditar.setText(secciones.Orden.toString())
+        // Cargar estado del examen
+        val estadoSeccionOpciones = EstadoSeccionData.estadoSeccionOpciones
+        val estadoSeccionIndex = estadoSeccionOpciones.indexOfFirst { it.estadoSeccion == secciones.Activo }
+        if (estadoSeccionIndex != -1) {
+            binding.spinnerEstadoSeccionEditar.setSelection(estadoSeccionIndex)
+        }
+        binding.etDescripcionSeccionEditar.setText(eliminarEtiquetasHTML(secciones.DescripcionSeccion))
+    }
+
+    private fun editarSeccion(idSeccionData: Int){
+        binding.btnEditarSeccion.setOnClickListener{
+            if (validarInputs()){
+                ApiEditarSeccion(idSeccionData)
+            }
+        }
     }
 
     private fun stringToHex(input: String): String {
@@ -131,8 +148,6 @@ class AgregarSeccion : Fragment() {
     }
 
     private fun irAdministrarSecciones(){
-        findNavController().navigate(R.id.action_agregarSeccion_to_administrarSecciones)
+        findNavController().navigate(R.id.action_editarSeccion_to_administrarSecciones)
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.example.examenesseq.secciones.data
+package com.example.examenesseq.fragments.secciones.data
 
 class EstadoSeccionData (val label: String, val estadoSeccion: Int) {
     companion object {

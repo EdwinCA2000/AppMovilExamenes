@@ -20,7 +20,7 @@ import com.example.examenesseq.fragments.crearExamen.adapter.EstadoExamenAdapter
 import com.example.examenesseq.fragments.crearExamen.data.DuracionExamenData
 import com.example.examenesseq.fragments.crearExamen.data.EstadoExamenData
 import com.example.examenesseq.model.crearExamen.ExamenResponse
-import com.example.examenesseq.secciones.viewmodel.ExamenViewModel
+import com.example.examenesseq.fragments.secciones.viewmodel.ExamenViewModel
 import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
