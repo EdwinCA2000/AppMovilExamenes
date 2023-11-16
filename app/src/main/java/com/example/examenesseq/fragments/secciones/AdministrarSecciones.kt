@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -183,12 +184,14 @@ class AdministrarSecciones : Fragment(), AdminSeccionesAdapter.OnItemClickListen
             binding.btnEditarSeccion.visibility = View.GONE
             binding.btnPreguntas.visibility = View.GONE
             binding.btnActivarDesactivar.visibility = View.GONE
+            binding.btnDescripcionSeccion.visibility = View.GONE
         } else {
             // Seleccionar el nuevo elemento
             selectedPosition = position
             binding.btnEditarSeccion.visibility = View.VISIBLE
             binding.btnPreguntas.visibility = View.VISIBLE
             binding.btnActivarDesactivar.visibility = View.VISIBLE
+            binding.btnDescripcionSeccion.visibility = View.VISIBLE
 
             binding.btnEditarSeccion.setOnClickListener {
                 seccionesViewModel.selectedSeccionData = seccionesData
@@ -227,6 +230,11 @@ class AdministrarSecciones : Fragment(), AdminSeccionesAdapter.OnItemClickListen
             binding.btnPreguntas.setOnClickListener {
                 idSeccionViewModel.idSeccion=seccionesData.IdSeccion
                 findNavController().navigate(R.id.action_administrarSecciones_to_administrarPreguntas)
+            }
+
+            binding.btnDescripcionSeccion.setOnClickListener {
+                val descripcionModal = ModalDescripcionSeccion(seccionesData)
+                descripcionModal.show((requireContext() as AppCompatActivity).supportFragmentManager, "DescripcionModalSeccion")
             }
         }
 

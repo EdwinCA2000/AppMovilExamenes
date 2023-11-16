@@ -145,11 +145,13 @@ class AdministrarExamenes : Fragment(),AdminExamenAdapter.OnItemClickListener {
             selectedPosition = null
             binding.btnEditar.visibility = View.GONE
             binding.btnSecciones .visibility= View.GONE
+            binding.btnDescripcionExamen.visibility=View.GONE
         } else {
             // Seleccionar el nuevo elemento
             selectedPosition = position
             binding.btnEditar.visibility = View.VISIBLE
             binding.btnSecciones.visibility= View.VISIBLE
+            binding.btnDescripcionExamen.visibility= View.VISIBLE
             binding.btnEditar.setOnClickListener{
                 examenViewModel.selectedExamenData = examenData
                 findNavController().navigate(R.id.action_administrarExamenes_to_editarExamen)
@@ -158,6 +160,11 @@ class AdministrarExamenes : Fragment(),AdminExamenAdapter.OnItemClickListener {
             binding.btnSecciones.setOnClickListener{
                 idExamenViewModel.idExamen=examenData.IdExamen
                 findNavController().navigate(R.id.action_administrarExamenes_to_administrarSecciones)
+            }
+
+            binding.btnDescripcionExamen.setOnClickListener {
+                val descripcionModal = ModalDescripcionExamen(examenData)
+                descripcionModal.show((requireContext() as AppCompatActivity).supportFragmentManager, "DescripcionModal")
             }
         }
 

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graylight"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+
+    <TextView
+        android:id="@+id/descripcionModal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSEQ"
+        android:fontFamily="@font/nunitoextrabold"
+        android:gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/nunitobold"
+        android:text="Descripción del examen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionModal" />
+
+    <LinearLayout
+        android:id="@+id/llDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:clickable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelDescripcion">
+
+        <EditText
+            android:id="@+id/etDescripcionExamenModal"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/input_custom"
+            android:ems="10"
+            android:focusable="false"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:fontFamily="@font/nunitoregular"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/labelBienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/nunitobold"
+        android:text="Bienvenida del examen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llDescripcion" />
+
+    <LinearLayout
+        android:id="@+id/llBienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelBienvenida">
+
+        <EditText
+            android:id="@+id/etBievenidaExamenModal"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/input_custom"
+            android:ems="10"
+            android:focusable="false"
+            android:fontFamily="@font/nunitoregular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCerrarModalExamen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/loginbtnestilo"
+        android:fontFamily="@font/nunitobold"
+        android:text="Cerrar"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llBienvenida" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graylight"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+
+    <TextView
+        android:id="@+id/descripcionModalSeccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSEQ"
+        android:fontFamily="@font/nunitoextrabold"
+        android:gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/nunitobold"
+        android:text="Descripción de la sección"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionModalSeccion" />
+
+    <LinearLayout
+        android:id="@+id/llDescripcionSeccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:clickable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelDescripcion">
+
+        <EditText
+            android:id="@+id/etDescripcionSeccionModal"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/input_custom"
+            android:ems="10"
+            android:focusable="false"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:fontFamily="@font/nunitoregular"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btnCerrarModalSeccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/loginbtnestilo"
+        android:fontFamily="@font/nunitobold"
+        android:text="Cerrar"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llDescripcionSeccion" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

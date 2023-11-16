@@ -16,6 +16,8 @@
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
     <color name="greendark">#007E66</color>
+    <color name="purpleLight">#BB86FC</color>
+    <color name="purple">#8e44ad</color>
     <color name="bgBienvenida">#F7F7F7</color>
     <color name="colorSEQ">#ab0a3c</color>
     <color name="hintTransparent">#90FFFFFF</color>
